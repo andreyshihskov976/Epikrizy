@@ -55,6 +55,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Doljnosti.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Doljnosti.Designer.cs">
+      <DependentUpon>Doljnosti.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gcgp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gcgp.Designer.cs">
+      <DependentUpon>Gcgp.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,13 +81,28 @@
     <Compile Include="Otdeleniya.Designer.cs">
       <DependentUpon>Otdeleniya.cs</DependentUpon>
     </Compile>
+    <Compile Include="Personal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Personal.Designer.cs">
+      <DependentUpon>Personal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Doljnosti.resx">
+      <DependentUpon>Doljnosti.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gcgp.resx">
+      <DependentUpon>Gcgp.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWin.resx">
       <DependentUpon>MainWin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Otdeleniya.resx">
       <DependentUpon>Otdeleniya.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Personal.resx">
+      <DependentUpon>Personal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -62,6 +62,7 @@ namespace Epikrizy
         {
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Otdeleniya, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
+            dataGridView1.ClearSelection();
             identify = "otdeleniya";
         }
 
@@ -69,6 +70,7 @@ namespace Epikrizy
         {
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Doljnosti, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
+            dataGridView1.ClearSelection();
             identify = "doljnosti";
         }
 
@@ -76,6 +78,7 @@ namespace Epikrizy
         {
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Personal, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
+            dataGridView1.ClearSelection();
             identify = "personal";
         }
 
@@ -83,12 +86,8 @@ namespace Epikrizy
         {
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Gcgp, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
+            dataGridView1.ClearSelection();
             identify = "gcgp";
-        }
-
-        private void toolStripMenuItem7_Click(object sender, EventArgs e)
-        {
-            Insert_Otdeleniya();
         }
 
         private void Insert_Otdeleniya()
@@ -101,19 +100,66 @@ namespace Epikrizy
             otdeleniya.Show();
         }
 
-        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void Insert_Doljnosti()
         {
-            if (MessageBox.Show("Хотите отредактировать запись?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                Edit_String();
+            Doljnosti doljnosti = new Doljnosti(MySqlOperations);
+            doljnosti.button1.Visible = true;
+            doljnosti.button3.Visible = false;
+            doljnosti.AcceptButton = doljnosti.button1;
+            doljnosti.Doljnosti_Closed += должностиToolStripMenuItem_Click;
+            doljnosti.Show();
         }
 
-        private void Edit_String()
+        private void Insert_Gcgp()
         {
-            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
-            {
-                if (identify == "otdeleniya")
-                    Update_Otdeleniya(row);
-            }
+            Gcgp gcgp = new Gcgp(MySqlOperations);
+            gcgp.button1.Visible = true;
+            gcgp.button3.Visible = false;
+            gcgp.AcceptButton = gcgp.button1;
+            gcgp.Gcgp_Closed += филиалыГЦГПToolStripMenuItem_Click;
+            gcgp.Show();
+        }
+
+        private void Insert_Personal()
+        {
+            Personal personal = new Personal(MySqlOperations);
+            personal.button1.Visible = true;
+            personal.button3.Visible = false;
+            personal.AcceptButton = personal.button1;
+            personal.Personal_Closed += персоналToolStripMenuItem_Click;
+            personal.Show();
+        }
+
+        private void вставкаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (identify == "otdeleniya")
+                Insert_Otdeleniya();
+            if (identify == "doljnosti")
+                Insert_Doljnosti();
+            if (identify == "gcgp")
+                Insert_Gcgp();
+            if (identify == "personal")
+                Insert_Personal();
+        }
+
+        private void toolStripMenuItem7_Click(object sender, EventArgs e)
+        {
+            Insert_Otdeleniya();
+        }
+
+        private void toolStripMenuItem8_Click(object sender, EventArgs e)
+        {
+            Insert_Doljnosti();
+        }
+
+        private void toolStripMenuItem10_Click(object sender, EventArgs e)
+        {
+            Insert_Gcgp();
+        }
+
+        private void toolStripMenuItem9_Click(object sender, EventArgs e)
+        {
+            Insert_Personal();
         }
 
         private void Update_Otdeleniya(DataGridViewRow row)
@@ -127,9 +173,84 @@ namespace Epikrizy
             otdeleniya.Show();
         }
 
+        private void Update_Doljnosti(DataGridViewRow row)
+        {
+            Doljnosti doljnosti = new Doljnosti(MySqlOperations, row.Cells[0].Value.ToString());
+            doljnosti.textBox1.Text = row.Cells[1].Value.ToString();
+            doljnosti.button3.Visible = true;
+            doljnosti.button1.Visible = false;
+            doljnosti.AcceptButton = doljnosti.button3;
+            doljnosti.Doljnosti_Closed += должностиToolStripMenuItem_Click;
+            doljnosti.Show();
+        }
+
+        private void Update_Gcgp(DataGridViewRow row)
+        {
+            Gcgp gcgp = new Gcgp(MySqlOperations, row.Cells[0].Value.ToString());
+            gcgp.maskedTextBox1.Text = row.Cells[1].Value.ToString();
+            gcgp.textBox1.Text = row.Cells[2].Value.ToString();
+            gcgp.button3.Visible = true;
+            gcgp.button1.Visible = false;
+            gcgp.AcceptButton = gcgp.button3;
+            gcgp.Gcgp_Closed += филиалыГЦГПToolStripMenuItem_Click;
+            gcgp.Show();
+        }
+
+        private void Update_Personal(DataGridViewRow row)
+        {
+            Personal personal = new Personal(MySqlOperations, row.Cells[0].Value.ToString());
+            personal.textBox1.Text = row.Cells[1].Value.ToString().Split(' ')[0];
+            personal.textBox2.Text = row.Cells[1].Value.ToString().Split(' ')[1];
+            personal.textBox3.Text = row.Cells[1].Value.ToString().Split(' ')[2];
+            MySqlOperations.Search_In_ComboBox(row.Cells[2].Value.ToString(), personal.comboBox1);
+            MySqlOperations.Search_In_ComboBox(row.Cells[3].Value.ToString(), personal.comboBox2);
+            personal.AcceptButton = personal.button3;
+            personal.Personal_Closed += персоналToolStripMenuItem_Click;
+            personal.Show();
+        }
+
+        private void Edit_String()
+        {
+            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+            {
+                if (identify == "otdeleniya")
+                    Update_Otdeleniya(row);
+                if (identify == "doljnosti")
+                    Update_Doljnosti(row);
+                if (identify == "otdeleniya")
+                    Update_Otdeleniya(row);
+                if (identify == "gcgp")
+                    Update_Gcgp(row);
+                if (identify == "personal")
+                    Update_Personal(row);
+            }
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (MessageBox.Show("Хотите отредактировать запись?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                Edit_String();
+        }
+
+
         private void копироватьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Edit_String();
+        }
+
+        private void Delete_String()
+        {
+            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+            {
+                if (identify == "otdeleniya")
+                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Otdeleniya, row.Cells[0].Value.ToString());
+                if (identify == "doljnosti")
+                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Doljnosti, row.Cells[0].Value.ToString());
+                if (identify == "gcgp")
+                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Gcgp, row.Cells[0].Value.ToString());
+                if (identify == "personal")
+                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Personal, row.Cells[0].Value.ToString());
+            }
         }
 
         private void вырезатьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -141,24 +262,31 @@ namespace Epikrizy
                 {
                     MySqlOperations.Select_DataGridView(MySqlQueries.Select_Otdeleniya, dataGridView1);
                     dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.ClearSelection();
                     identify = "otdeleniya";
                 }
+                if (identify == "doljnosti")
+                {
+                    MySqlOperations.Select_DataGridView(MySqlQueries.Select_Doljnosti, dataGridView1);
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.ClearSelection();
+                    identify = "doljnosti";
+                }
+                if (identify == "gcgp")
+                {
+                    MySqlOperations.Select_DataGridView(MySqlQueries.Select_Gcgp, dataGridView1);
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.ClearSelection();
+                    identify = "gcgp";
+                }
+                if (identify == "personal")
+                {
+                    MySqlOperations.Select_DataGridView(MySqlQueries.Select_Personal, dataGridView1);
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.ClearSelection();
+                    identify = "personal";
+                }
             }
-        }
-
-        private void Delete_String()
-        {
-            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
-            {
-                if (identify == "otdeleniya")
-                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Otdeleniya, row.Cells[0].Value.ToString());
-            }
-        }
-
-        private void вставкаToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (identify == "otdeleniya")
-                Insert_Otdeleniya();
         }
     }
 }
