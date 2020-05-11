@@ -90,6 +90,14 @@ namespace Epikrizy
             identify = "gcgp";
         }
 
+        private void лабораторныеИсследованияToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MySqlOperations.Select_DataGridView(MySqlQueries.Select_LabIssl, dataGridView1);
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.ClearSelection();
+            identify = "labIssl";
+        }
+
         private void Insert_Otdeleniya()
         {
             Otdeleniya otdeleniya = new Otdeleniya(MySqlOperations);
@@ -130,6 +138,16 @@ namespace Epikrizy
             personal.Show();
         }
 
+        private void Insert_LabIssl()
+        {
+            LabIssl labIssl = new LabIssl(MySqlOperations);
+            labIssl.button1.Visible = true;
+            labIssl.button3.Visible = false;
+            labIssl.AcceptButton = labIssl.button1;
+            labIssl.LabIssl_Closed += лабораторныеИсследованияToolStripMenuItem_Click;
+            labIssl.Show();
+        }
+
         private void вставкаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (identify == "otdeleniya")
@@ -140,6 +158,8 @@ namespace Epikrizy
                 Insert_Gcgp();
             if (identify == "personal")
                 Insert_Personal();
+            if (identify == "labIssl")
+                Insert_LabIssl();
         }
 
         private void toolStripMenuItem7_Click(object sender, EventArgs e)
@@ -160,6 +180,11 @@ namespace Epikrizy
         private void toolStripMenuItem9_Click(object sender, EventArgs e)
         {
             Insert_Personal();
+        }
+
+        private void toolStripMenuItem14_Click(object sender, EventArgs e)
+        {
+            Insert_LabIssl();
         }
 
         private void Update_Otdeleniya(DataGridViewRow row)
@@ -209,6 +234,21 @@ namespace Epikrizy
             personal.Show();
         }
 
+        private void Update_LabIssl(DataGridViewRow row)
+        {
+            LabIssl labIssl = new LabIssl(MySqlOperations, row.Cells[0].Value.ToString());
+            labIssl.textBox1.Text = row.Cells[2].Value.ToString().Split(' ')[0];
+            labIssl.groupBox1.Visible = true;
+            labIssl.groupBox2.Visible = true;
+            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Pokazat_LabIssl, labIssl.dataGridView1, row.Cells[0].Value.ToString());
+            labIssl.dataGridView1.Columns[0].Visible = false;
+            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Otdeleniya_LabIssl, labIssl.dataGridView2, row.Cells[0].Value.ToString());
+            labIssl.dataGridView2.Columns[0].Visible = false;
+            labIssl.AcceptButton = labIssl.button3;
+            labIssl.LabIssl_Closed += лабораторныеИсследованияToolStripMenuItem_Click;
+            labIssl.Show();
+        }
+
         private void Edit_String()
         {
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
@@ -223,6 +263,8 @@ namespace Epikrizy
                     Update_Gcgp(row);
                 if (identify == "personal")
                     Update_Personal(row);
+                if (identify == "labIssl")
+                    Update_LabIssl(row);
             }
         }
 
@@ -250,6 +292,8 @@ namespace Epikrizy
                     MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Gcgp, row.Cells[0].Value.ToString());
                 if (identify == "personal")
                     MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Personal, row.Cells[0].Value.ToString());
+                if (identify == "labIssl")
+                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_LabIssl, row.Cells[0].Value.ToString());
             }
         }
 
@@ -285,6 +329,13 @@ namespace Epikrizy
                     dataGridView1.Columns[0].Visible = false;
                     dataGridView1.ClearSelection();
                     identify = "personal";
+                }
+                if (identify == "labIssl")
+                {
+                    MySqlOperations.Select_DataGridView(MySqlQueries.Select_LabIssl, dataGridView1);
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.ClearSelection();
+                    identify = "labIssl";
                 }
             }
         }
