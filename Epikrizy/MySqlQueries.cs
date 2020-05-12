@@ -8,6 +8,26 @@ namespace Epikrizy
 {
     public class MySqlQueries
     {
+        //Exists
+        public string Exists_LabIssl = $@"SELECT EXISTS(SELECT * FROM lab_issledovaniya WHERE naimenovanie = @Value1);";
+
+        public string Exists_InstrIssl = $@"SELECT EXISTS(SELECT * FROM instr_issledovaniya WHERE naimenovanie = @Value1);";
+
+        public string Exists_Doljnosti = $@"SELECT EXISTS(SELECT * FROM doljnosti WHERE naimenovanie = @Value1);";
+
+        public string Exists_Otdeleniya = $@"SELECT EXISTS(SELECT * FROM otdeleniya WHERE naimenovanie = @Value1);";
+
+        public string Exists_Gcgp = $@"SELECT EXISTS(SELECT * FROM gcgp WHERE nom_filiala = @Value1 OR adress = @Value2);";
+
+        public string Exists_Otdeleniya_LabIssl = $@"SELECT EXISTS(SELECT * FROM lab_otdeleniya WHERE id_lab_issledovaniya = @Value1 AND id_otdeleniya = @Value2);";
+
+        public string Exists_Pokazat_LabIssl = $@"SELECT EXISTS(SELECT * FROM pokazat_lab_issled WHERE id_lab_issledovaniya = @Value1 AND naimenovanie = @Value2 AND ed_izm = @Value3);";
+
+        public string Exists_Otdeleniya_InstrIssl = $@"SELECT EXISTS(SELECT * FROM instr_otdeleniya WHERE id_instr_issledovaniya = @Value1 AND id_otdeleniya = @Value2);";
+
+        public string Exists_Pokazat_InstrIssl = $@"SELECT EXISTS(SELECT * FROM pokazat_instr_issled WHERE id_instr_issledovaniya = @Value1 AND naimenovanie = @Value2 AND ed_izm = @Value3);";
+        //Exists
+
         //Select
         public string Select_Last_ID = $@"SELECT LAST_INSERT_ID();";
 
@@ -39,9 +59,20 @@ FROM lab_otdeleniya INNER JOIN otdeleniya ON lab_otdeleniya.id_otdeleniya = otde
 INNER JOIN lab_issledovaniya ON lab_otdeleniya.id_lab_issledovaniya = lab_issledovaniya.id_lab_issledovaniya
 WHERE lab_issledovaniya.id_lab_issledovaniya = @ID;";
 
-        public string Select_LabIssl = $@"SELECT lab_issledovaniya.id_lab_issledovaniya, otdeleniya.naimenovanie AS 'Наименование отделения', lab_issledovaniya.naimenovanie AS 'Наименование исследования'
-FROM lab_otdeleniya INNER JOIN otdeleniya ON lab_otdeleniya.id_otdeleniya = otdeleniya.id_otdeleniya
-INNER JOIN lab_issledovaniya ON lab_otdeleniya.id_lab_issledovaniya = lab_issledovaniya.id_lab_issledovaniya;";
+        public string Select_LabIssl = $@"SELECT lab_issledovaniya.id_lab_issledovaniya, lab_issledovaniya.naimenovanie AS 'Наименование исследования'
+FROM lab_issledovaniya;";
+
+        public string Select_Pokazat_InstrIssl = $@"SELECT pokazat_instr_issled.id_pokazat_instr_issled, pokazat_instr_issled.naimenovanie AS 'Наименование', pokazat_instr_issled.ed_izm AS 'Ед. Изм.' 
+FROM pokazat_instr_issled INNER JOIN instr_issledovaniya ON pokazat_instr_issled.id_instr_issledovaniya = instr_issledovaniya.id_instr_issledovaniya
+WHERE instr_issledovaniya.id_instr_issledovaniya = @ID;";
+
+        public string Select_Otdeleniya_InstrIssl = $@"SELECT instr_otdeleniya.id_instr_otdeleniya, otdeleniya.naimenovanie AS 'Наименование отделения'
+FROM instr_otdeleniya INNER JOIN otdeleniya ON instr_otdeleniya.id_otdeleniya = otdeleniya.id_otdeleniya
+INNER JOIN instr_issledovaniya ON instr_otdeleniya.id_instr_issledovaniya = instr_issledovaniya.id_instr_issledovaniya
+WHERE instr_issledovaniya.id_instr_issledovaniya = @ID;";
+
+        public string Select_InstrIssl = $@"SELECT instr_issledovaniya.id_instr_issledovaniya, instr_issledovaniya.naimenovanie AS 'Наименование исследования'
+        FROM instr_issledovaniya;";
         //Select
 
         //Insert
@@ -58,6 +89,12 @@ INNER JOIN lab_issledovaniya ON lab_otdeleniya.id_lab_issledovaniya = lab_issled
         public string Insert_Pokazat_LabIssl = $@"INSERT INTO pokazat_lab_issled (id_lab_issledovaniya, naimenovanie, ed_izm) VALUES (@Value1, @Value2, @Value3);";
 
         public string Insert_Otdeleniya_LabIssl = $@"INSERT INTO lab_otdeleniya (id_lab_issledovaniya, id_otdeleniya) VALUES (@Value1, @Value2);";
+
+        public string Insert_InstrIssl = $@"INSERT INTO instr_issledovaniya (naimenovanie) VALUES (@Value1);";
+
+        public string Insert_Pokazat_InstrIssl = $@"INSERT INTO pokazat_instr_issled (id_instr_issledovaniya, naimenovanie, ed_izm) VALUES (@Value1, @Value2, @Value3);";
+
+        public string Insert_Otdeleniya_InstrIssl = $@"INSERT INTO instr_otdeleniya (id_instr_issledovaniya, id_otdeleniya) VALUES (@Value1, @Value2);";
         //Insert
 
         //Update
@@ -73,7 +110,13 @@ INNER JOIN lab_issledovaniya ON lab_otdeleniya.id_lab_issledovaniya = lab_issled
 
         public string Update_Pokazat_LabIssl = $@"UPDATE pokazat_lab_issled SET id_lab_issledovaniya = @Value1, naimenovanie = @Value2, ed_izm = @Value3 WHERE id_pokazat_lab_issled = @ID;";
 
-        public string Update_Otdeleniya_LabIssl = $@"UPDATE lab_otdeleniya SET id_otdeleniya = @Value1, id_lab_issledovaniya = @Value2 WHERE id_lab_otdeleniya = @ID;";
+        public string Update_Otdeleniya_LabIssl = $@"UPDATE lab_otdeleniya SET id_lab_issledovaniya = @Value1, id_otdeleniya = @Value2 WHERE id_lab_otdeleniya = @ID;";
+
+        public string Update_InstrIssl = $@"UPDATE instr_issledovaniya SET naimenovanie = @Value1 WHERE id_instr_issledovaniya = @ID;";
+
+        public string Update_Pokazat_InstrIssl = $@"UPDATE pokazat_instr_issled SET id_instr_issledovaniya = @Value1, naimenovanie = @Value2, ed_izm = @Value3 WHERE id_pokazat_instr_issled = @ID;";
+
+        public string Update_Otdeleniya_InstrIssl = $@"UPDATE instr_otdeleniya SET id_instr_issledovaniya = @Value1, id_otdeleniya = @Value2 WHERE id_instr_otdeleniya = @ID;";
         //Update
 
         //Delete
@@ -90,6 +133,12 @@ INNER JOIN lab_issledovaniya ON lab_otdeleniya.id_lab_issledovaniya = lab_issled
         public string Delete_Pokazat_LabIssl = $@"DELETE FROM pokazat_lab_issled WHERE id_pokazat_lab_issled = @ID;";
 
         public string Delete_Otdeleniya_LabIssl = $@"DELETE FROM lab_otdeleniya WHERE id_lab_otdeleniya = @ID;";
+
+        public string Delete_InstrIssl = $@"DELETE FROM instr_issledovaniya WHERE id_instr_issledovaniya = @ID";
+
+        public string Delete_Pokazat_InstrIssl = $@"DELETE FROM pokazat_instr_issled WHERE id_pokazat_instr_issled = @ID;";
+
+        public string Delete_Otdeleniya_InstrIssl = $@"DELETE FROM instr_otdeleniya WHERE id_instr_otdeleniya = @ID;";
         //Delete
     }
 }

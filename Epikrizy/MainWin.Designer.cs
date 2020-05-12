@@ -213,6 +213,7 @@
             this.toolStripMenuItem15.Name = "toolStripMenuItem15";
             this.toolStripMenuItem15.Size = new System.Drawing.Size(262, 22);
             this.toolStripMenuItem15.Text = "Инструментальные исследования";
+            this.toolStripMenuItem15.Click += new System.EventHandler(this.toolStripMenuItem15_Click);
             // 
             // toolStripMenuItem16
             // 
@@ -332,6 +333,7 @@
             this.инструментальныеИсследованияToolStripMenuItem1.Name = "инструментальныеИсследованияToolStripMenuItem1";
             this.инструментальныеИсследованияToolStripMenuItem1.Size = new System.Drawing.Size(262, 22);
             this.инструментальныеИсследованияToolStripMenuItem1.Text = "Инструментальные исследования";
+            this.инструментальныеИсследованияToolStripMenuItem1.Click += new System.EventHandler(this.инструментальныеИсследованияToolStripMenuItem_Click);
             // 
             // пациентыToolStripMenuItem
             // 

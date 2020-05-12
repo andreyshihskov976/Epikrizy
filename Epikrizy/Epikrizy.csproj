@@ -67,6 +67,12 @@
     <Compile Include="Gcgp.Designer.cs">
       <DependentUpon>Gcgp.cs</DependentUpon>
     </Compile>
+    <Compile Include="InstrIssl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InstrIssl.Designer.cs">
+      <DependentUpon>InstrIssl.cs</DependentUpon>
+    </Compile>
     <Compile Include="LabIssl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gcgp.resx">
       <DependentUpon>Gcgp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InstrIssl.resx">
+      <DependentUpon>InstrIssl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LabIssl.resx">
       <DependentUpon>LabIssl.cs</DependentUpon>

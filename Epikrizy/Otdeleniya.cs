@@ -24,8 +24,18 @@ namespace Epikrizy
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Otdeleniya, null, textBox1.Text);
-            this.Close();
+            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Otdeleniya, null, textBox1.Text) != "1")
+            {
+                if (textBox1.Text != "")
+                {
+                    MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Otdeleniya, null, textBox1.Text);
+                    this.Close();
+                }
+                else
+                    MessageBox.Show("Поля не заполнены.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+                MessageBox.Show("Должность с введенным вами наименованием уже существует.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -35,8 +45,18 @@ namespace Epikrizy
 
         private void button3_Click(object sender, EventArgs e)
         {
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Otdeleniya, ID, textBox1.Text);
-            this.Close();
+            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Otdeleniya, null, textBox1.Text) != "1")
+            {
+                if (textBox1.Text != "")
+                {
+                    MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Otdeleniya, ID, textBox1.Text);
+                    this.Close();
+                }
+                else
+                    MessageBox.Show("Поля не заполнены.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+                MessageBox.Show("Исследование с введенным вами наименованием уже существует или изменения не были внесены.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Otdeleniya_FormClosed(object sender, FormClosedEventArgs e)

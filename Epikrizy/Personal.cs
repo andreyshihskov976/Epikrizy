@@ -26,8 +26,13 @@ namespace Epikrizy
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Personal, null, textBox1.Text, textBox2.Text, textBox3.Text, MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Otdeleniya_ComboBox, null, comboBox1.Text), MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Doljnosti_ComboBox, null, comboBox2.Text));
-            this.Close();
+            if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "")
+            {
+                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Personal, null, textBox1.Text, textBox2.Text, textBox3.Text, MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Otdeleniya_ComboBox, null, comboBox1.Text), MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Doljnosti_ComboBox, null, comboBox2.Text));
+                this.Close();
+            }
+            else
+                MessageBox.Show("Поля не заполнены.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -37,8 +42,13 @@ namespace Epikrizy
 
         private void button3_Click(object sender, EventArgs e)
         {
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Personal, ID, textBox1.Text, textBox2.Text, textBox3.Text, MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Otdeleniya_ComboBox, null, comboBox1.Text), MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Doljnosti_ComboBox, null, comboBox2.Text));
-            this.Close();
+            if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "")
+            {
+                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Personal, ID, textBox1.Text, textBox2.Text, textBox3.Text, MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Otdeleniya_ComboBox, null, comboBox1.Text), MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Doljnosti_ComboBox, null, comboBox2.Text));
+                this.Close();
+            }
+            else
+                MessageBox.Show("Поля не заполнены.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void Personal_FormClosed(object sender, FormClosedEventArgs e)

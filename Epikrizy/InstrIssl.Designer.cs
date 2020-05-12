@@ -1,6 +1,6 @@
 ﻿namespace Epikrizy
 {
-    partial class LabIssl
+    partial class InstrIssl
     {
         /// <summary>
         /// Required designer variable.
@@ -265,7 +265,7 @@
             this.dataGridView2.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellDoubleClick);
             this.dataGridView2.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridView2_UserDeletingRow);
             // 
-            // LabIssl
+            // InstrIssl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -283,9 +283,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "LabIssl";
-            this.Text = "Лабораторные исследования";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LabIssl_FormClosed);
+            this.Name = "InstrIssl";
+            this.Text = "Инструментальные исследования";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.InstrIssl_FormClosed);
             this.Shown += new System.EventHandler(this.LabIssl_Shown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

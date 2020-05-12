@@ -60,6 +60,7 @@ namespace Epikrizy
                 dataAdapter = new MySqlDataAdapter(sqlCommand);
                 dataAdapter.Fill(dataSet);
                 dataGridView.DataSource = dataSet.Tables[0].DefaultView;
+                dataGridView.ClearSelection();
             }
             catch (Exception ex)
             {
