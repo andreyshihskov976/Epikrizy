@@ -40,6 +40,7 @@ namespace Epikrizy
             try
             {
                 MySqlOperations.OpenConnection();
+                panel3.Visible = !panel3.Visible;
             }
             catch (Exception)
             {
@@ -383,6 +384,22 @@ namespace Epikrizy
                     dataGridView1.ClearSelection();
                     identify = "instrIssl";
                 }
+            }
+        }
+
+        private void toolStripMenuItem6_Click(object sender, EventArgs e)
+        {
+            panel3.Visible = !panel3.Visible;
+        }
+
+        private void panel3_VisibleChanged(object sender, EventArgs e)
+        {
+            if (panel3.Visible == false)
+                panel2.Dock = DockStyle.Fill;
+            else
+            {
+                panel2.Dock = DockStyle.None;
+                panel2.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left);
             }
         }
     }
