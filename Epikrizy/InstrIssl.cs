@@ -171,6 +171,7 @@ namespace Epikrizy
         {
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
                 MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Pokazat_InstrIssl, row.Cells[0].Value.ToString());
+            dataGridView1.ClearSelection();
             //MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Pokazat_LabIssl, dataGridView1, ID);
             //dataGridView1.Columns[0].Visible = false;
         }
@@ -179,6 +180,7 @@ namespace Epikrizy
         {
             foreach (DataGridViewRow row in dataGridView2.SelectedRows)
                 MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Otdeleniya_InstrIssl, row.Cells[0].Value.ToString());
+            dataGridView1.ClearSelection();
             //MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Otdeleniya_LabIssl, dataGridView2, ID);
             //dataGridView2.Columns[0].Visible = false;
         }

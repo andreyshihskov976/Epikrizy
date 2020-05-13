@@ -107,6 +107,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.AutoSize = true;
+            this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.groupBox1.Controls.Add(this.textBox3);
             this.groupBox1.Controls.Add(this.button6);
             this.groupBox1.Controls.Add(this.button4);
@@ -117,7 +119,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.groupBox1.Location = new System.Drawing.Point(5, 35);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(360, 345);
+            this.groupBox1.Size = new System.Drawing.Size(360, 364);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Показатели исследования";
@@ -195,6 +197,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.AutoSize = true;
+            this.groupBox2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.groupBox2.Controls.Add(this.button5);
             this.groupBox2.Controls.Add(this.button7);
             this.groupBox2.Controls.Add(this.label4);
@@ -203,7 +207,7 @@
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.groupBox2.Location = new System.Drawing.Point(371, 35);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(360, 345);
+            this.groupBox2.Size = new System.Drawing.Size(360, 364);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Отделенния, в которых проводится";

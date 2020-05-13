@@ -1,6 +1,6 @@
 ﻿namespace Epikrizy
 {
-    partial class LabIssl
+    partial class Diagnozy
     {
         /// <summary>
         /// Required designer variable.
@@ -28,27 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button5 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -105,99 +96,8 @@
             this.label1.TabIndex = 10;
             this.label1.Text = "Наименование исследования:";
             // 
-            // groupBox1
-            // 
-            this.groupBox1.AutoSize = true;
-            this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.groupBox1.Controls.Add(this.textBox3);
-            this.groupBox1.Controls.Add(this.button6);
-            this.groupBox1.Controls.Add(this.button4);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.dataGridView1);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.groupBox1.Location = new System.Drawing.Point(5, 35);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(360, 364);
-            this.groupBox1.TabIndex = 15;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Показатели исследования";
-            this.groupBox1.Visible = false;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(183, 55);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(171, 26);
-            this.textBox3.TabIndex = 8;
-            // 
-            // button6
-            // 
-            this.button6.Enabled = false;
-            this.button6.Location = new System.Drawing.Point(183, 87);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(171, 26);
-            this.button6.TabIndex = 7;
-            this.button6.Text = "Изменить";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(6, 87);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(171, 26);
-            this.button4.TabIndex = 5;
-            this.button4.Text = "Добавить";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 58);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(168, 20);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Единицы измерения:";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(183, 23);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(171, 26);
-            this.textBox2.TabIndex = 2;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 26);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(126, 20);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Наименование:";
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 119);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(348, 220);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
-            this.dataGridView1.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridView1_UserDeletingRow);
-            // 
             // groupBox2
             // 
-            this.groupBox2.AutoSize = true;
             this.groupBox2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.groupBox2.Controls.Add(this.button5);
             this.groupBox2.Controls.Add(this.button7);
@@ -205,20 +105,20 @@
             this.groupBox2.Controls.Add(this.comboBox2);
             this.groupBox2.Controls.Add(this.dataGridView2);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.groupBox2.Location = new System.Drawing.Point(371, 35);
+            this.groupBox2.Location = new System.Drawing.Point(5, 35);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(360, 364);
+            this.groupBox2.Size = new System.Drawing.Size(726, 332);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Отделенния, в которых проводится";
+            this.groupBox2.Text = "Препараты, показанные к применению";
             this.groupBox2.Visible = false;
             // 
             // button5
             // 
             this.button5.Enabled = false;
-            this.button5.Location = new System.Drawing.Point(183, 57);
+            this.button5.Location = new System.Drawing.Point(578, 23);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(171, 26);
+            this.button5.Size = new System.Drawing.Size(142, 28);
             this.button5.TabIndex = 9;
             this.button5.Text = "Изменить";
             this.button5.UseVisualStyleBackColor = true;
@@ -226,9 +126,9 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(6, 57);
+            this.button7.Location = new System.Drawing.Point(430, 23);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(171, 26);
+            this.button7.Size = new System.Drawing.Size(142, 28);
             this.button7.TabIndex = 8;
             this.button7.Text = "Добавить";
             this.button7.UseVisualStyleBackColor = true;
@@ -237,19 +137,19 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 26);
+            this.label4.Location = new System.Drawing.Point(7, 27);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(100, 20);
+            this.label4.Size = new System.Drawing.Size(211, 20);
             this.label4.TabIndex = 6;
-            this.label4.Text = "Отделение:";
+            this.label4.Text = "Наименвавние препарата:";
             // 
             // comboBox2
             // 
             this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(183, 23);
+            this.comboBox2.Location = new System.Drawing.Point(241, 23);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(171, 28);
+            this.comboBox2.Size = new System.Drawing.Size(183, 28);
             this.comboBox2.TabIndex = 5;
             // 
             // dataGridView2
@@ -259,17 +159,25 @@
             this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView2.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridView2.Location = new System.Drawing.Point(6, 89);
+            this.dataGridView2.Location = new System.Drawing.Point(7, 57);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(348, 250);
+            this.dataGridView2.Size = new System.Drawing.Size(713, 250);
             this.dataGridView2.TabIndex = 1;
             this.dataGridView2.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellDoubleClick);
             this.dataGridView2.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridView2_UserDeletingRow);
             // 
-            // LabIssl
+            // Diagnozy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -278,7 +186,6 @@
             this.CancelButton = this.button2;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -287,13 +194,10 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "LabIssl";
+            this.Name = "Diagnozy";
             this.Text = "Лабораторные исследования";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LabIssl_FormClosed);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Diagnozy_FormClosed);
             this.Shown += new System.EventHandler(this.LabIssl_Shown);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
@@ -309,19 +213,11 @@
         public System.Windows.Forms.Button button1;
         public System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Label label4;
-        public System.Windows.Forms.GroupBox groupBox1;
-        public System.Windows.Forms.TextBox textBox2;
-        public System.Windows.Forms.DataGridView dataGridView1;
         public System.Windows.Forms.GroupBox groupBox2;
         public System.Windows.Forms.DataGridView dataGridView2;
         public System.Windows.Forms.ComboBox comboBox2;
-        public System.Windows.Forms.TextBox textBox3;
     }
 }

@@ -11,9 +11,13 @@ namespace Epikrizy
         //Exists
         public string Exists_LabIssl = $@"SELECT EXISTS(SELECT * FROM lab_issledovaniya WHERE naimenovanie = @Value1);";
 
+        public string Exists_Diagnozy = $@"SELECT EXISTS(SELECT * FROM diagnozy WHERE naimenovanie = @Value1);";
+
         public string Exists_InstrIssl = $@"SELECT EXISTS(SELECT * FROM instr_issledovaniya WHERE naimenovanie = @Value1);";
 
         public string Exists_Doljnosti = $@"SELECT EXISTS(SELECT * FROM doljnosti WHERE naimenovanie = @Value1);";
+
+        public string Exists_Preparaty = $@"SELECT EXISTS(SELECT * FROM preparaty WHERE naimenovanie = @Value1 AND farm_svoistva = @Value2);";
 
         public string Exists_Otdeleniya = $@"SELECT EXISTS(SELECT * FROM otdeleniya WHERE naimenovanie = @Value1);";
 
@@ -26,6 +30,8 @@ namespace Epikrizy
         public string Exists_Otdeleniya_InstrIssl = $@"SELECT EXISTS(SELECT * FROM instr_otdeleniya WHERE id_instr_issledovaniya = @Value1 AND id_otdeleniya = @Value2);";
 
         public string Exists_Pokazat_InstrIssl = $@"SELECT EXISTS(SELECT * FROM pokazat_instr_issled WHERE id_instr_issledovaniya = @Value1 AND naimenovanie = @Value2 AND ed_izm = @Value3);";
+
+        public string Exists_Lechenie = $@"SELECT EXISTS(SELECT * FROM lechenie WHERE id_diagnoza = @Value1 AND id_preparata = @Value2);";
         //Exists
 
         //Select
@@ -42,6 +48,12 @@ namespace Epikrizy
         public string Select_Doljnosti_ComboBox = $@"SELECT naimenovanie FROM doljnosti;";
 
         public string Select_ID_Doljnosti_ComboBox = $@"SELECT id_doljnosti FROM doljnosti WHERE naimenovanie = @Value1;";
+
+        public string Select_Preparaty = $@"SELECT id_preparata, naimenovanie AS 'Наименование препарата', farm_svoistva AS 'Фармакологические свойства' FROM preparaty;";
+
+        public string Select_Preparaty_ComboBox = $@"SELECT naimenovanie FROM preparaty;";
+
+        public string Select_ID_Preparaty_ComboBox = $@"SELECT id_preparata FROM preparaty WHERE naimenovanie = @Value1;";
 
         public string Select_Personal = $@"SELECT personal.id_personala, CONCAT(personal.familiya,' ', personal.imya, ' ', personal.otchestvo) AS 'Ф.И.О. Сотрудника', 
 otdeleniya.naimenovanie AS 'Наименование отделения', doljnosti.naimenovanie AS 'Наименование должности'
@@ -73,12 +85,22 @@ WHERE instr_issledovaniya.id_instr_issledovaniya = @ID;";
 
         public string Select_InstrIssl = $@"SELECT instr_issledovaniya.id_instr_issledovaniya, instr_issledovaniya.naimenovanie AS 'Наименование исследования'
         FROM instr_issledovaniya;";
+
+        public string Select_Diagnozy = $@"SELECT diagnozy.id_diagnoza, diagnozy.naimenovanie AS 'Наименование исследования'
+        FROM diagnozy;";
+
+        public string Select_Lechenie = $@"SELECT lechenie.id_lecheniya, preparaty.naimenovanie AS 'Наименование препарата', preparaty.farm_svoistva AS 'Фармакологические свойства' 
+FROM lechenie INNER JOIN preparaty ON lechenie.id_preparata = preparaty.id_preparata
+INNER JOIN diagnozy ON lechenie.id_diagnoza = diagnozy.id_diagnoza
+WHERE diagnozy.id_diagnoza = @ID;";
         //Select
 
         //Insert
         public string Insert_Otdeleniya = $@"INSERT INTO otdeleniya (naimenovanie) VALUES (@Value1);";
 
         public string Insert_Doljnosti = $@"INSERT INTO doljnosti (naimenovanie) VALUES (@Value1);";
+
+        public string Insert_Preparaty = $@"INSERT INTO preparaty (naimenovanie, farm_svoistva) VALUES (@Value1, @Value2);";
 
         public string Insert_Gcgp = $@"INSERT INTO gcgp (nom_filiala, adress) VALUES (@Value1, @Value2);";
 
@@ -95,12 +117,18 @@ WHERE instr_issledovaniya.id_instr_issledovaniya = @ID;";
         public string Insert_Pokazat_InstrIssl = $@"INSERT INTO pokazat_instr_issled (id_instr_issledovaniya, naimenovanie, ed_izm) VALUES (@Value1, @Value2, @Value3);";
 
         public string Insert_Otdeleniya_InstrIssl = $@"INSERT INTO instr_otdeleniya (id_instr_issledovaniya, id_otdeleniya) VALUES (@Value1, @Value2);";
+
+        public string Insert_Diagnozy = $@"INSERT INTO diagnozy (naimenovanie) VALUES (@Value1);";
+
+        public string Insert_Lechenie = $@"INSERT INTO lechenie (id_diagnoza, id_preparata) VALUES (@Value1, @Value2);";
         //Insert
 
         //Update
         public string Update_Otdeleniya = $@"UPDATE otdeleniya SET naimenovanie = @Value1 WHERE id_otdeleniya = @ID;";
 
         public string Update_Doljnosti = $@"UPDATE doljnosti SET naimenovanie = @Value1 WHERE id_doljnosti = @ID;";
+
+        public string Update_Preparaty = $@"UPDATE preparaty SET naimenovanie = @Value1, farm_svoistva = @Value2 WHERE id_preparata = @ID;";
 
         public string Update_Gcgp = $@"UPDATE gcgp SET nom_filiala = @Value1, adress = @Value2 WHERE id_gcgp = @ID;";
 
@@ -117,12 +145,18 @@ WHERE instr_issledovaniya.id_instr_issledovaniya = @ID;";
         public string Update_Pokazat_InstrIssl = $@"UPDATE pokazat_instr_issled SET id_instr_issledovaniya = @Value1, naimenovanie = @Value2, ed_izm = @Value3 WHERE id_pokazat_instr_issled = @ID;";
 
         public string Update_Otdeleniya_InstrIssl = $@"UPDATE instr_otdeleniya SET id_instr_issledovaniya = @Value1, id_otdeleniya = @Value2 WHERE id_instr_otdeleniya = @ID;";
+
+        public string Update_Diagnozy = $@"UPDATE diagnozy SET naimenovanie = @Value1 WHERE id_diagnoza = @ID;";
+
+        public string Update_Lechenie = $@"UPDATE lechenie SET id_diagnoza = @Value1, id_preparata = @Value2 WHERE id_lecheniya = @ID;";
         //Update
 
         //Delete
         public string Delete_Otdeleniya = $@"DELETE FROM otdeleniya WHERE id_otdeleniya = @ID;";
         
         public string Delete_Doljnosti = $@"DELETE FROM doljnosti WHERE id_doljnosti = @ID;";
+
+        public string Delete_Preparaty = $@"DELETE FROM preparaty WHERE id_preparata = @ID;";
 
         public string Delete_Gcgp = $@"DELETE FROM gcgp WHERE id_gcgp = @ID;";
 
@@ -139,6 +173,10 @@ WHERE instr_issledovaniya.id_instr_issledovaniya = @ID;";
         public string Delete_Pokazat_InstrIssl = $@"DELETE FROM pokazat_instr_issled WHERE id_pokazat_instr_issled = @ID;";
 
         public string Delete_Otdeleniya_InstrIssl = $@"DELETE FROM instr_otdeleniya WHERE id_instr_otdeleniya = @ID;";
+
+        public string Delete_Diagnozy = $@"DELETE FROM diagnozy WHERE id_diagnoza = @ID";
+
+        public string Delete_Lechenie = $@"DELETE FROM lechenie WHERE id_lecheniya = @ID;";
         //Delete
     }
 }

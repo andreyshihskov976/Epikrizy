@@ -73,6 +73,13 @@ namespace Epikrizy
             identify = "doljnosti";
         }
 
+        private void препаратыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MySqlOperations.Select_DataGridView(MySqlQueries.Select_Preparaty, dataGridView1);
+            dataGridView1.Columns[0].Visible = false;
+            identify = "preparaty";
+        }
+
         private void персоналToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Personal, dataGridView1);
@@ -101,6 +108,13 @@ namespace Epikrizy
             identify = "instrIssl";
         }
 
+        private void диагнозыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MySqlOperations.Select_DataGridView(MySqlQueries.Select_Diagnozy, dataGridView1);
+            dataGridView1.Columns[0].Visible = false;
+            identify = "diagnozy";
+        }
+
         private void Insert_Otdeleniya()
         {
             Otdeleniya otdeleniya = new Otdeleniya(MySqlOperations);
@@ -119,6 +133,16 @@ namespace Epikrizy
             doljnosti.AcceptButton = doljnosti.button1;
             doljnosti.Doljnosti_Closed += должностиToolStripMenuItem_Click;
             doljnosti.Show();
+        }
+
+        private void Insert_Preparaty()
+        {
+            Preparaty preparaty = new Preparaty(MySqlOperations);
+            preparaty.button1.Visible = true;
+            preparaty.button3.Visible = false;
+            preparaty.AcceptButton = preparaty.button1;
+            preparaty.Preparaty_Closed += препаратыToolStripMenuItem_Click;
+            preparaty.Show();
         }
 
         private void Insert_Gcgp()
@@ -161,12 +185,24 @@ namespace Epikrizy
             instrIssl.Show();
         }
 
+        private void Insert_Diagnozy()
+        {
+            Diagnozy diagnozy = new Diagnozy(MySqlOperations);
+            diagnozy.button1.Visible = true;
+            diagnozy.button3.Visible = false;
+            diagnozy.AcceptButton = diagnozy.button1;
+            diagnozy.Diagnozy_Closed += диагнозыToolStripMenuItem_Click;
+            diagnozy.Show();
+        }
+
         private void вставкаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (identify == "otdeleniya")
                 Insert_Otdeleniya();
             if (identify == "doljnosti")
                 Insert_Doljnosti();
+            if (identify == "preparaty")
+                Insert_Preparaty();
             if (identify == "gcgp")
                 Insert_Gcgp();
             if (identify == "personal")
@@ -175,6 +211,8 @@ namespace Epikrizy
                 Insert_LabIssl();
             if (identify == "instrIssl")
                 Insert_LabIssl();
+            if (identify == "diagnozy")
+                Insert_Diagnozy();
         }
 
         private void toolStripMenuItem7_Click(object sender, EventArgs e)
@@ -185,6 +223,11 @@ namespace Epikrizy
         private void toolStripMenuItem8_Click(object sender, EventArgs e)
         {
             Insert_Doljnosti();
+        }
+
+        private void toolStripMenuItem18_Click(object sender, EventArgs e)
+        {
+            Insert_Preparaty();
         }
 
         private void toolStripMenuItem10_Click(object sender, EventArgs e)
@@ -207,6 +250,11 @@ namespace Epikrizy
             Insert_InstrIssl();
         }
 
+        private void toolStripMenuItem17_Click(object sender, EventArgs e)
+        {
+            Insert_Diagnozy();
+        }
+
         private void Update_Otdeleniya(DataGridViewRow row)
         {
             Otdeleniya otdeleniya = new Otdeleniya(MySqlOperations, row.Cells[0].Value.ToString());
@@ -227,6 +275,17 @@ namespace Epikrizy
             doljnosti.AcceptButton = doljnosti.button3;
             doljnosti.Doljnosti_Closed += должностиToolStripMenuItem_Click;
             doljnosti.Show();
+        }
+
+        private void Update_Preparaty(DataGridViewRow row)
+        {
+            Preparaty preparaty = new Preparaty(MySqlOperations, row.Cells[0].Value.ToString());
+            preparaty.textBox1.Text = row.Cells[1].Value.ToString();
+            preparaty.button3.Visible = true;
+            preparaty.button1.Visible = false;
+            preparaty.AcceptButton = preparaty.button3;
+            preparaty.Preparaty_Closed += препаратыToolStripMenuItem_Click;
+            preparaty.Show();
         }
 
         private void Update_Gcgp(DataGridViewRow row)
@@ -284,6 +343,18 @@ namespace Epikrizy
             instrIssl.Show();
         }
 
+        private void Update_Diagnozy(DataGridViewRow row)
+        {
+            Diagnozy diagnozy = new Diagnozy(MySqlOperations, row.Cells[0].Value.ToString());
+            diagnozy.textBox1.Text = row.Cells[1].Value.ToString();
+            diagnozy.groupBox2.Visible = true;
+            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Lechenie, diagnozy.dataGridView2, row.Cells[0].Value.ToString());
+            diagnozy.dataGridView2.Columns[0].Visible = false;
+            diagnozy.AcceptButton = diagnozy.button3;
+            diagnozy.Diagnozy_Closed += диагнозыToolStripMenuItem_Click;
+            diagnozy.Show();
+        }
+
         private void Edit_String()
         {
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
@@ -292,6 +363,8 @@ namespace Epikrizy
                     Update_Otdeleniya(row);
                 if (identify == "doljnosti")
                     Update_Doljnosti(row);
+                if (identify == "preparaty")
+                    Update_Preparaty(row);
                 if (identify == "otdeleniya")
                     Update_Otdeleniya(row);
                 if (identify == "gcgp")
@@ -302,6 +375,8 @@ namespace Epikrizy
                     Update_LabIssl(row);
                 if (identify == "instrIssl")
                     Update_InstrIssl(row);
+                if (identify == "diagnozy")
+                    Update_Diagnozy(row);
             }
         }
 
@@ -326,6 +401,8 @@ namespace Epikrizy
                     MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Otdeleniya, row.Cells[0].Value.ToString());
                 if (identify == "doljnosti")
                     MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Doljnosti, row.Cells[0].Value.ToString());
+                if (identify == "preparaty")
+                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Preparaty, row.Cells[0].Value.ToString());
                 if (identify == "gcgp")
                     MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Gcgp, row.Cells[0].Value.ToString());
                 if (identify == "personal")
@@ -334,6 +411,8 @@ namespace Epikrizy
                     MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_LabIssl, row.Cells[0].Value.ToString());
                 if (identify == "instrIssl")
                     MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_InstrIssl, row.Cells[0].Value.ToString());
+                if (identify == "diagnozy")
+                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Diagnozy, row.Cells[0].Value.ToString());
             }
         }
 
@@ -352,6 +431,13 @@ namespace Epikrizy
                 if (identify == "doljnosti")
                 {
                     MySqlOperations.Select_DataGridView(MySqlQueries.Select_Doljnosti, dataGridView1);
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.ClearSelection();
+                    identify = "doljnosti";
+                }
+                if (identify == "preparaty")
+                {
+                    MySqlOperations.Select_DataGridView(MySqlQueries.Select_Preparaty, dataGridView1);
                     dataGridView1.Columns[0].Visible = false;
                     dataGridView1.ClearSelection();
                     identify = "doljnosti";
@@ -377,12 +463,19 @@ namespace Epikrizy
                     dataGridView1.ClearSelection();
                     identify = "labIssl";
                 }
-                if (identify == "labIssl")
+                if (identify == "instrIssl")
                 {
                     MySqlOperations.Select_DataGridView(MySqlQueries.Select_InstrIssl, dataGridView1);
                     dataGridView1.Columns[0].Visible = false;
                     dataGridView1.ClearSelection();
                     identify = "instrIssl";
+                }
+                if (identify == "diagnozy")
+                {
+                    MySqlOperations.Select_DataGridView(MySqlQueries.Select_Diagnozy, dataGridView1);
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.ClearSelection();
+                    identify = "diagnozy";
                 }
             }
         }
@@ -401,6 +494,22 @@ namespace Epikrizy
                 panel2.Dock = DockStyle.None;
                 panel2.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left);
             }
+        }
+
+        private void вклвыклПереносПоСловамToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.DefaultCellStyle.WrapMode == DataGridViewTriState.False)
+                dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            else
+                dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        }
+
+        private void toolStripMenuItem23_Click(object sender, EventArgs e)
+        {
+            if (dataGridView2.DefaultCellStyle.WrapMode == DataGridViewTriState.False)
+                dataGridView2.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            else
+                dataGridView2.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         }
     }
 }

@@ -55,6 +55,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Diagnozy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Diagnozy.Designer.cs">
+      <DependentUpon>Diagnozy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Preparaty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Preparaty.Designer.cs">
+      <DependentUpon>Preparaty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Doljnosti.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +113,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Diagnozy.resx">
+      <DependentUpon>Diagnozy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Preparaty.resx">
+      <DependentUpon>Preparaty.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Doljnosti.resx">
       <DependentUpon>Doljnosti.cs</DependentUpon>
     </EmbeddedResource>

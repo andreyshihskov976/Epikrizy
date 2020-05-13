@@ -35,7 +35,7 @@ namespace Epikrizy
                     MessageBox.Show("Поля не заполнены.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
-                MessageBox.Show("Должность с введенным вами наименованием уже существует.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Отделение с введенным вами наименованием уже существует.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -56,7 +56,7 @@ namespace Epikrizy
                     MessageBox.Show("Поля не заполнены.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
-                MessageBox.Show("Исследование с введенным вами наименованием уже существует или изменения не были внесены.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Отделение с введенным вами наименованием уже существует или изменения не были внесены.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Otdeleniya_FormClosed(object sender, FormClosedEventArgs e)
