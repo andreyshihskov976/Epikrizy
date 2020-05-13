@@ -195,7 +195,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Diagnozy";
-            this.Text = "Лабораторные исследования";
+            this.Text = "Диагнозы";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Diagnozy_FormClosed);
             this.Shown += new System.EventHandler(this.LabIssl_Shown);
             this.groupBox2.ResumeLayout(false);

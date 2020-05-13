@@ -40,7 +40,6 @@ namespace Epikrizy
             try
             {
                 MySqlOperations.OpenConnection();
-                //panel3.Visible = !panel3.Visible;
             }
             catch (Exception)
             {
@@ -85,6 +84,13 @@ namespace Epikrizy
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Personal, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
             identify = "personal";
+        }
+
+        private void пациентыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MySqlOperations.Select_DataGridView(MySqlQueries.Select_Pacienty, dataGridView1);
+            dataGridView1.Columns[0].Visible = false;
+            identify = "pacienty";
         }
 
         private void филиалыГЦГПToolStripMenuItem_Click(object sender, EventArgs e)
@@ -165,6 +171,16 @@ namespace Epikrizy
             personal.Show();
         }
 
+        private void Insert_Pacienty()
+        {
+            Pacienty pacienty = new Pacienty(MySqlOperations);
+            pacienty.button1.Visible = true;
+            pacienty.button3.Visible = false;
+            pacienty.AcceptButton = pacienty.button1;
+            pacienty.Pacienty_Closed += пациентыToolStripMenuItem_Click;
+            pacienty.Show();
+        }
+
         private void Insert_LabIssl()
         {
             LabIssl labIssl = new LabIssl(MySqlOperations);
@@ -207,6 +223,8 @@ namespace Epikrizy
                 Insert_Gcgp();
             if (identify == "personal")
                 Insert_Personal();
+            if (identify == "pacienty")
+                Insert_Pacienty();
             if (identify == "labIssl")
                 Insert_LabIssl();
             if (identify == "instrIssl")
@@ -240,6 +258,10 @@ namespace Epikrizy
             Insert_Personal();
         }
 
+        private void toolStripMenuItem12_Click(object sender, EventArgs e)
+        {
+            Insert_Pacienty();
+        }
         private void toolStripMenuItem14_Click(object sender, EventArgs e)
         {
             Insert_LabIssl();
@@ -313,6 +335,20 @@ namespace Epikrizy
             personal.Show();
         }
 
+        private void Update_Pacienty(DataGridViewRow row)
+        {
+            Pacienty pacienty = new Pacienty(MySqlOperations, row.Cells[0].Value.ToString());
+            pacienty.textBox1.Text = row.Cells[1].Value.ToString().Split(' ')[0];
+            pacienty.textBox2.Text = row.Cells[1].Value.ToString().Split(' ')[1];
+            pacienty.textBox3.Text = row.Cells[1].Value.ToString().Split(' ')[2];
+            pacienty.dateTimePicker1.Value = DateTime.Parse(row.Cells[2].Value.ToString());
+            pacienty.textBox4.Text = row.Cells[3].Value.ToString();
+            MySqlOperations.Search_In_ComboBox(row.Cells[4].Value.ToString(), pacienty.comboBox1);
+            pacienty.AcceptButton = pacienty.button3;
+            pacienty.Pacienty_Closed += пациентыToolStripMenuItem_Click;
+            pacienty.Show();
+        }
+
         private void Update_LabIssl(DataGridViewRow row)
         {
             LabIssl labIssl = new LabIssl(MySqlOperations, row.Cells[0].Value.ToString());
@@ -371,6 +407,8 @@ namespace Epikrizy
                     Update_Gcgp(row);
                 if (identify == "personal")
                     Update_Personal(row);
+                if (identify == "pacienty")
+                    Update_Pacienty(row);
                 if (identify == "labIssl")
                     Update_LabIssl(row);
                 if (identify == "instrIssl")
@@ -407,6 +445,8 @@ namespace Epikrizy
                     MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Gcgp, row.Cells[0].Value.ToString());
                 if (identify == "personal")
                     MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Personal, row.Cells[0].Value.ToString());
+                if (identify == "pacienty")
+                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Pacienty, row.Cells[0].Value.ToString());
                 if (identify == "labIssl")
                     MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_LabIssl, row.Cells[0].Value.ToString());
                 if (identify == "instrIssl")
@@ -456,6 +496,13 @@ namespace Epikrizy
                     dataGridView1.ClearSelection();
                     identify = "personal";
                 }
+                if (identify == "pacienty")
+                {
+                    MySqlOperations.Select_DataGridView(MySqlQueries.Select_Pacienty, dataGridView1);
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.ClearSelection();
+                    identify = "pacienty";
+                }
                 if (identify == "labIssl")
                 {
                     MySqlOperations.Select_DataGridView(MySqlQueries.Select_LabIssl, dataGridView1);
@@ -480,23 +527,6 @@ namespace Epikrizy
             }
         }
 
-        private void toolStripMenuItem6_Click(object sender, EventArgs e)
-        {
-            if (this.WindowState == WindowState.Normal)
-                panel3.Visible = !panel3.Visible;
-        }
-
-        private void panel3_VisibleChanged(object sender, EventArgs e)
-        {
-            if (panel3.Visible == false)
-                panel2.Dock = DockStyle.Fill;
-            else
-            {
-                panel2.Dock = DockStyle.None;
-                panel2.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
-            }
-        }
-
         private void вклвыклПереносПоСловамToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dataGridView1.DefaultCellStyle.WrapMode == DataGridViewTriState.False)
@@ -513,18 +543,13 @@ namespace Epikrizy
                 dataGridView2.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
         }
 
-        private void MainWin_SizeChanged(object sender, EventArgs e)
+        private void toolStripMenuItem6_Click(object sender, EventArgs e)
         {
-            if (this.WindowState == WindowState.Maximized)
-            {
-                panel3.Visible = true;
-                toolStripMenuItem6.Visible = false;
-            }
+            splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
+            if (toolStripMenuItem6.Text == "->")
+                toolStripMenuItem6.Text = "<-";
             else
-            {
-                panel3.Visible = false;
-                toolStripMenuItem6.Visible = true;
-            }
+                toolStripMenuItem6.Text = "->";
         }
     }
 }

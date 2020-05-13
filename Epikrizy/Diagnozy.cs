@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Epikrizy
@@ -14,7 +7,6 @@ namespace Epikrizy
     {
         MySqlOperations MySqlOperations = null;
         string ID = null;
-        string ID_Pokazat = null;
         string ID_Preparata = null;
 
         public Diagnozy(MySqlOperations mySqlOperations, string iD = null)

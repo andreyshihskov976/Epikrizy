@@ -60,7 +60,16 @@ otdeleniya.naimenovanie AS 'Наименование отделения', doljno
 FROM personal INNER JOIN otdeleniya ON personal.id_otdeleniya = otdeleniya.id_otdeleniya
 INNER JOIN doljnosti ON personal.id_doljnosti = doljnosti.id_doljnosti;";
 
+        public string Select_Pacienty = $@"SET lc_time_names = 'ru_RU';
+SELECT pacienty.id_pacienta, CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Ф.И.О. Пациента', 
+DATE_FORMAT(pacienty.data_rojdeniya,'%d %M %Y') AS 'Дата рождения', pacienty.adress_projivaniya AS 'Адрес проживания', gcgp.nom_filiala AS 'Филиал ГЦГП'
+FROM pacienty INNER JOIN gcgp ON pacienty.id_gcgp = gcgp.id_gcgp;";
+
         public string Select_Gcgp = $@"SELECT id_gcgp, nom_filiala AS 'Номер филиала', adress AS 'Адрес' FROM gcgp;";
+
+        public string Select_Gcgp_ComboBox = $@"SELECT nom_filiala FROM gcgp;";
+
+        public string Select_ID_Gcgp_ComboBox = $@"SELECT id_gcgp FROM gcgp WHERE nom_filiala = @Value1;";
 
         public string Select_Pokazat_LabIssl = $@"SELECT pokazat_lab_issled.id_pokazat_lab_issled, pokazat_lab_issled.naimenovanie AS 'Наименование', pokazat_lab_issled.ed_izm AS 'Ед. Изм.' 
 FROM pokazat_lab_issled INNER JOIN lab_issledovaniya ON pokazat_lab_issled.id_lab_issledovaniya = lab_issledovaniya.id_lab_issledovaniya
@@ -106,6 +115,8 @@ WHERE diagnozy.id_diagnoza = @ID;";
 
         public string Insert_Personal = $@"INSERT INTO personal (familiya, imya, otchestvo, id_otdeleniya, id_doljnosti) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5);";
 
+        public string Insert_Pacienty = $@"INSERT INTO pacienty (familiya, imya, otchestvo, data_rojdeniya, adress_projivaniya, id_gcgp) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5, @Value6);";
+
         public string Insert_LabIssl = $@"INSERT INTO lab_issledovaniya (naimenovanie) VALUES (@Value1);";
 
         public string Insert_Pokazat_LabIssl = $@"INSERT INTO pokazat_lab_issled (id_lab_issledovaniya, naimenovanie, ed_izm) VALUES (@Value1, @Value2, @Value3);";
@@ -134,6 +145,8 @@ WHERE diagnozy.id_diagnoza = @ID;";
 
         public string Update_Personal = $@"UPDATE personal SET familiya = @Value1, imya = @Value2, otchestvo = @Value3, id_otdeleniya = @Value4, id_doljnosti = @Value5 WHERE id_personala = @ID;";
 
+        public string Update_Pacienty = $@"UPDATE pacienty SET familiya = @Value1, imya = @Value2, otchestvo = @Value3, data_rojdeniya = @Value4, adress_projivaniya = @Value5, id_gcgp = @Value6 WHERE id_pacienta = @ID;";
+
         public string Update_LabIssl = $@"UPDATE lab_issledovaniya SET naimenovanie = @Value1 WHERE id_lab_issledovaniya = @ID;";
 
         public string Update_Pokazat_LabIssl = $@"UPDATE pokazat_lab_issled SET id_lab_issledovaniya = @Value1, naimenovanie = @Value2, ed_izm = @Value3 WHERE id_pokazat_lab_issled = @ID;";
@@ -161,6 +174,8 @@ WHERE diagnozy.id_diagnoza = @ID;";
         public string Delete_Gcgp = $@"DELETE FROM gcgp WHERE id_gcgp = @ID;";
 
         public string Delete_Personal = $@"DELETE FROM personal WHERE id_personala = @ID";
+
+        public string Delete_Pacienty = $@"DELETE FROM pacienty WHERE id_pacienta = @ID";
 
         public string Delete_LabIssl = $@"DELETE FROM lab_issledovaniya WHERE id_lab_issledovaniya = @ID";
 
