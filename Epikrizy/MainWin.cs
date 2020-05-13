@@ -40,7 +40,7 @@ namespace Epikrizy
             try
             {
                 MySqlOperations.OpenConnection();
-                panel3.Visible = !panel3.Visible;
+                //panel3.Visible = !panel3.Visible;
             }
             catch (Exception)
             {
@@ -482,7 +482,8 @@ namespace Epikrizy
 
         private void toolStripMenuItem6_Click(object sender, EventArgs e)
         {
-            panel3.Visible = !panel3.Visible;
+            if (this.WindowState == WindowState.Normal)
+                panel3.Visible = !panel3.Visible;
         }
 
         private void panel3_VisibleChanged(object sender, EventArgs e)
@@ -492,7 +493,7 @@ namespace Epikrizy
             else
             {
                 panel2.Dock = DockStyle.None;
-                panel2.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left);
+                panel2.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
             }
         }
 
@@ -510,6 +511,20 @@ namespace Epikrizy
                 dataGridView2.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             else
                 dataGridView2.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+        }
+
+        private void MainWin_SizeChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                panel3.Visible = true;
+                toolStripMenuItem6.Visible = false;
+            }
+            else
+            {
+                panel3.Visible = false;
+                toolStripMenuItem6.Visible = true;
+            }
         }
     }
 }
