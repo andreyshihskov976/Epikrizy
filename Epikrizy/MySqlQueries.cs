@@ -32,6 +32,8 @@ namespace Epikrizy
         public string Exists_Pokazat_InstrIssl = $@"SELECT EXISTS(SELECT * FROM pokazat_instr_issled WHERE id_instr_issledovaniya = @Value1 AND naimenovanie = @Value2 AND ed_izm = @Value3);";
 
         public string Exists_Lechenie = $@"SELECT EXISTS(SELECT * FROM lechenie WHERE id_diagnoza = @Value1 AND id_preparata = @Value2);";
+
+        public string Exists_Perenesennye_Operacii = $@"SELECT EXISTS(SELECT * FROM perenesennye_operacii WHERE id_pacienta = @Value1 AND date_provedeniya = @Value2 AND provedeno = @Value3 AND commentariy = @Value4);";
         //Exists
 
         //Select
@@ -102,6 +104,9 @@ WHERE instr_issledovaniya.id_instr_issledovaniya = @ID;";
 FROM lechenie INNER JOIN preparaty ON lechenie.id_preparata = preparaty.id_preparata
 INNER JOIN diagnozy ON lechenie.id_diagnoza = diagnozy.id_diagnoza
 WHERE diagnozy.id_diagnoza = @ID;";
+
+        public string Select_Perenesennye_Operacii = $@"SELECT date_provedeniya AS 'Дата проведения', provedeno AS 'Проведено (действия)', commentariy AS 'Послеоперационный период'
+FROM perenesennye_operacii INNER JOIN pacienty ON perenesennye_operacii.id_pacienta = pacienty.id_pacienta;";
         //Select
 
         //Insert
@@ -132,6 +137,8 @@ WHERE diagnozy.id_diagnoza = @ID;";
         public string Insert_Diagnozy = $@"INSERT INTO diagnozy (naimenovanie) VALUES (@Value1);";
 
         public string Insert_Lechenie = $@"INSERT INTO lechenie (id_diagnoza, id_preparata) VALUES (@Value1, @Value2);";
+
+        public string Insert_Perenesennye_Operacii = $@"INSERT INTO perenesennye_operacii (id_pacienta, date_provedeniya, provedeno, commentariy) VALUES (@Value1, @Value2, @Value3, @Value4);";
         //Insert
 
         //Update
@@ -162,6 +169,8 @@ WHERE diagnozy.id_diagnoza = @ID;";
         public string Update_Diagnozy = $@"UPDATE diagnozy SET naimenovanie = @Value1 WHERE id_diagnoza = @ID;";
 
         public string Update_Lechenie = $@"UPDATE lechenie SET id_diagnoza = @Value1, id_preparata = @Value2 WHERE id_lecheniya = @ID;";
+
+        public string Update_Perenesennye_Operacii = $@"UPDATE perenesennye_operacii SET id_pacienta = @Value1, date_provedeniya = @Value2, provedeno = @Value3, commentariy = @Value4 WHERE id_operacii = @ID;";
         //Update
 
         //Delete
@@ -192,6 +201,8 @@ WHERE diagnozy.id_diagnoza = @ID;";
         public string Delete_Diagnozy = $@"DELETE FROM diagnozy WHERE id_diagnoza = @ID";
 
         public string Delete_Lechenie = $@"DELETE FROM lechenie WHERE id_lecheniya = @ID;";
+
+        public string Delete_Perenesennye_Operacii = $@"DELETE FROM perenesennye_operacii WHERE id_operacii = @ID;";
         //Delete
     }
 }
