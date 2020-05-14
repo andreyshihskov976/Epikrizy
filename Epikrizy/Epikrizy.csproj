@@ -34,19 +34,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySql.Data">
-      <HintPath>..\..\..\..\Курсовой проект по БД\Jewerly Administrator\Jewerly Administrator\MySql.Data.dll</HintPath>
+      <HintPath>.\MySql.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="MySql.Data.Entity">
-      <HintPath>..\..\..\..\Курсовой проект по БД\Edvin.Drive\Edvin.Drive\MySql.Data.Entity.dll</HintPath>
+      <HintPath>.\MySql.Data.Entity.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6">
-      <HintPath>..\..\..\..\Курсовой проект по БД\Edvin.Drive\Edvin.Drive\MySql.Data.Entity.EF6.dll</HintPath>
+      <HintPath>.\MySql.Data.Entity.EF6.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
