@@ -80,12 +80,15 @@ namespace Epikrizy
             return dataTable;
         }
 
-        public void Select_ComboBox(string query, ComboBox comboBox)
+        public void Select_ComboBox(string query, ComboBox comboBox, string ID = null, string Value1 = null, string Value2 = null)
         {
             try
             {
                 comboBox.Items.Clear();
                 sqlCommand = new MySqlCommand(query, mySqlConnection);
+                sqlCommand.Parameters.AddWithValue("ID", ID);
+                sqlCommand.Parameters.AddWithValue("Value1", Value1);
+                sqlCommand.Parameters.AddWithValue("Value2", Value2);
                 sqlDataReader = sqlCommand.ExecuteReader();
                 while (sqlDataReader.Read())
                 {

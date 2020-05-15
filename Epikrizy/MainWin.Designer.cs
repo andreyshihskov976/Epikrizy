@@ -80,7 +80,9 @@
             this.содержаниеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.опрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.поискToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,13 +99,11 @@
             this.toolStripMenuItem22 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem23 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
@@ -131,7 +131,7 @@
             this.toolStripMenuItem6});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(816, 27);
+            this.menuStrip1.Size = new System.Drawing.Size(832, 27);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -211,6 +211,7 @@
             this.toolStripMenuItem11.Name = "toolStripMenuItem11";
             this.toolStripMenuItem11.Size = new System.Drawing.Size(201, 22);
             this.toolStripMenuItem11.Text = "Выписные эпикризы";
+            this.toolStripMenuItem11.Click += new System.EventHandler(this.toolStripMenuItem11_Click);
             // 
             // toolStripMenuItem12
             // 
@@ -534,12 +535,28 @@
             this.опрограммеToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.опрограммеToolStripMenuItem.Text = "&О программе...";
             // 
+            // toolStripTextBox1
+            // 
+            this.toolStripTextBox1.AutoSize = false;
+            this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.Size = new System.Drawing.Size(470, 23);
+            this.toolStripTextBox1.TextDirection = System.Windows.Forms.ToolStripTextDirection.Vertical270;
+            // 
             // поискToolStripMenuItem
             // 
             this.поискToolStripMenuItem.Name = "поискToolStripMenuItem";
             this.поискToolStripMenuItem.Size = new System.Drawing.Size(54, 23);
             this.поискToolStripMenuItem.Text = "&Поиск";
             this.поискToolStripMenuItem.Click += new System.EventHandler(this.поискToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem6
+            // 
+            this.toolStripMenuItem6.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(32, 23);
+            this.toolStripMenuItem6.Text = "<-";
+            this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
             // 
             // contextMenuStrip1
             // 
@@ -681,13 +698,6 @@
             this.toolStripMenuItem23.Text = "Вкл/выкл перенос по словам";
             this.toolStripMenuItem23.Click += new System.EventHandler(this.toolStripMenuItem23_Click);
             // 
-            // toolStripTextBox1
-            // 
-            this.toolStripTextBox1.AutoSize = false;
-            this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(470, 23);
-            this.toolStripTextBox1.TextDirection = System.Windows.Forms.ToolStripTextDirection.Vertical270;
-            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -697,15 +707,14 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.dataGridView1);
-            this.splitContainer1.Panel1MinSize = 662;
+            this.splitContainer1.Panel1MinSize = 563;
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Panel2Collapsed = true;
             this.splitContainer1.Panel2MinSize = 150;
-            this.splitContainer1.Size = new System.Drawing.Size(816, 423);
-            this.splitContainer1.SplitterDistance = 662;
+            this.splitContainer1.Size = new System.Drawing.Size(832, 461);
+            this.splitContainer1.SplitterDistance = 663;
             this.splitContainer1.TabIndex = 2;
             // 
             // dataGridView1
@@ -719,7 +728,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(816, 423);
+            this.dataGridView1.Size = new System.Drawing.Size(663, 461);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
@@ -729,14 +738,14 @@
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            this.splitContainer2.Panel1MinSize = 190;
+            this.splitContainer2.Panel1MinSize = 150;
             // 
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.dataGridView2);
-            this.splitContainer2.Panel2MinSize = 190;
-            this.splitContainer2.Size = new System.Drawing.Size(230, 423);
-            this.splitContainer2.SplitterDistance = 194;
+            this.splitContainer2.Panel2MinSize = 96;
+            this.splitContainer2.Size = new System.Drawing.Size(165, 461);
+            this.splitContainer2.SplitterDistance = 150;
             this.splitContainer2.TabIndex = 0;
             // 
             // dataGridView2
@@ -752,7 +761,7 @@
             this.dataGridView2.Location = new System.Drawing.Point(0, 0);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(230, 225);
+            this.dataGridView2.Size = new System.Drawing.Size(165, 307);
             this.dataGridView2.TabIndex = 0;
             // 
             // Column1
@@ -760,19 +769,11 @@
             this.Column1.HeaderText = "Скоро тут будет инфа в разрезе выбранной записи";
             this.Column1.Name = "Column1";
             // 
-            // toolStripMenuItem6
-            // 
-            this.toolStripMenuItem6.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(32, 23);
-            this.toolStripMenuItem6.Text = "<-";
-            this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
-            // 
             // MainWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(816, 450);
+            this.ClientSize = new System.Drawing.Size(832, 488);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;

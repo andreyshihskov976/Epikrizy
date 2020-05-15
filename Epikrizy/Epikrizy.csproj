@@ -86,6 +86,12 @@
     <Compile Include="Diagnozy.Designer.cs">
       <DependentUpon>Diagnozy.cs</DependentUpon>
     </Compile>
+    <Compile Include="Epikrizy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Epikrizy.Designer.cs">
+      <DependentUpon>Epikrizy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pacienty.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,6 +152,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Diagnozy.resx">
       <DependentUpon>Diagnozy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Epikrizy.resx">
+      <DependentUpon>Epikrizy.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pacienty.resx">
       <DependentUpon>Pacienty.cs</DependentUpon>

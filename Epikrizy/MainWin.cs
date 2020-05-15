@@ -40,6 +40,7 @@ namespace Epikrizy
             try
             {
                 MySqlOperations.OpenConnection();
+                splitContainer1.Panel2Collapsed = true;
             }
             catch (Exception)
             {
@@ -275,6 +276,12 @@ namespace Epikrizy
         private void toolStripMenuItem17_Click(object sender, EventArgs e)
         {
             Insert_Diagnozy();
+        }
+
+        private void toolStripMenuItem11_Click(object sender, EventArgs e)
+        {
+            Epikrizy epikrizy = new Epikrizy(MySqlOperations);
+            epikrizy.Show();
         }
 
         private void Update_Otdeleniya(DataGridViewRow row)
@@ -546,7 +553,7 @@ namespace Epikrizy
         private void toolStripMenuItem6_Click(object sender, EventArgs e)
         {
             splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
-            if (toolStripMenuItem6.Text == "->")
+            if (splitContainer1.Panel2Collapsed == true)
                 toolStripMenuItem6.Text = "<-";
             else
                 toolStripMenuItem6.Text = "->";
