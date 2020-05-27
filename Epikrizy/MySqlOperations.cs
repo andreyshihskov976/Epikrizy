@@ -197,7 +197,9 @@ namespace Epikrizy
 
         public void Insert_Update_Delete(string query, string ID = null, string Value1 = null, string Value2 = null,
             string Value3 = null, string Value4 = null, string Value5 = null, string Value6 = null,
-            string Value7 = null, string Value8 = null)
+            string Value7 = null, string Value8 = null, string Value9 = null, string Value10 = null, 
+            string Value11 = null, string Value12 = null, string Value13 = null, string Value14 = null, 
+            string Value15 = null, string Value16 = null, string Value17 = null)
         {
             try
             {
@@ -210,6 +212,15 @@ namespace Epikrizy
                 sqlCommand.Parameters.AddWithValue("Value6", Value6);
                 sqlCommand.Parameters.AddWithValue("Value7", Value7);
                 sqlCommand.Parameters.AddWithValue("Value8", Value8);
+                sqlCommand.Parameters.AddWithValue("Value9", Value9);
+                sqlCommand.Parameters.AddWithValue("Value10", Value10);
+                sqlCommand.Parameters.AddWithValue("Value11", Value11);
+                sqlCommand.Parameters.AddWithValue("Value12", Value12);
+                sqlCommand.Parameters.AddWithValue("Value13", Value13);
+                sqlCommand.Parameters.AddWithValue("Value14", Value14);
+                sqlCommand.Parameters.AddWithValue("Value15", Value15);
+                sqlCommand.Parameters.AddWithValue("Value16", Value16);
+                sqlCommand.Parameters.AddWithValue("Value17", Value17);
                 sqlCommand.Parameters.AddWithValue("ID", ID);
                 sqlCommand.ExecuteNonQuery();
             }

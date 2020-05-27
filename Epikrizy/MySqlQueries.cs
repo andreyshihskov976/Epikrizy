@@ -64,7 +64,7 @@ INNER JOIN doljnosti ON personal.id_doljnosti = doljnosti.id_doljnosti;";
 
         public string Select_Lech_Vrach_ComboBox = $@"SELECT CONCAT(personal.familiya,' ', personal.imya, ' ', personal.otchestvo)
 FROM personal INNER JOIN otdeleniya ON personal.id_otdeleniya = otdeleniya.id_otdeleniya
-WHERE personal.id_otdeleniya = @Value1";
+WHERE personal.id_otdeleniya = @ID";
 
         public string Select_Pacienty = $@"SET lc_time_names = 'ru_RU';
 SELECT pacienty.id_pacienta, CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Ф.И.О. Пациента', 
@@ -118,6 +118,13 @@ FROM dannye_lab_issled
 INNER JOIN pokazat_lab_issled ON dannye_lab_issled.id_pokazat_lab_issled = pokazat_lab_issled.id_pokazat_lab_issled
 WHERE dannye_lab_issled.id_pacienta = @ID AND dannye_lab_issled.date_proved = @Value1 AND pokazat_lab_issled.id_lab_issledovaniya = @Value2";
 
+        public string Select_Edit_Dannye_LabIssl = $@"SELECT dannye_lab_issled.id_dannyh_lab_issled, pokazat_lab_issled.naimenovanie, dannye_lab_issled.znachenie,pokazat_lab_issled.ed_izm,dannye_lab_issled.commentariy
+FROM dannye_lab_issled INNER JOIN pokazat_lab_issled ON dannye_lab_issled.id_pokazat_lab_issled = pokazat_lab_issled.id_pokazat_lab_issled
+INNER JOIN pacienty ON dannye_lab_issled.id_pacienta = pacienty.id_pacienta
+INNER JOIN lab_issledovaniya ON pokazat_lab_issled.id_lab_issledovaniya = lab_issledovaniya.id_lab_issledovaniya
+WHERE dannye_lab_issled.id_pacienta = @ID AND dannye_lab_issled.date_proved = @Value1
+AND lab_issledovaniya.id_lab_issledovaniya = @Value2;";
+
         public string Select_Otdeleniya_InstrIssl = $@"SELECT instr_otdeleniya.id_instr_otdeleniya, otdeleniya.naimenovanie AS 'Наименование отделения'
 FROM instr_otdeleniya INNER JOIN otdeleniya ON instr_otdeleniya.id_otdeleniya = otdeleniya.id_otdeleniya
 INNER JOIN instr_issledovaniya ON instr_otdeleniya.id_instr_issledovaniya = instr_issledovaniya.id_instr_issledovaniya
@@ -133,13 +140,40 @@ WHERE instr_issledovaniya.id_instr_issledovaniya = @ID;";
 
         public string Select_Diagnozy_ComboBox = $@"SELECT naimenovanie FROM diagnozy;";
 
+        public string Select_ID_Diagnozy_ComboBox = $@"SELECT id_diagnoza FROM diagnozy WHERE naimenovanie = @Value1;";
+
         public string Select_Lechenie = $@"SELECT lechenie.id_lecheniya, preparaty.naimenovanie AS 'Наименование препарата', preparaty.farm_svoistva AS 'Фармакологические свойства' 
 FROM lechenie INNER JOIN preparaty ON lechenie.id_preparata = preparaty.id_preparata
 INNER JOIN diagnozy ON lechenie.id_diagnoza = diagnozy.id_diagnoza
 WHERE diagnozy.id_diagnoza = @ID;";
 
-        public string Select_Perenesennye_Operacii = $@"SELECT date_provedeniya AS 'Дата проведения', provedeno AS 'Проведено (действия)', commentariy AS 'Послеоперационный период'
-FROM perenesennye_operacii INNER JOIN pacienty ON perenesennye_operacii.id_pacienta = pacienty.id_pacienta;";
+        public string Select_Perenesennye_Operacii = $@"SELECT id_operacii, date_provedeniya AS 'Дата проведения', provedeno AS 'Проведено (действия)', commentariy AS 'Послеоперационный период'
+FROM perenesennye_operacii INNER JOIN epikrizy ON perenesennye_operacii.id_epikriza = epikrizy.id_epikriza
+WHERE epikrizy.id_epikriza = @ID;";
+
+        public string Select_Epikrizy = $@"SELECT id_epikriza, CONCAT('Эпикриз №',id_epikriza) AS '', CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Пациент (Ф.И.О.)', date_n AS 'Дата начала лечения',
+date_k AS 'Дата окончания лечения', otdeleniya.naimenovanie AS 'Наименование отделения'
+FROM epikrizy INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
+INNER JOIN otdeleniya ON epikrizy.id_otdeleniya = otdeleniya.id_otdeleniya;";
+
+        public string Select_Edit_Epikrizy = $@"SET lc_time_names = 'ru_RU';
+SELECT CONCAT(CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo, ' ',
+DATE_FORMAT(pacienty.data_rojdeniya,'%d %M %Y')),';', date_n,';',
+date_k,';', otdeleniya.naimenovanie,';', sost_vypiski,';',lvn_n,';',lvn_k,';',recomendacii,';',lech_vrach)
+FROM epikrizy INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
+INNER JOIN otdeleniya ON epikrizy.id_otdeleniya = otdeleniya.id_otdeleniya
+WHERE id_epikriza = @ID;";
+
+        public string Select_Dianozy_Pacienta = $@"SELECT id_diagnoza_pacienta, diagnozy.naimenovanie AS 'Наименование диагноза', commentariy AS 'Комментарий', zaklucheniye AS 'Является заключением'
+FROM diagnozy_pacienta INNER JOIN diagnozy ON diagnozy_pacienta.id_diagnoza = diagnozy.id_diagnoza
+INNER JOIN epikrizy ON diagnozy_pacienta.id_epikriza = epikrizy.id_epikriza
+WHERE epikrizy.id_epikriza = @ID;";
+
+        public string Select_Proved_LabIssl = $@"SELECT DISTINCT lab_issledovaniya.id_lab_issledovaniya, lab_issledovaniya.naimenovanie AS 'Наименование', dannye_lab_issled.date_proved AS 'Дата проведения' 
+FROM lab_issledovaniya
+INNER JOIN pokazat_lab_issled ON lab_issledovaniya.id_lab_issledovaniya = pokazat_lab_issled.id_lab_issledovaniya
+INNER JOIN dannye_lab_issled ON pokazat_lab_issled.id_pokazat_lab_issled = dannye_lab_issled.id_pokazat_lab_issled
+WHERE dannye_lab_issled.id_pacienta = '1' AND dannye_lab_issled.date_proved BETWEEN @Value1 AND @Value2;";
         //Select
 
         //Insert
@@ -159,7 +193,7 @@ FROM perenesennye_operacii INNER JOIN pacienty ON perenesennye_operacii.id_pacie
 
         public string Insert_Pokazat_LabIssl = $@"INSERT INTO pokazat_lab_issled (id_lab_issledovaniya, naimenovanie, ed_izm) VALUES (@Value1, @Value2, @Value3);";
 
-        public string Insert_Dannye_labIssl = $@"INSERT INTO dannye_lab_issled (id_pacienta,id_pokazat_lab_issled,date_proved) VALUES (@Value1, @Value2, @Value3)";
+        public string Insert_Dannye_LabIssl = $@"INSERT INTO dannye_lab_issled (id_pacienta, id_pokazat_lab_issled, date_proved, znachenie, commentariy) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5);";
 
         public string Insert_Otdeleniya_LabIssl = $@"INSERT INTO lab_otdeleniya (id_lab_issledovaniya, id_otdeleniya) VALUES (@Value1, @Value2);";
 
@@ -173,7 +207,11 @@ FROM perenesennye_operacii INNER JOIN pacienty ON perenesennye_operacii.id_pacie
 
         public string Insert_Lechenie = $@"INSERT INTO lechenie (id_diagnoza, id_preparata) VALUES (@Value1, @Value2);";
 
-        public string Insert_Perenesennye_Operacii = $@"INSERT INTO perenesennye_operacii (id_pacienta, date_provedeniya, provedeno, commentariy) VALUES (@Value1, @Value2, @Value3, @Value4);";
+        public string Insert_Perenesennye_Operacii = $@"INSERT INTO perenesennye_operacii (id_epikriza, date_provedeniya, provedeno, commentariy) VALUES (@Value1, @Value2, @Value3, @Value4);";
+
+        public string Insert_Epikrizy = $@"INSERT INTO epikrizy (id_pacienta, date_n, date_k, id_otdeleniya, sost_vypiski, lvn_n, lvn_k, recomendacii, lech_vrach) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5, @Value6, @Value7, @Value8, @Value9);";
+
+        public string Insert_Diagnozy_Pacienta = $@"INSERT INTO diagnozy_pacienta (id_epikriza, id_diagnoza, commentariy, zaklucheniye) VALUES (@Value1, @Value2, @Value3, @Value4);";
         //Insert
 
         //Update
@@ -207,7 +245,11 @@ FROM perenesennye_operacii INNER JOIN pacienty ON perenesennye_operacii.id_pacie
 
         public string Update_Lechenie = $@"UPDATE lechenie SET id_diagnoza = @Value1, id_preparata = @Value2 WHERE id_lecheniya = @ID;";
 
-        public string Update_Perenesennye_Operacii = $@"UPDATE perenesennye_operacii SET id_pacienta = @Value1, date_provedeniya = @Value2, provedeno = @Value3, commentariy = @Value4 WHERE id_operacii = @ID;";
+        public string Update_Perenesennye_Operacii = $@"UPDATE perenesennye_operacii SET id_epikriza = @Value1, date_provedeniya = @Value2, provedeno = @Value3, commentariy = @Value4 WHERE id_operacii = @ID;";
+
+        public string Update_Epikrizy = $@"UPDATE epikrizy SET id_pacienta = @Value1, date_n = @Value2, date_k = @Value3, id_otdeleniya = @Value4, sost_vypiski = @Value5, lvn_n = @Value6, lvn_k = @Value7, recomendacii = @Value8, lech_vrach = @Value9 WHERE id_epikriza = @ID;";
+        
+        public string Update_Diagnozy_Pacienta = $@"UPDATE diagnozy_pacienta SET id_epikriza = @Value1, id_diagnoza = @Value2, commentariy = @Value3, zaklucheniye = @Value4 WHERE id_diagnoza_pacienta = @ID;";
         //Update
 
         //Delete
@@ -240,6 +282,10 @@ FROM perenesennye_operacii INNER JOIN pacienty ON perenesennye_operacii.id_pacie
         public string Delete_Lechenie = $@"DELETE FROM lechenie WHERE id_lecheniya = @ID;";
 
         public string Delete_Perenesennye_Operacii = $@"DELETE FROM perenesennye_operacii WHERE id_operacii = @ID;";
+
+        public string Delete_Epikrizy = $@"DELETE FROM epikrizy WHERE id_epikriza = @ID;";
+        
+        public string Delete_Diagnozy_Pacienta = $@"DELETE FROM diagnozy_pacienta WHERE id_diagnoza_pacienta = @ID";
         //Delete
     }
 }

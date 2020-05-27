@@ -122,6 +122,13 @@ namespace Epikrizy
             identify = "diagnozy";
         }
 
+        private void выписныеЭпикризыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MySqlOperations.Select_DataGridView(MySqlQueries.Select_Epikrizy, dataGridView1);
+            dataGridView1.Columns[0].Visible = false;
+            identify = "epikrizy";
+        }
+
         private void Insert_Otdeleniya()
         {
             Otdeleniya otdeleniya = new Otdeleniya(MySqlOperations);
@@ -212,6 +219,16 @@ namespace Epikrizy
             diagnozy.Show();
         }
 
+        private void Insert_Epikrizy()
+        {
+            Epikrizy epikrizy = new Epikrizy(MySqlOperations);
+            epikrizy.button3.Visible = true;
+            epikrizy.button5.Visible = false;
+            epikrizy.AcceptButton = epikrizy.button3;
+            epikrizy.Epikrizy_Closed += выписныеЭпикризыToolStripMenuItem_Click;
+            epikrizy.Show();
+        }
+
         private void вставкаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (identify == "otdeleniya")
@@ -232,6 +249,8 @@ namespace Epikrizy
                 Insert_LabIssl();
             if (identify == "diagnozy")
                 Insert_Diagnozy();
+            if (identify == "epikrizy")
+                Insert_Epikrizy();
         }
 
         private void toolStripMenuItem7_Click(object sender, EventArgs e)
@@ -280,8 +299,7 @@ namespace Epikrizy
 
         private void toolStripMenuItem11_Click(object sender, EventArgs e)
         {
-            Epikrizy epikrizy = new Epikrizy(MySqlOperations);
-            epikrizy.Show();
+            Insert_Epikrizy();
         }
 
         private void Update_Otdeleniya(DataGridViewRow row)
@@ -398,6 +416,30 @@ namespace Epikrizy
             diagnozy.Show();
         }
 
+        private void Update_Epikrizy(DataGridViewRow row)
+        {
+            Epikrizy epikrizy = new Epikrizy(MySqlOperations, row.Cells[0].Value.ToString());
+            string output = MySqlOperations.Select_Text(MySqlQueries.Select_Edit_Epikrizy, row.Cells[0].Value.ToString());
+            MySqlOperations.Search_In_ComboBox(output.Split(';')[0],epikrizy.comboBox1);
+            epikrizy.dateTimePicker1.Value = DateTime.Parse(output.Split(';')[1]);
+            epikrizy.dateTimePicker2.Value = DateTime.Parse(output.Split(';')[2]);
+            MySqlOperations.Search_In_ComboBox(output.Split(';')[3], epikrizy.comboBox2);
+            epikrizy.textBox1.Text = output.Split(';')[4];
+            epikrizy.dateTimePicker3.Value = DateTime.Parse(output.Split(';')[5]);
+            epikrizy.dateTimePicker4.Value = DateTime.Parse(output.Split(';')[6]);
+            epikrizy.textBox2.Text = output.Split(';')[7];
+            MySqlOperations.Search_In_ComboBox(output.Split(';')[8], epikrizy.comboBox3);
+            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Dianozy_Pacienta, epikrizy.dataGridView1, row.Cells[0].Value.ToString());
+            epikrizy.dataGridView1.Columns[0].Visible = false;
+            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Perenesennye_Operacii, epikrizy.dataGridView2, row.Cells[0].Value.ToString());
+            epikrizy.dataGridView2.Columns[0].Visible = false;
+            epikrizy.button3.Visible = false;
+            epikrizy.button5.Visible = true;
+            epikrizy.AcceptButton = epikrizy.button5;
+            epikrizy.Epikrizy_Closed += выписныеЭпикризыToolStripMenuItem_Click;
+            epikrizy.Show();
+        }
+
         private void Edit_String()
         {
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
@@ -422,6 +464,8 @@ namespace Epikrizy
                     Update_InstrIssl(row);
                 if (identify == "diagnozy")
                     Update_Diagnozy(row);
+                if (identify == "epikrizy")
+                    Update_Epikrizy(row);
             }
         }
 
@@ -460,6 +504,8 @@ namespace Epikrizy
                     MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_InstrIssl, row.Cells[0].Value.ToString());
                 if (identify == "diagnozy")
                     MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Diagnozy, row.Cells[0].Value.ToString());
+                if (identify == "epikrizy")
+                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Epikrizy, row.Cells[0].Value.ToString());
             }
         }
 
@@ -530,6 +576,13 @@ namespace Epikrizy
                     dataGridView1.Columns[0].Visible = false;
                     dataGridView1.ClearSelection();
                     identify = "diagnozy";
+                }
+                if (identify == "epikrizy")
+                {
+                    MySqlOperations.Select_DataGridView(MySqlQueries.Select_Epikrizy, dataGridView1);
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.ClearSelection();
+                    identify = "epikrizy";
                 }
             }
         }
