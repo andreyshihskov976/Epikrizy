@@ -20,6 +20,9 @@ namespace Epikrizy
         string ID_Diagnoza_Pacienta = null;
         string ID_Operacii = null;
         string ID_Proved_LabIssl = null;
+        string ID_Proved_InstrIssl = null;
+        string ID_LabIssl = null;
+        string ID_InstrIssl = null;
 
         public Epikrizy(MySqlOperations mySqlOperations, string iD = null)
         {
@@ -33,8 +36,10 @@ namespace Epikrizy
             MySqlOperations.Select_ComboBox(MySqlOperations.MySqlQueries.Select_Lech_Vrach_ComboBox, comboBox3, MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Otdeleniya_ComboBox,null, comboBox2.Text));
             MySqlOperations.Select_ComboBox(MySqlOperations.MySqlQueries.Select_Diagnozy_ComboBox, comboBox4);
             MySqlOperations.Select_ComboBox(MySqlOperations.MySqlQueries.Select_LabIssl_ComboBox, comboBox5, null, ID_Otdeleniya);
+            MySqlOperations.Select_ComboBox(MySqlOperations.MySqlQueries.Select_InstrIssl_ComboBox, comboBox6, null, ID_Otdeleniya);
         }
 
+        //Epikrizy
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             dateTimePicker2.MinDate = dateTimePicker1.Value;
@@ -45,6 +50,15 @@ namespace Epikrizy
         {
             dateTimePicker3.MinDate = dateTimePicker2.Value;
             dateTimePicker3.Value = dateTimePicker2.Value.AddDays(1);
+            dateTimePicker5.MinDate = dateTimePicker1.Value;
+            dateTimePicker5.Value = dateTimePicker5.MinDate;
+            dateTimePicker5.MaxDate = dateTimePicker2.Value;
+            dateTimePicker6.MinDate = dateTimePicker1.Value;
+            dateTimePicker6.Value = dateTimePicker6.MinDate;
+            dateTimePicker6.MaxDate = dateTimePicker2.Value;
+            dateTimePicker7.MinDate = dateTimePicker1.Value;
+            dateTimePicker7.Value = dateTimePicker7.MinDate;
+            dateTimePicker7.MaxDate = dateTimePicker2.Value;
         }
 
         private void dateTimePicker3_ValueChanged(object sender, EventArgs e)
@@ -77,11 +91,15 @@ namespace Epikrizy
                 MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Otdeleniya_ComboBox, null, comboBox2.Text),
                 textBox1.Text, date3, date4, textBox2.Text, comboBox3.Text);
             ID = MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_Last_ID);
-            button3.Enabled = false;
             button4.Enabled = false;
             button5.Visible = true;
             button3.Visible = false;
             tabControl1.SelectedIndex += 1;
+            Load_Tabs();
+        }
+
+        private void Load_Tabs()
+        {
             MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Dianozy_Pacienta, dataGridView1, ID);
             dataGridView1.Columns[0].Visible = false;
             MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Perenesennye_Operacii, dataGridView2, ID);
@@ -110,19 +128,25 @@ namespace Epikrizy
             button4.Enabled = false;
             tabControl1.SelectedIndex += 1;
         }
+        //Epikrizy
 
+        //Diagnozy
         private void button8_Click(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Diagnozy_Pacienta, null, ID,
-                MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Diagnozy_ComboBox, null, comboBox4.Text),
-                textBox3.Text, "Да");
+                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Diagnozy_Pacienta, null, ID,
+                    MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Diagnozy_ComboBox, null, comboBox4.Text),
+                    textBox3.Text, "Да");
             else
                 MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Diagnozy_Pacienta, null, ID,
                 MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Diagnozy_ComboBox, null, comboBox4.Text),
                 textBox3.Text, "Нет");
-            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Dianozy_Pacienta, dataGridView1, ID);
-            dataGridView1.Columns[0].Visible = false;
+            Load_Tabs();
+            Clear_Tab2();
+        }
+
+        private void Clear_Tab2()
+        {
             comboBox4.SelectedItem = comboBox4.Items[0];
             textBox3.Text = "";
             checkBox1.Checked = false;
@@ -135,16 +159,13 @@ namespace Epikrizy
                     MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Diagnozy_ComboBox, null, comboBox4.Text),
                     textBox3.Text, "Да");
             else
-                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Diagnozy_Pacienta, null, ID,
+                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Diagnozy_Pacienta, ID_Diagnoza_Pacienta, ID,
                 MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Diagnozy_ComboBox, null, comboBox4.Text),
                 textBox3.Text, "Нет");
-            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Dianozy_Pacienta, dataGridView1, ID);
-            dataGridView1.Columns[0].Visible = false;
+            Load_Tabs();
             button8.Visible = true;
             button6.Visible = false;
-            comboBox4.SelectedItem = comboBox4.Items[0];
-            textBox3.Text = "";
-            checkBox1.Checked = false;
+            Clear_Tab2();
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -165,13 +186,19 @@ namespace Epikrizy
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
                 MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Diagnozy_Pacienta, row.Cells[0].Value.ToString());
         }
+        //Diagnozy
 
+        //Perenesennye_Operacii
         private void button12_Click(object sender, EventArgs e)
         {
             string date = dateTimePicker5.Value.Year.ToString() + '-' + dateTimePicker5.Value.Month.ToString() + '-' + dateTimePicker5.Value.Day.ToString();
             MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Perenesennye_Operacii, null, ID, date, textBox4.Text, textBox5.Text);
-            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Perenesennye_Operacii, dataGridView2, ID);
-            dataGridView2.Columns[0].Visible = false;
+            Load_Tabs();
+            Clear_Tab3();
+        }
+
+        private void Clear_Tab3()
+        {
             textBox4.Text = "";
             textBox5.Text = "";
         }
@@ -180,12 +207,10 @@ namespace Epikrizy
         {
             string date = dateTimePicker5.Value.Year.ToString() + '-' + dateTimePicker5.Value.Month.ToString() + '-' + dateTimePicker5.Value.Day.ToString();
             MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Perenesennye_Operacii, ID_Operacii, ID, date, textBox4.Text, textBox5.Text);
-            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Perenesennye_Operacii, dataGridView2, ID);
-            dataGridView2.Columns[0].Visible = false;
+            Load_Tabs();
             button10.Visible = false;
             button12.Visible = true;
-            textBox4.Text = "";
-            textBox5.Text = "";
+            Clear_Tab3();
         }
 
         private void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -203,27 +228,34 @@ namespace Epikrizy
             foreach (DataGridViewRow row in dataGridView2.SelectedRows)
                 MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Perenesennye_Operacii, row.Cells[0].Value.ToString());
         }
+        //Perenesennye_Operacii
 
+        //Proved LabIssl
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Pokazat_LabIssl_Insert_Epikrizy, dataGridView4,
-                MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_LabIssl_ComboBox, null, comboBox5.Text));
+            ID_LabIssl = MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_LabIssl_ComboBox, null, comboBox5.Text);
+            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Pokazat_LabIssl_Insert_Epikrizy, dataGridView4, ID_LabIssl);
             dataGridView4.Columns[0].Visible = false;
+            dataGridView4.Columns[1].ReadOnly = true;
+            dataGridView4.Columns[3].ReadOnly = true;
         }
 
         private void button13_Click(object sender, EventArgs e)
         {
             string date = dateTimePicker6.Value.Year.ToString() + '-' + dateTimePicker6.Value.Month.ToString() + '-' + dateTimePicker6.Value.Day.ToString();
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Proved_LabIssl, null, ID,
-                MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_LabIssl_ComboBox, null, comboBox5.Text), date);
+            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Proved_LabIssl, null, ID, ID_LabIssl, date);
             ID_Proved_LabIssl = MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_Last_ID);
             foreach (DataGridViewRow row in dataGridView4.Rows)
                 MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Dannye_LabIssl, null, ID_Proved_LabIssl, row.Cells[0].Value.ToString(), row.Cells[2].Value.ToString(), row.Cells[4].Value.ToString());
-            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Pokazat_LabIssl_Insert_Epikrizy, dataGridView4,
-                MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_LabIssl_ComboBox, null, comboBox5.Text));
+            Clear_Tab4();
+        }
+
+        private void Clear_Tab4()
+        {
+            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Pokazat_LabIssl_Insert_Epikrizy, dataGridView4, ID_LabIssl);
             dataGridView4.Columns[0].Visible = false;
             MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Proved_LabIssl, dataGridView3, ID);
-            dataGridView3.Columns[0].Visible = false;            
+            dataGridView3.Columns[0].Visible = false;
         }
 
         private void dataGridView3_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
@@ -239,6 +271,8 @@ namespace Epikrizy
             dateTimePicker6.Value = DateTime.Parse(dataGridView3.SelectedRows[0].Cells[2].Value.ToString());
             MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Dannye_LabIssl, dataGridView4, ID_Proved_LabIssl);
             dataGridView4.Columns[0].Visible = false;
+            dataGridView4.Columns[1].ReadOnly = true;
+            dataGridView4.Columns[3].ReadOnly = true;
             comboBox5.Enabled = false;
             button13.Visible = false;
             button15.Visible = true;
@@ -250,14 +284,72 @@ namespace Epikrizy
             MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Proved_LabIssl, ID_Proved_LabIssl, ID, date);
             foreach (DataGridViewRow row in dataGridView4.Rows)
                 MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Dannye_LabIssl, row.Cells[0].Value.ToString(), row.Cells[2].Value.ToString(), row.Cells[4].Value.ToString());
-            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Pokazat_LabIssl_Insert_Epikrizy, dataGridView4,
-                MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_LabIssl_ComboBox, null, comboBox5.Text));
-            dataGridView4.Columns[0].Visible = false;
-            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Proved_LabIssl, dataGridView3, ID);
-            dataGridView3.Columns[0].Visible = false;
+            Clear_Tab4();
             comboBox5.Enabled = true;
             button15.Visible = false;
             button13.Visible = true;
         }
+        //Proved_LabIssl
+
+        //Proved InstrIssl
+        private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ID_InstrIssl = MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_InstrIssl_ComboBox, null, comboBox6.Text);
+            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Pokazat_InstrIssl_Insert_Epikrizy, dataGridView5, ID_InstrIssl);
+            dataGridView5.Columns[0].Visible = false;
+            dataGridView5.Columns[1].ReadOnly = true;
+            dataGridView5.Columns[3].ReadOnly = true;
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            string date = dateTimePicker7.Value.Year.ToString() + '-' + dateTimePicker7.Value.Month.ToString() + '-' + dateTimePicker7.Value.Day.ToString();
+            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Proved_InstrIssl, null, ID, ID_InstrIssl, date);
+            ID_Proved_InstrIssl = MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_Last_ID);
+            foreach (DataGridViewRow row in dataGridView5.Rows)
+                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Dannye_InstrIssl, null, ID_Proved_InstrIssl, row.Cells[0].Value.ToString(), row.Cells[2].Value.ToString(), row.Cells[4].Value.ToString());
+            Clear_Tab5();
+        }
+
+        private void Clear_Tab5()
+        {
+            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Pokazat_InstrIssl_Insert_Epikrizy, dataGridView5, ID_InstrIssl);
+            dataGridView5.Columns[0].Visible = false;
+            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Proved_InstrIssl, dataGridView6, ID);
+            dataGridView6.Columns[0].Visible = false;
+        }
+
+        private void dataGridView6_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridView6.SelectedRows)
+                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Proved_InstrIssl, row.Cells[0].Value.ToString());
+        }
+
+        private void dataGridView6_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            ID_Proved_InstrIssl = dataGridView6.SelectedRows[0].Cells[0].Value.ToString();
+            MySqlOperations.Search_In_ComboBox(dataGridView6.SelectedRows[0].Cells[1].Value.ToString(), comboBox5);
+            dateTimePicker7.Value = DateTime.Parse(dataGridView6.SelectedRows[0].Cells[2].Value.ToString());
+            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Dannye_InstrIssl, dataGridView5, ID_Proved_InstrIssl);
+            dataGridView5.Columns[0].Visible = false;
+            dataGridView5.Columns[1].ReadOnly = true;
+            dataGridView5.Columns[3].ReadOnly = true;
+            comboBox6.Enabled = false;
+            button18.Visible = false;
+            button16.Visible = true;
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            string date = dateTimePicker7.Value.Year.ToString() + '-' + dateTimePicker7.Value.Month.ToString() + '-' + dateTimePicker7.Value.Day.ToString();
+            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Proved_InstrIssl, ID_Proved_InstrIssl, ID, date);
+            foreach (DataGridViewRow row in dataGridView5.Rows)
+                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Dannye_InstrIssl, row.Cells[0].Value.ToString(), row.Cells[2].Value.ToString(), row.Cells[4].Value.ToString());
+            Clear_Tab5();
+            comboBox6.Enabled = true;
+            button16.Visible = false;
+            button18.Visible = true;
+        }
+        //Proved_InstrIssl
     }
 }
