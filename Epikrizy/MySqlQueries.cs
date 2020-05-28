@@ -34,6 +34,8 @@ namespace Epikrizy
         public string Exists_Lechenie = $@"SELECT EXISTS(SELECT * FROM lechenie WHERE id_diagnoza = @Value1 AND id_preparata = @Value2);";
 
         public string Exists_Perenesennye_Operacii = $@"SELECT EXISTS(SELECT * FROM perenesennye_operacii WHERE id_pacienta = @Value1 AND date_provedeniya = @Value2 AND provedeno = @Value3 AND commentariy = @Value4);";
+
+        public string Exists_Dop_Sved = $@"SELECT EXISTS(SELECT * FROM dop_sved WHERE id_epikriza = @ID);";
         //Exists
 
         //Select
@@ -196,6 +198,8 @@ WHERE epikrizy.id_epikriza = @ID;";
 FROM proved_instr_issled INNER JOIN instr_issledovaniya ON proved_instr_issled.id_instr_issledovaniya = instr_issledovaniya.id_instr_issledovaniya
 INNER JOIN epikrizy ON proved_instr_issled.id_epikriza = epikrizy.id_epikriza
 WHERE epikrizy.id_epikriza = @ID;";
+
+        public string Select_Dop_Sved = $@"SELECT CONCAT(ad, ';', gen_anam, ';', smoking, ';', alco, ';', imt, ';', cholesterin, ';', blood, ';', urina, ';', ekg, ';', skore, ';', vgd, ';', predstat, ';', mol, ';', flura, ';', glukoza, ';', suicide) FROM dop_sved WHERE id_epikriza = @ID;";
         //Select
 
         //Insert
@@ -240,6 +244,8 @@ WHERE epikrizy.id_epikriza = @ID;";
         public string Insert_Epikrizy = $@"INSERT INTO epikrizy (id_pacienta, date_n, date_k, id_otdeleniya, sost_vypiski, lvn_n, lvn_k, recomendacii, lech_vrach) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5, @Value6, @Value7, @Value8, @Value9);";
 
         public string Insert_Diagnozy_Pacienta = $@"INSERT INTO diagnozy_pacienta (id_epikriza, id_diagnoza, commentariy, zaklucheniye) VALUES (@Value1, @Value2, @Value3, @Value4);";
+
+        public string Insert_Dop_Sved = $@"INSERT INTO dop_sved (id_epikriza, ad, gen_anam, smoking, alco, imt, cholesterin, blood, urina, ekg, skore, vgd, predstat, mol, flura, glukoza, suicide) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5, @Value6, @Value17, @Value8, @Value9, @Value10, @Value11, @Value12, @Value13, @Value14, @Value15, @Value16, @Value17);";
         //Insert
 
         //Update
@@ -284,6 +290,8 @@ WHERE epikrizy.id_epikriza = @ID;";
         public string Update_Epikrizy = $@"UPDATE epikrizy SET id_pacienta = @Value1, date_n = @Value2, date_k = @Value3, id_otdeleniya = @Value4, sost_vypiski = @Value5, lvn_n = @Value6, lvn_k = @Value7, recomendacii = @Value8, lech_vrach = @Value9 WHERE id_epikriza = @ID;";
         
         public string Update_Diagnozy_Pacienta = $@"UPDATE diagnozy_pacienta SET id_epikriza = @Value1, id_diagnoza = @Value2, commentariy = @Value3, zaklucheniye = @Value4 WHERE id_diagnoza_pacienta = @ID;";
+
+        public string Update_Dop_Sved = $@"UPDATE dop_sved SET ad = @Value1, gen_anam = @Value2, smoking = @Value3, alco = @Value4, imt = @Value5, cholesterin = @Value6, blood = @Value7, urina = @Value8, ekg = @Value9, skore = @Value10, vgd = @Value11, predstat = @Value12, mol = @Value13, flura = @Value14, glukoza = @Value15, suicide = @Value16 WHERE id_epikriza = @ID;";
         //Update
 
         //Delete

@@ -224,7 +224,8 @@ namespace Epikrizy
             Epikrizy epikrizy = new Epikrizy(MySqlOperations);
             epikrizy.button3.Visible = true;
             epikrizy.button5.Visible = false;
-            epikrizy.AcceptButton = epikrizy.button3;
+            epikrizy.button19.Visible = false;
+            epikrizy.button21.Visible = true;
             epikrizy.Epikrizy_Closed += выписныеЭпикризыToolStripMenuItem_Click;
             epikrizy.Show();
         }
@@ -435,9 +436,35 @@ namespace Epikrizy
             epikrizy.dataGridView2.Columns[0].Visible = false;
             MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Proved_LabIssl, epikrizy.dataGridView3, row.Cells[0].Value.ToString());
             epikrizy.dataGridView3.Columns[0].Visible = false;
+            output = MySqlOperations.Select_Text(MySqlQueries.Select_Dop_Sved, row.Cells[0].Value.ToString());
+            epikrizy.textBox6.Text = output.Split(';')[0];
+            epikrizy.textBox7.Text = output.Split(';')[1];
+            MySqlOperations.Search_In_ComboBox(output.Split(';')[2], epikrizy.comboBox7);
+            MySqlOperations.Search_In_ComboBox(output.Split(';')[3], epikrizy.comboBox8);
+            epikrizy.textBox10.Text = output.Split(';')[4];
+            epikrizy.textBox11.Text = output.Split(';')[5];
+            epikrizy.textBox12.Text = output.Split(';')[6];
+            epikrizy.textBox13.Text = output.Split(';')[7];
+            epikrizy.textBox14.Text = output.Split(';')[8];
+            epikrizy.textBox17.Text = output.Split(';')[9];
+            epikrizy.textBox18.Text = output.Split(';')[10];
+            epikrizy.textBox19.Text = output.Split(';')[11];
+            epikrizy.textBox20.Text = output.Split(';')[12];
+            epikrizy.textBox21.Text = output.Split(';')[13];
+            epikrizy.textBox22.Text = output.Split(';')[14];
+            epikrizy.textBox23.Text = output.Split(';')[15];
             epikrizy.button3.Visible = false;
             epikrizy.button5.Visible = true;
-            epikrizy.AcceptButton = epikrizy.button5;
+            if (MySqlOperations.Select_Text(MySqlQueries.Exists_Dop_Sved, row.Cells[0].Value.ToString()) == "1")
+            {
+                epikrizy.button21.Visible = false;
+                epikrizy.button19.Visible = true;
+            }
+            else
+            {
+                epikrizy.button19.Visible = false;
+                epikrizy.button21.Visible = true;
+            }
             epikrizy.Epikrizy_Closed += выписныеЭпикризыToolStripMenuItem_Click;
             epikrizy.Show();
         }

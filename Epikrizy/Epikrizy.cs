@@ -67,6 +67,11 @@ namespace Epikrizy
             dateTimePicker4.Value = dateTimePicker3.Value.AddDays(1);
         }
 
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ID_Pacienta = MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Pacienty_ComboBox, null, comboBox1.Text);
+        }
+
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             ID_Otdeleniya = MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Otdeleniya_ComboBox, null, comboBox2.Text);
@@ -85,16 +90,13 @@ namespace Epikrizy
             string date2 = dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString() + '-' + dateTimePicker2.Value.Day.ToString();
             string date3 = dateTimePicker3.Value.Year.ToString() + '-' + dateTimePicker3.Value.Month.ToString() + '-' + dateTimePicker3.Value.Day.ToString();
             string date4 = dateTimePicker4.Value.Year.ToString() + '-' + dateTimePicker4.Value.Month.ToString() + '-' + dateTimePicker4.Value.Day.ToString();
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Epikrizy, null,
-                MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Pacienty_ComboBox, null, comboBox1.Text),
-                date1, date2,
-                MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Otdeleniya_ComboBox, null, comboBox2.Text),
-                textBox1.Text, date3, date4, textBox2.Text, comboBox3.Text);
+            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Epikrizy, null, ID_Pacienta, date1, date2, ID_Otdeleniya, textBox1.Text, date3, date4, textBox2.Text, comboBox3.Text);
             ID = MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_Last_ID);
             button4.Enabled = false;
             button5.Visible = true;
             button3.Visible = false;
             tabControl1.SelectedIndex += 1;
+            button4.Text = "Закрыть";
             Load_Tabs();
         }
 
@@ -120,13 +122,11 @@ namespace Epikrizy
             string date2 = dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString() + '-' + dateTimePicker2.Value.Day.ToString();
             string date3 = dateTimePicker3.Value.Year.ToString() + '-' + dateTimePicker3.Value.Month.ToString() + '-' + dateTimePicker3.Value.Day.ToString();
             string date4 = dateTimePicker4.Value.Year.ToString() + '-' + dateTimePicker4.Value.Month.ToString() + '-' + dateTimePicker4.Value.Day.ToString();
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Epikrizy, ID,
-                MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Pacienty_ComboBox, null, comboBox1.Text),
-                date1, date2,
-                MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Otdeleniya_ComboBox, null, comboBox2.Text),
-                textBox1.Text, date3, date4, textBox2.Text, comboBox3.Text);
+            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Epikrizy, ID, ID_Pacienta, date1, date2, ID_Otdeleniya, textBox1.Text, date3, date4, textBox2.Text, comboBox3.Text);
             button4.Enabled = false;
             tabControl1.SelectedIndex += 1;
+            button4.Text = "Закрыть";
+            Load_Tabs();
         }
         //Epikrizy
 
@@ -186,6 +186,11 @@ namespace Epikrizy
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
                 MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Diagnozy_Pacienta, row.Cells[0].Value.ToString());
         }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Clear_Tab2();
+        }
         //Diagnozy
 
         //Perenesennye_Operacii
@@ -199,6 +204,7 @@ namespace Epikrizy
 
         private void Clear_Tab3()
         {
+            dateTimePicker5.Value = dateTimePicker5.MinDate;
             textBox4.Text = "";
             textBox5.Text = "";
         }
@@ -227,6 +233,11 @@ namespace Epikrizy
         {
             foreach (DataGridViewRow row in dataGridView2.SelectedRows)
                 MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Perenesennye_Operacii, row.Cells[0].Value.ToString());
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            Clear_Tab3();
         }
         //Perenesennye_Operacii
 
@@ -289,6 +300,11 @@ namespace Epikrizy
             button15.Visible = false;
             button13.Visible = true;
         }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            Clear_Tab4();
+        }
         //Proved_LabIssl
 
         //Proved InstrIssl
@@ -350,6 +366,57 @@ namespace Epikrizy
             button16.Visible = false;
             button18.Visible = true;
         }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            Clear_Tab5();
+        }
         //Proved_InstrIssl
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((ID == null || ID == "") && tabControl1.SelectedIndex != 0)
+            {
+                MessageBox.Show("Прежде чем переходить к заполнению вкладки " + '"' + tabControl1.TabPages[tabControl1.SelectedIndex].Text + '"' + '\n' + "следует заполнить вкладку " + '"' + tabControl1.TabPages[0].Text + '"' + '.', "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tabControl1.SelectedIndex = 0;
+            }
+        }
+
+        //Dop Sved
+        private void button21_Click(object sender, EventArgs e)
+        {
+            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Dop_Sved,null, ID,
+                textBox6.Text, textBox7.Text, comboBox7.Text, comboBox8.Text, textBox10.Text, textBox11.Text, textBox12.Text, textBox13.Text,
+                textBox14.Text, textBox17.Text, textBox18.Text, textBox19.Text, textBox20.Text, textBox21.Text, textBox22.Text, textBox23.Text);
+            button19.Visible = true;
+            button21.Visible = false;
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Dop_Sved, ID,
+                textBox6.Text, textBox7.Text, comboBox7.Text, comboBox8.Text, textBox10.Text, textBox11.Text, textBox12.Text, textBox13.Text,
+                textBox14.Text, textBox17.Text, textBox18.Text, textBox19.Text, textBox20.Text, textBox21.Text, textBox22.Text, textBox23.Text);
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            textBox6.Text = "";
+            textBox7.Text = "";
+            comboBox7.Text = "";
+            comboBox8.Text = ""; 
+            textBox10.Text = ""; 
+            textBox11.Text = ""; 
+            textBox12.Text = ""; 
+            textBox13.Text = "";
+            textBox14.Text = ""; 
+            textBox17.Text = ""; 
+            textBox18.Text = ""; 
+            textBox19.Text = ""; 
+            textBox20.Text = ""; 
+            textBox21.Text = ""; 
+            textBox22.Text = ""; 
+            textBox23.Text = "";
+        }
     }
 }
