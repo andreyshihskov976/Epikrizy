@@ -113,10 +113,10 @@ WHERE lab_otdeleniya.id_otdeleniya = @Value1;";
 FROM pokazat_instr_issled INNER JOIN instr_issledovaniya ON pokazat_instr_issled.id_instr_issledovaniya = instr_issledovaniya.id_instr_issledovaniya
 WHERE instr_issledovaniya.id_instr_issledovaniya = @ID;";
 
-        public string Select_Dannye_LabIssl = $@"SELECT dannye_lab_issled.id_dannyh_lab_issled, pokazat_lab_issled.naimenovanie, dannye_lab_issled.znachenie, pokazat_lab_issled.ed_izm, dannye_lab_issled.commentariy
-FROM dannye_lab_issled
-INNER JOIN pokazat_lab_issled ON dannye_lab_issled.id_pokazat_lab_issled = pokazat_lab_issled.id_pokazat_lab_issled
-WHERE dannye_lab_issled.id_pacienta = @ID AND dannye_lab_issled.date_proved = @Value1 AND pokazat_lab_issled.id_lab_issledovaniya = @Value2";
+        public string Select_Dannye_LabIssl = $@"SELECT id_dannyh_lab_issled, pokazat_lab_issled.naimenovanie AS 'Наименование', znachenie AS 'Значение', pokazat_lab_issled.ed_izm AS 'Ед. изм.', commentariy AS 'Комментарий'
+FROM dannye_lab_issled INNER JOIN pokazat_lab_issled ON dannye_lab_issled.id_pokazat_lab_issled = pokazat_lab_issled.id_pokazat_lab_issled
+INNER JOIN proved_lab_issled ON dannye_lab_issled.id_proved_lab_issled = proved_lab_issled.id_proved_lab_issled
+WHERE proved_lab_issled.id_proved_lab_issled = @ID;";
 
         public string Select_Edit_Dannye_LabIssl = $@"SELECT dannye_lab_issled.id_dannyh_lab_issled, pokazat_lab_issled.naimenovanie, dannye_lab_issled.znachenie,pokazat_lab_issled.ed_izm,dannye_lab_issled.commentariy
 FROM dannye_lab_issled INNER JOIN pokazat_lab_issled ON dannye_lab_issled.id_pokazat_lab_issled = pokazat_lab_issled.id_pokazat_lab_issled
@@ -169,11 +169,10 @@ FROM diagnozy_pacienta INNER JOIN diagnozy ON diagnozy_pacienta.id_diagnoza = di
 INNER JOIN epikrizy ON diagnozy_pacienta.id_epikriza = epikrizy.id_epikriza
 WHERE epikrizy.id_epikriza = @ID;";
 
-        public string Select_Proved_LabIssl = $@"SELECT DISTINCT lab_issledovaniya.id_lab_issledovaniya, lab_issledovaniya.naimenovanie AS 'Наименование', dannye_lab_issled.date_proved AS 'Дата проведения' 
-FROM lab_issledovaniya
-INNER JOIN pokazat_lab_issled ON lab_issledovaniya.id_lab_issledovaniya = pokazat_lab_issled.id_lab_issledovaniya
-INNER JOIN dannye_lab_issled ON pokazat_lab_issled.id_pokazat_lab_issled = dannye_lab_issled.id_pokazat_lab_issled
-WHERE dannye_lab_issled.id_pacienta = '1' AND dannye_lab_issled.date_proved BETWEEN @Value1 AND @Value2;";
+        public string Select_Proved_LabIssl = $@"SELECT id_proved_lab_issled, lab_issledovaniya.naimenovanie AS 'Наименование', date_proved AS 'Дата проведения'
+FROM proved_lab_issled INNER JOIN lab_issledovaniya ON proved_lab_issled.id_lab_issledovaniya = lab_issledovaniya.id_lab_issledovaniya
+INNER JOIN epikrizy ON proved_lab_issled.id_epikriza = epikrizy.id_epikriza
+WHERE epikrizy.id_epikriza = @ID;";
         //Select
 
         //Insert
@@ -193,7 +192,7 @@ WHERE dannye_lab_issled.id_pacienta = '1' AND dannye_lab_issled.date_proved BETW
 
         public string Insert_Pokazat_LabIssl = $@"INSERT INTO pokazat_lab_issled (id_lab_issledovaniya, naimenovanie, ed_izm) VALUES (@Value1, @Value2, @Value3);";
 
-        public string Insert_Dannye_LabIssl = $@"INSERT INTO dannye_lab_issled (id_pacienta, id_pokazat_lab_issled, date_proved, znachenie, commentariy) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5);";
+        public string Insert_Dannye_LabIssl = $@"INSERT INTO dannye_lab_issled (id_proved_lab_issled, id_pokazat_lab_issled, znachenie, commentariy) VALUES (@Value1, @Value2, @Value3, @Value4);";
 
         public string Insert_Otdeleniya_LabIssl = $@"INSERT INTO lab_otdeleniya (id_lab_issledovaniya, id_otdeleniya) VALUES (@Value1, @Value2);";
 
@@ -212,6 +211,8 @@ WHERE dannye_lab_issled.id_pacienta = '1' AND dannye_lab_issled.date_proved BETW
         public string Insert_Epikrizy = $@"INSERT INTO epikrizy (id_pacienta, date_n, date_k, id_otdeleniya, sost_vypiski, lvn_n, lvn_k, recomendacii, lech_vrach) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5, @Value6, @Value7, @Value8, @Value9);";
 
         public string Insert_Diagnozy_Pacienta = $@"INSERT INTO diagnozy_pacienta (id_epikriza, id_diagnoza, commentariy, zaklucheniye) VALUES (@Value1, @Value2, @Value3, @Value4);";
+
+        public string Insert_Proved_LabIssl = $@"INSERT INTO proved_lab_issled (id_epikriza, id_lab_issledovaniya, date_proved) VALUES (@Value1, @Value2, @Value3);";
         //Insert
 
         //Update
@@ -231,7 +232,7 @@ WHERE dannye_lab_issled.id_pacienta = '1' AND dannye_lab_issled.date_proved BETW
 
         public string Update_Pokazat_LabIssl = $@"UPDATE pokazat_lab_issled SET id_lab_issledovaniya = @Value1, naimenovanie = @Value2, ed_izm = @Value3 WHERE id_pokazat_lab_issled = @ID;";
 
-        public string Update_Dannye_labIssl = $@"UPDATE dannye_lab_issled SET znachenie = @Value1, commentariy = @Value2 WHERE id_dannyh_lab_issled = @ID;";
+        public string Update_Dannye_LabIssl = $@"UPDATE dannye_lab_issled SET znachenie = @Value1, commentariy = @Value2 WHERE id_dannyh_lab_issled = @ID;";
 
         public string Update_Otdeleniya_LabIssl = $@"UPDATE lab_otdeleniya SET id_lab_issledovaniya = @Value1, id_otdeleniya = @Value2 WHERE id_lab_otdeleniya = @ID;";
 
@@ -250,6 +251,8 @@ WHERE dannye_lab_issled.id_pacienta = '1' AND dannye_lab_issled.date_proved BETW
         public string Update_Epikrizy = $@"UPDATE epikrizy SET id_pacienta = @Value1, date_n = @Value2, date_k = @Value3, id_otdeleniya = @Value4, sost_vypiski = @Value5, lvn_n = @Value6, lvn_k = @Value7, recomendacii = @Value8, lech_vrach = @Value9 WHERE id_epikriza = @ID;";
         
         public string Update_Diagnozy_Pacienta = $@"UPDATE diagnozy_pacienta SET id_epikriza = @Value1, id_diagnoza = @Value2, commentariy = @Value3, zaklucheniye = @Value4 WHERE id_diagnoza_pacienta = @ID;";
+
+        public string Update_Proved_LabIssl = $@"UPDATE proved_lab_issled SET id_epikriza = @Value1, date_proved = @Value2 WHERE id_proved_lab_issled = @ID;";
         //Update
 
         //Delete
@@ -286,6 +289,8 @@ WHERE dannye_lab_issled.id_pacienta = '1' AND dannye_lab_issled.date_proved BETW
         public string Delete_Epikrizy = $@"DELETE FROM epikrizy WHERE id_epikriza = @ID;";
         
         public string Delete_Diagnozy_Pacienta = $@"DELETE FROM diagnozy_pacienta WHERE id_diagnoza_pacienta = @ID";
+
+        public string Delete_Proved_LabIssl = $@"DELETE FROM proved_lab_issled WHERE id_proved_lab_issled = @ID;";
         //Delete
     }
 }

@@ -433,6 +433,8 @@ namespace Epikrizy
             epikrizy.dataGridView1.Columns[0].Visible = false;
             MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Perenesennye_Operacii, epikrizy.dataGridView2, row.Cells[0].Value.ToString());
             epikrizy.dataGridView2.Columns[0].Visible = false;
+            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Proved_LabIssl, epikrizy.dataGridView3, row.Cells[0].Value.ToString());
+            epikrizy.dataGridView3.Columns[0].Visible = false;
             epikrizy.button3.Visible = false;
             epikrizy.button5.Visible = true;
             epikrizy.AcceptButton = epikrizy.button5;
