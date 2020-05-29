@@ -18,6 +18,7 @@ namespace Epikrizy
         string ID_Pacienta = null;
         string ID_Otdeleniya = null;
         string ID_Diagnoza_Pacienta = null;
+        string ID_Diagnoza = null;
         string ID_Operacii = null;
         string ID_Proved_LabIssl = null;
         string ID_Proved_InstrIssl = null;
@@ -90,14 +91,24 @@ namespace Epikrizy
             string date2 = dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString() + '-' + dateTimePicker2.Value.Day.ToString();
             string date3 = dateTimePicker3.Value.Year.ToString() + '-' + dateTimePicker3.Value.Month.ToString() + '-' + dateTimePicker3.Value.Day.ToString();
             string date4 = dateTimePicker4.Value.Year.ToString() + '-' + dateTimePicker4.Value.Month.ToString() + '-' + dateTimePicker4.Value.Day.ToString();
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Epikrizy, null, ID_Pacienta, date1, date2, ID_Otdeleniya, textBox1.Text, date3, date4, textBox2.Text, comboBox3.Text);
-            ID = MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_Last_ID);
-            button4.Enabled = false;
-            button5.Visible = true;
-            button3.Visible = false;
-            tabControl1.SelectedIndex += 1;
-            button4.Text = "Закрыть";
-            Load_Tabs();
+            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Epikrizy, ID_Pacienta, date1, date2, ID_Otdeleniya, date3, date4, comboBox3.Text) != "1")
+            {
+                if (textBox1.Text != "" && textBox2.Text != "")
+                {
+                    MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Epikrizy, null, ID_Pacienta, date1, date2, ID_Otdeleniya, textBox1.Text, date3, date4, textBox2.Text, comboBox3.Text);
+                    ID = MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_Last_ID);
+                    button4.Enabled = false;
+                    button5.Visible = true;
+                    button3.Visible = false;
+                    tabControl1.SelectedIndex += 1;
+                    button4.Text = "Закрыть";
+                    Load_Tabs();
+                }
+                else
+                    MessageBox.Show("Поля на вкладке " + '"' + tabControl1.TabPages[tabControl1.SelectedIndex].Text + '"' + " не заполнены.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+                MessageBox.Show("Эпикриз с введенными вами параметрами уже существует.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Load_Tabs()
@@ -122,27 +133,45 @@ namespace Epikrizy
             string date2 = dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString() + '-' + dateTimePicker2.Value.Day.ToString();
             string date3 = dateTimePicker3.Value.Year.ToString() + '-' + dateTimePicker3.Value.Month.ToString() + '-' + dateTimePicker3.Value.Day.ToString();
             string date4 = dateTimePicker4.Value.Year.ToString() + '-' + dateTimePicker4.Value.Month.ToString() + '-' + dateTimePicker4.Value.Day.ToString();
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Epikrizy, ID, ID_Pacienta, date1, date2, ID_Otdeleniya, textBox1.Text, date3, date4, textBox2.Text, comboBox3.Text);
-            button4.Enabled = false;
-            tabControl1.SelectedIndex += 1;
-            button4.Text = "Закрыть";
-            Load_Tabs();
+            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Epikrizy, ID_Pacienta, date1, date2, ID_Otdeleniya, date3, date4, comboBox3.Text) != "1")
+            {
+                if (textBox1.Text != "" && textBox2.Text != "")
+            {
+                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Epikrizy, ID, ID_Pacienta, date1, date2, ID_Otdeleniya, textBox1.Text, date3, date4, textBox2.Text, comboBox3.Text);
+                button4.Enabled = false;
+                tabControl1.SelectedIndex += 1;
+                button4.Text = "Закрыть";
+                Load_Tabs();
+            }
+            else
+                MessageBox.Show("Поля на вкладке " + '"' + tabControl1.TabPages[tabControl1.SelectedIndex].Text + '"' + " не заполнены.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+                MessageBox.Show("Изменения не были внесены.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         //Epikrizy
 
         //Diagnozy
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ID_Diagnoza = MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Diagnozy_ComboBox, null, comboBox4.Text);
+        }
+
         private void button8_Click(object sender, EventArgs e)
         {
+            string Value4 = null;
             if (checkBox1.Checked)
-                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Diagnozy_Pacienta, null, ID,
-                    MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Diagnozy_ComboBox, null, comboBox4.Text),
-                    textBox3.Text, "Да");
+                Value4 = "Да";
             else
-                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Diagnozy_Pacienta, null, ID,
-                MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Diagnozy_ComboBox, null, comboBox4.Text),
-                textBox3.Text, "Нет");
-            Load_Tabs();
-            Clear_Tab2();
+                Value4 = "Нет";
+            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Diagnozy_Pacienty, ID, ID_Diagnoza) != "1")
+            {
+                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Diagnozy_Pacienta, null, ID, ID_Diagnoza, textBox3.Text, Value4);
+                Load_Tabs();
+                Clear_Tab2();
+            }
+            else
+                MessageBox.Show("Добавляемый вами диагноз уже пристутствует в данном эпикризе.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Clear_Tab2()
@@ -154,18 +183,19 @@ namespace Epikrizy
 
         private void button6_Click(object sender, EventArgs e)
         {
+            string Value4 = null;
             if (checkBox1.Checked)
-                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Diagnozy_Pacienta, ID_Diagnoza_Pacienta, ID,
-                    MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Diagnozy_ComboBox, null, comboBox4.Text),
-                    textBox3.Text, "Да");
+                Value4 = "Да";
             else
-                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Diagnozy_Pacienta, ID_Diagnoza_Pacienta, ID,
-                MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Diagnozy_ComboBox, null, comboBox4.Text),
-                textBox3.Text, "Нет");
-            Load_Tabs();
-            button8.Visible = true;
-            button6.Visible = false;
-            Clear_Tab2();
+                Value4 = "Нет";
+            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Diagnozy_Pacienty, ID, ID_Diagnoza) != "1")
+            {
+                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Diagnozy_Pacienta, ID_Diagnoza_Pacienta, ID, ID_Diagnoza, textBox3.Text, Value4);
+                Load_Tabs();
+                Clear_Tab2();
+            }
+            else
+                MessageBox.Show("Изменения не были внесены.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -183,8 +213,9 @@ namespace Epikrizy
 
         private void dataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
-                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Diagnozy_Pacienta, row.Cells[0].Value.ToString());
+            if (MessageBox.Show("Хотите удалить запись(-и)?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+                    MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Diagnozy_Pacienta, row.Cells[0].Value.ToString());
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -197,9 +228,19 @@ namespace Epikrizy
         private void button12_Click(object sender, EventArgs e)
         {
             string date = dateTimePicker5.Value.Year.ToString() + '-' + dateTimePicker5.Value.Month.ToString() + '-' + dateTimePicker5.Value.Day.ToString();
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Perenesennye_Operacii, null, ID, date, textBox4.Text, textBox5.Text);
-            Load_Tabs();
-            Clear_Tab3();
+            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Perenesennye_Operacii, ID, date, textBox4.Text, textBox5.Text) != "1")
+            {
+                if (textBox4.Text != "" && textBox5.Text != "")
+                {
+                    MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Perenesennye_Operacii, null, ID, date, textBox4.Text, textBox5.Text);
+                    Load_Tabs();
+                    Clear_Tab3();
+                }
+                else
+                    MessageBox.Show("Поля на вкладке " + '"' + tabControl1.TabPages[tabControl1.SelectedIndex].Text + '"' + " не заполнены.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+                MessageBox.Show("Добавляемая вами операция уже пристутствует в данном эпикризе.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Clear_Tab3()
@@ -212,11 +253,21 @@ namespace Epikrizy
         private void button10_Click(object sender, EventArgs e)
         {
             string date = dateTimePicker5.Value.Year.ToString() + '-' + dateTimePicker5.Value.Month.ToString() + '-' + dateTimePicker5.Value.Day.ToString();
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Perenesennye_Operacii, ID_Operacii, ID, date, textBox4.Text, textBox5.Text);
-            Load_Tabs();
-            button10.Visible = false;
-            button12.Visible = true;
-            Clear_Tab3();
+            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Perenesennye_Operacii, ID, date, textBox4.Text, textBox5.Text) != "1")
+            {
+                if (textBox4.Text != "" && textBox5.Text != "")
+                {
+                    MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Perenesennye_Operacii, ID_Operacii, ID, date, textBox4.Text, textBox5.Text);
+                    Load_Tabs();
+                    button10.Visible = false;
+                    button12.Visible = true;
+                    Clear_Tab3();
+                }
+                else
+                    MessageBox.Show("Поля на вкладке " + '"' + tabControl1.TabPages[tabControl1.SelectedIndex].Text + '"' + " не заполнены.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+                MessageBox.Show("Изменения не были внесены.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -231,8 +282,9 @@ namespace Epikrizy
 
         private void dataGridView2_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            foreach (DataGridViewRow row in dataGridView2.SelectedRows)
-                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Perenesennye_Operacii, row.Cells[0].Value.ToString());
+            if (MessageBox.Show("Хотите удалить запись(-и)?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                foreach (DataGridViewRow row in dataGridView2.SelectedRows)
+                    MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Perenesennye_Operacii, row.Cells[0].Value.ToString());
         }
 
         private void button11_Click(object sender, EventArgs e)
@@ -254,11 +306,16 @@ namespace Epikrizy
         private void button13_Click(object sender, EventArgs e)
         {
             string date = dateTimePicker6.Value.Year.ToString() + '-' + dateTimePicker6.Value.Month.ToString() + '-' + dateTimePicker6.Value.Day.ToString();
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Proved_LabIssl, null, ID, ID_LabIssl, date);
-            ID_Proved_LabIssl = MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_Last_ID);
-            foreach (DataGridViewRow row in dataGridView4.Rows)
-                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Dannye_LabIssl, null, ID_Proved_LabIssl, row.Cells[0].Value.ToString(), row.Cells[2].Value.ToString(), row.Cells[4].Value.ToString());
-            Clear_Tab4();
+            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Proved_LabIssl, ID, ID_LabIssl, date) != "1")
+            {
+                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Proved_LabIssl, null, ID, ID_LabIssl, date);
+                ID_Proved_LabIssl = MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_Last_ID);
+                foreach (DataGridViewRow row in dataGridView4.Rows)
+                    MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Dannye_LabIssl, null, ID_Proved_LabIssl, row.Cells[0].Value.ToString(), row.Cells[2].Value.ToString(), row.Cells[4].Value.ToString());
+                Clear_Tab4();
+            }
+            else
+                MessageBox.Show("Добавляемое вами лаборатнорное исследование уже пристутствует в данном эпикризе.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Clear_Tab4()
@@ -271,8 +328,9 @@ namespace Epikrizy
 
         private void dataGridView3_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            foreach (DataGridViewRow row in dataGridView3.SelectedRows)
-                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Proved_LabIssl, row.Cells[0].Value.ToString());
+            if (MessageBox.Show("Хотите удалить запись(-и)?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                foreach (DataGridViewRow row in dataGridView3.SelectedRows)
+                    MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Proved_LabIssl, row.Cells[0].Value.ToString());
         }
 
         private void dataGridView3_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -292,13 +350,18 @@ namespace Epikrizy
         private void button15_Click(object sender, EventArgs e)
         {
             string date = dateTimePicker6.Value.Year.ToString() + '-' + dateTimePicker6.Value.Month.ToString() + '-' + dateTimePicker6.Value.Day.ToString();
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Proved_LabIssl, ID_Proved_LabIssl, ID, date);
-            foreach (DataGridViewRow row in dataGridView4.Rows)
-                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Dannye_LabIssl, row.Cells[0].Value.ToString(), row.Cells[2].Value.ToString(), row.Cells[4].Value.ToString());
-            Clear_Tab4();
-            comboBox5.Enabled = true;
-            button15.Visible = false;
-            button13.Visible = true;
+            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Proved_LabIssl, ID, ID_LabIssl, date) != "1")
+            {
+                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Proved_LabIssl, ID_Proved_LabIssl, ID, date);
+                foreach (DataGridViewRow row in dataGridView4.Rows)
+                    MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Dannye_LabIssl, row.Cells[0].Value.ToString(), row.Cells[2].Value.ToString(), row.Cells[4].Value.ToString());
+                Clear_Tab4();
+                comboBox5.Enabled = true;
+                button15.Visible = false;
+                button13.Visible = true;
+            }
+            else
+                MessageBox.Show("Изменения не были внесены.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void button14_Click(object sender, EventArgs e)
@@ -320,11 +383,16 @@ namespace Epikrizy
         private void button18_Click(object sender, EventArgs e)
         {
             string date = dateTimePicker7.Value.Year.ToString() + '-' + dateTimePicker7.Value.Month.ToString() + '-' + dateTimePicker7.Value.Day.ToString();
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Proved_InstrIssl, null, ID, ID_InstrIssl, date);
+            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Proved_InstrIssl, ID, ID_InstrIssl, date) != "1")
+            {
+                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Proved_InstrIssl, null, ID, ID_InstrIssl, date);
             ID_Proved_InstrIssl = MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_Last_ID);
             foreach (DataGridViewRow row in dataGridView5.Rows)
                 MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Insert_Dannye_InstrIssl, null, ID_Proved_InstrIssl, row.Cells[0].Value.ToString(), row.Cells[2].Value.ToString(), row.Cells[4].Value.ToString());
             Clear_Tab5();
+            }
+            else
+                MessageBox.Show("Добавляемое вами лаборатнорное исследование уже пристутствует в данном эпикризе.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Clear_Tab5()
@@ -337,8 +405,9 @@ namespace Epikrizy
 
         private void dataGridView6_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            foreach (DataGridViewRow row in dataGridView6.SelectedRows)
-                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Proved_InstrIssl, row.Cells[0].Value.ToString());
+            if (MessageBox.Show("Хотите удалить запись(-и)?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                foreach (DataGridViewRow row in dataGridView6.SelectedRows)
+                    MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Proved_InstrIssl, row.Cells[0].Value.ToString());
         }
 
         private void dataGridView6_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -358,13 +427,18 @@ namespace Epikrizy
         private void button16_Click(object sender, EventArgs e)
         {
             string date = dateTimePicker7.Value.Year.ToString() + '-' + dateTimePicker7.Value.Month.ToString() + '-' + dateTimePicker7.Value.Day.ToString();
-            MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Proved_InstrIssl, ID_Proved_InstrIssl, ID, date);
-            foreach (DataGridViewRow row in dataGridView5.Rows)
-                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Dannye_InstrIssl, row.Cells[0].Value.ToString(), row.Cells[2].Value.ToString(), row.Cells[4].Value.ToString());
-            Clear_Tab5();
-            comboBox6.Enabled = true;
-            button16.Visible = false;
-            button18.Visible = true;
+            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Proved_InstrIssl, ID, ID_InstrIssl, date) != "1")
+            {
+                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Proved_InstrIssl, ID_Proved_InstrIssl, ID, date);
+                foreach (DataGridViewRow row in dataGridView5.Rows)
+                    MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Dannye_InstrIssl, row.Cells[0].Value.ToString(), row.Cells[2].Value.ToString(), row.Cells[4].Value.ToString());
+                Clear_Tab5();
+                comboBox6.Enabled = true;
+                button16.Visible = false;
+                button18.Visible = true;
+            }
+            else
+                MessageBox.Show("Изменения не были внесены.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void button17_Click(object sender, EventArgs e)

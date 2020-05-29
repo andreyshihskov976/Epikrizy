@@ -538,7 +538,7 @@ namespace Epikrizy
             }
         }
 
-        private void вырезатьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Delete_Rows()
         {
             if (MessageBox.Show("Хотите удалить запись(-и)?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -614,6 +614,16 @@ namespace Epikrizy
                     identify = "epikrizy";
                 }
             }
+        }
+
+        private void вырезатьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Delete_Rows();
+        }
+
+        private void dataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            Delete_Rows();
         }
 
         private void вклвыклПереносПоСловамToolStripMenuItem_Click(object sender, EventArgs e)

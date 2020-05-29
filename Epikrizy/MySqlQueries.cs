@@ -33,9 +33,17 @@ namespace Epikrizy
 
         public string Exists_Lechenie = $@"SELECT EXISTS(SELECT * FROM lechenie WHERE id_diagnoza = @Value1 AND id_preparata = @Value2);";
 
-        public string Exists_Perenesennye_Operacii = $@"SELECT EXISTS(SELECT * FROM perenesennye_operacii WHERE id_pacienta = @Value1 AND date_provedeniya = @Value2 AND provedeno = @Value3 AND commentariy = @Value4);";
-
         public string Exists_Dop_Sved = $@"SELECT EXISTS(SELECT * FROM dop_sved WHERE id_epikriza = @ID);";
+
+        public string Exists_Epikrizy = $@"SELECT EXISTS(SELECT 8 FROM epikrizy WHERE id_pacienta = @ID AND date_n = @Value1 AND date_k = @Value2 AND id_otdeleniya = @Value3 AND lvn_n = @Value4 AND lvn_k = @Value5 AND lech_vrach = @Value6);";
+
+        public string Exists_Diagnozy_Pacienty = $@"SELECT EXISTS(SELECT * FROM diagnozy_pacienta WHERE id_epikriza = @ID AND id_diagnoza = @Value1);";
+
+        public string Exists_Perenesennye_Operacii = $@"SELECT EXISTS(SELECT * FROM perenesennye_operacii WHERE id_epikriza = @ID AND date_provedeniya = @Value1 AND provedeno = @Value2 AND commentariy = @Value3);";
+
+        public string Exists_Proved_LabIssl = $@"SELECT EXISTS(SELECT * FROM proved_lab_issled WHERE id_epikriza = @ID AND id_lab_issledovaniya = @Value1 AND date_proved = @Value2);";
+
+        public string Exists_Proved_InstrIssl = $@"SELECT EXISTS(SELECT * FROM proved_instr_issled WHERE id_epikriza = @ID AND id_instr_issledovaniya = @Value1 AND date_proved = @Value2);";
         //Exists
 
         //Select
