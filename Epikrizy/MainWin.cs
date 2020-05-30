@@ -650,5 +650,10 @@ namespace Epikrizy
             else
                 toolStripMenuItem6.Text = "->";
         }
+
+        private void toolStripMenuItem19_Click(object sender, EventArgs e)
+        {
+            MySqlOperations.Print_Epikriz(saveFileDialog1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+        }
     }
 }

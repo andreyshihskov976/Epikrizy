@@ -341,5 +341,43 @@ WHERE epikrizy.id_epikriza = @ID;";
         
         public string Delete_Diagnozy_Pacienta = $@"DELETE FROM diagnozy_pacienta WHERE id_diagnoza_pacienta = @ID";
         //Delete
+
+        //Print Epikrizy
+        public string Print_Epikrizy = $@"SELECT CONCAT(CONCAT('Выписной эпикриз №',id_epikriza,' пациента ',
+CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo)),';',id_epikriza,';', 
+CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo,' ', DATE_FORMAT(pacienty.data_rojdeniya, '%d.%m.%Y'), ' года рождения'),';', 
+pacienty.adress_projivaniya, ';', gcgp.nom_filiala,';', otdeleniya.naimenovanie,';', DATE_FORMAT(date_n, '%d.%m.%Y'),';', DATE_FORMAT(date_k, '%d.%m.%Y'),';', 
+sost_vypiski,';', DATE_FORMAT(lvn_n, '%d.%m.%Y'),';', DATE_FORMAT(lvn_k, '%d.%m.%Y'),';',recomendacii,';',lech_vrach)
+FROM epikrizy INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
+INNER JOIN gcgp ON pacienty.id_gcgp = gcgp.id_gcgp
+INNER JOIN otdeleniya ON epikrizy.id_otdeleniya = otdeleniya.id_otdeleniya
+WHERE epikrizy.id_epikriza = @ID;";
+
+        public string Print_Diagnozy_Pacienta = $@"SELECT CONCAT(diagnozy.naimenovanie,'. ', commentariy,'. ')
+FROM diagnozy_pacienta INNER JOIN epikrizy ON diagnozy_pacienta.id_epikriza = epikrizy.id_epikriza
+INNER JOIN diagnozy ON diagnozy_pacienta.id_diagnoza = diagnozy.id_diagnoza
+WHERE epikrizy.id_epikriza = @ID;";
+
+        public string Print_Perenesennye_Operacii = $@"SELECT CONCAT(Date_Format(date_provedeniya, '%d.%m.%y'),'г. - ',provedeno,'. Послеоперационный период: ',commentariy, '. ')
+FROM perenesennye_operacii INNER JOIN epikrizy ON perenesennye_operacii.id_epikriza = epikrizy.id_epikriza
+WHERE epikrizy.id_epikriza = @ID;";
+
+        public string Print_Zaklucheniya_Pacienta = $@"SELECT CONCAT(diagnozy.naimenovanie,'. ', commentariy,'. ')
+FROM diagnozy_pacienta INNER JOIN epikrizy ON diagnozy_pacienta.id_epikriza = epikrizy.id_epikriza
+INNER JOIN diagnozy ON diagnozy_pacienta.id_diagnoza = diagnozy.id_diagnoza
+WHERE epikrizy.id_epikriza = @ID AND diagnozy_pacienta.zaklucheniye = 'Да';";
+
+        public string Print_Preparaty = $@"SELECT DISTINCT preparaty.naimenovanie FROM preparaty
+INNER JOIN lechenie ON preparaty.id_preparata = lechenie.id_preparata
+INNER JOIN diagnozy ON lechenie.id_diagnoza = diagnozy.id_diagnoza
+INNER JOIN diagnozy_pacienta ON diagnozy.id_diagnoza = diagnozy_pacienta.id_diagnoza
+INNER JOIN epikrizy ON diagnozy_pacienta.id_epikriza = epikrizy.id_epikriza
+WHERE epikrizy.id_epikriza = @ID;";
+
+        public string Print_Dop_Sved = $@"SELECT CONCAT(ad,';',gen_anam,';',smoking,';',alco,';',imt,';',
+cholesterin,';',blood,';',urina,';',ekg,';',skore,';',vgd,';',predstat,';',mol,';',flura,';',glukoza,';',suicide)
+FROM dop_sved INNER JOIN epikrizy ON dop_sved.id_epikriza = epikrizy.id_epikriza
+WHERE epikrizy.id_epikriza = @ID;";
+        //Print Epikrizy
     }
 }
