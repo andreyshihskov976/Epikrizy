@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -378,6 +379,53 @@ WHERE epikrizy.id_epikriza = @ID;";
 cholesterin,';',blood,';',urina,';',ekg,';',skore,';',vgd,';',predstat,';',mol,';',flura,';',glukoza,';',suicide)
 FROM dop_sved INNER JOIN epikrizy ON dop_sved.id_epikriza = epikrizy.id_epikriza
 WHERE epikrizy.id_epikriza = @ID;";
+
+        public string Print_Proved_LabIssl = $@"SELECT proved_lab_issled.id_proved_lab_issled, CONCAT(lab_issledovaniya.naimenovanie,' от ', DATE_FORMAT(date_proved, '%d.%m.%y'),'г. : ')
+FROM proved_lab_issled INNER JOIN epikrizy ON proved_lab_issled.id_epikriza = epikrizy.id_epikriza
+INNER JOIN lab_issledovaniya ON proved_lab_issled.id_lab_issledovaniya = lab_issledovaniya.id_lab_issledovaniya
+WHERE epikrizy.id_epikriza = @ID;";
+
+        public string Print_Dannye_LabIssl = $@"SELECT CASE
+	WHEN pokazat_lab_issled.ed_izm = '' AND commentariy = ''
+		THEN CONCAT(pokazat_lab_issled.naimenovanie,' ', znachenie)
+	WHEN pokazat_lab_issled.ed_izm = ''
+		THEN CONCAT(pokazat_lab_issled.naimenovanie,' ', znachenie,' ', commentariy)
+	WHEN commentariy = ''
+		THEN CONCAT(pokazat_lab_issled.naimenovanie,' ', znachenie,' ', pokazat_lab_issled.ed_izm)
+	ELSE CONCAT(pokazat_lab_issled.naimenovanie,' ', znachenie,' ', pokazat_lab_issled.ed_izm,' ',commentariy)
+END
+FROM dannye_lab_issled
+INNER JOIN proved_lab_issled ON dannye_lab_issled.id_proved_lab_issled = proved_lab_issled.id_proved_lab_issled
+INNER JOIN pokazat_lab_issled ON dannye_lab_issled.id_pokazat_lab_issled = pokazat_lab_issled.id_pokazat_lab_issled
+INNER JOIN epikrizy ON proved_lab_issled.id_epikriza = epikrizy.id_epikriza
+WHERE epikrizy.id_epikriza = @ID AND proved_lab_issled.id_proved_lab_issled = @Value1;";
+
+        public string Print_Proved_InstrIssl = $@"SELECT proved_instr_issled.id_proved_instr_issled, CONCAT(instr_issledovaniya.naimenovanie,' от ', DATE_FORMAT(date_proved, '%d.%m.%y'),'г. : ')
+FROM proved_instr_issled INNER JOIN epikrizy ON proved_instr_issled.id_epikriza = epikrizy.id_epikriza
+INNER JOIN instr_issledovaniya ON proved_instr_issled.id_instr_issledovaniya = instr_issledovaniya.id_instr_issledovaniya
+WHERE epikrizy.id_epikriza = @ID;";
+
+        public string Print_Dannye_InstrIssl = $@"SELECT CASE
+	WHEN pokazat_instr_issled.ed_izm = '' AND commentariy = ''
+		THEN CONCAT(pokazat_instr_issled.naimenovanie,' ', znachenie)
+	WHEN pokazat_instr_issled.ed_izm = ''
+		THEN CONCAT(pokazat_instr_issled.naimenovanie,' ', znachenie,' ', commentariy)
+	WHEN commentariy = ''
+		THEN CONCAT(pokazat_instr_issled.naimenovanie,' ', znachenie,' ', pokazat_instr_issled.ed_izm)
+	ELSE CONCAT(pokazat_instr_issled.naimenovanie,' ', znachenie,' ', pokazat_instr_issled.ed_izm,' ',commentariy)
+END
+FROM dannye_instr_issled
+INNER JOIN proved_instr_issled ON dannye_instr_issled.id_proved_instr_issled = proved_instr_issled.id_proved_instr_issled
+INNER JOIN pokazat_instr_issled ON dannye_instr_issled.id_pokazat_instr_issled = pokazat_instr_issled.id_pokazat_instr_issled
+INNER JOIN epikrizy ON proved_instr_issled.id_epikriza = epikrizy.id_epikriza
+WHERE epikrizy.id_epikriza = @ID AND proved_instr_issled.id_proved_instr_issled = @Value1;";
+
+        public string Print_Zav_Otdeleniya = $@"SELECT CONCAT(personal.familiya,' ', personal.imya, ' ', personal.otchestvo) 
+FROM personal 
+INNER JOIN otdeleniya ON personal.id_otdeleniya = otdeleniya.id_otdeleniya
+INNER JOIN doljnosti ON personal.id_doljnosti = doljnosti.id_doljnosti
+INNER JOIN epikrizy ON otdeleniya.id_otdeleniya = epikrizy.id_otdeleniya
+WHERE epikrizy.id_epikriza = @ID AND doljnosti.id_doljnosti = 5;";
         //Print Epikrizy
     }
 }

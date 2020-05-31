@@ -288,6 +288,7 @@ namespace Epikrizy
             string output = null;
             string fileName = null;
             DataTable dt = new DataTable();
+            DataTable dt2 = new DataTable();
             saveFileDialog.DefaultExt = "Документ Word|*.docx";
             saveFileDialog.Filter = "Документ Word|*.docx|Документ Word 93-2003|*.doc|PDF|*.pdf";
             saveFileDialog.Title = "Сохранить выписной эпикриз как";
@@ -343,14 +344,46 @@ namespace Epikrizy
                         else
                             output += dt.Rows[i][0].ToString() + ".";
                     }
-
-                    //foreach (DataRow row in dt.Rows)
-                    //    output += row[0].ToString()+', ';
                     Replace("{preparaty}", output, Document);
 
+                    output = "";
+                    dt = Select_DataTable(MySqlQueries.Print_Proved_LabIssl, ID);
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        output += row[1].ToString();
+                        dt2 = Select_DataTable(MySqlQueries.Print_Dannye_LabIssl, ID, row[0].ToString());
+                        for (int j = 0; j < dt2.Rows.Count; j++)
+                        {
+                            if (j != dt2.Rows.Count - 1)
+                                output += dt2.Rows[j][0].ToString() + ", ";
+                            else
+                                output += dt2.Rows[j][0].ToString() + "."+ '\r'+'\t';
+                        }
+                    }
+                    Replace("{lab_issl}", output, Document);
+
+                    output = "";
+                    dt = Select_DataTable(MySqlQueries.Print_Proved_InstrIssl, ID);
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        output += row[1].ToString();
+                        dt2 = Select_DataTable(MySqlQueries.Print_Dannye_InstrIssl, ID, row[0].ToString());
+                        for (int j = 0; j < dt2.Rows.Count; j++)
+                        {
+                            if (j != dt2.Rows.Count - 1)
+                                output += dt2.Rows[j][0].ToString() + ", ";
+                            else
+                                output += dt2.Rows[j][0].ToString() + "." + '\r' + '\t';
+                        }
+                    }
+                    Replace("{instr_issl}", output, Document);
+
                     output = Select_Text(MySqlQueries.Print_Dop_Sved, ID);
-                    for(int i = 0; i < 16; i++)
+                    for (int i = 0; i < 16; i++)
                         Replace("{ds"+i.ToString()+"}", output.Split(';')[i], Document);
+
+                    output = Select_Text(MySqlQueries.Print_Zav_Otdeleniya, ID);
+                    Replace("{zav_otdeleniya}", output, Document);
 
                     Document.SaveAs(fileName);
                     WordApp.Visible = true;
