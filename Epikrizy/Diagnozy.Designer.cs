@@ -50,7 +50,7 @@
             this.button3.Location = new System.Drawing.Point(441, 2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(142, 28);
-            this.button3.TabIndex = 14;
+            this.button3.TabIndex = 3;
             this.button3.Text = "Изменить";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
@@ -62,7 +62,7 @@
             this.button2.Location = new System.Drawing.Point(589, 2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(142, 28);
-            this.button2.TabIndex = 13;
+            this.button2.TabIndex = 4;
             this.button2.Text = "Отменить";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -73,7 +73,7 @@
             this.button1.Location = new System.Drawing.Point(441, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(142, 28);
-            this.button1.TabIndex = 12;
+            this.button1.TabIndex = 2;
             this.button1.Text = "Добавить";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -84,7 +84,7 @@
             this.textBox1.Location = new System.Drawing.Point(246, 3);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(189, 26);
-            this.textBox1.TabIndex = 11;
+            this.textBox1.TabIndex = 1;
             // 
             // label1
             // 
@@ -119,7 +119,7 @@
             this.button5.Location = new System.Drawing.Point(578, 23);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(142, 28);
-            this.button5.TabIndex = 9;
+            this.button5.TabIndex = 7;
             this.button5.Text = "Изменить";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
@@ -129,7 +129,7 @@
             this.button7.Location = new System.Drawing.Point(430, 23);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(142, 28);
-            this.button7.TabIndex = 8;
+            this.button7.TabIndex = 6;
             this.button7.Text = "Добавить";
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
@@ -145,7 +145,8 @@
             // 
             // comboBox2
             // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.comboBox2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(241, 23);
             this.comboBox2.Name = "comboBox2";
@@ -173,7 +174,7 @@
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView2.Size = new System.Drawing.Size(713, 250);
-            this.dataGridView2.TabIndex = 1;
+            this.dataGridView2.TabIndex = 8;
             this.dataGridView2.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellDoubleClick);
             this.dataGridView2.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridView2_UserDeletingRow);
             // 

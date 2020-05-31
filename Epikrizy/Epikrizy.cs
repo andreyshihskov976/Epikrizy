@@ -40,7 +40,37 @@ namespace Epikrizy
             MySqlOperations.Select_ComboBox(MySqlOperations.MySqlQueries.Select_InstrIssl_ComboBox, comboBox6, null, ID_Otdeleniya);
         }
 
+        private void Load_ComboBoxes(object sender, EventArgs e)
+        {
+            MySqlOperations.Select_ComboBox(MySqlOperations.MySqlQueries.Select_Pacienty_ComboBox, comboBox1);
+            MySqlOperations.Select_ComboBox(MySqlOperations.MySqlQueries.Select_Otdeleniya_ComboBox, comboBox2);
+            MySqlOperations.Select_ComboBox(MySqlOperations.MySqlQueries.Select_Lech_Vrach_ComboBox, comboBox3, MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Otdeleniya_ComboBox, null, comboBox2.Text));
+            MySqlOperations.Select_ComboBox(MySqlOperations.MySqlQueries.Select_Diagnozy_ComboBox, comboBox4);
+            MySqlOperations.Select_ComboBox(MySqlOperations.MySqlQueries.Select_LabIssl_ComboBox, comboBox5, null, ID_Otdeleniya);
+            MySqlOperations.Select_ComboBox(MySqlOperations.MySqlQueries.Select_InstrIssl_ComboBox, comboBox6, null, ID_Otdeleniya);
+        }
+
         //Epikrizy
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Pacienty pacienty = new Pacienty(MySqlOperations);
+            pacienty.button1.Visible = true;
+            pacienty.button3.Visible = false;
+            pacienty.AcceptButton = pacienty.button1;
+            pacienty.Pacienty_Closed += Load_ComboBoxes;
+            pacienty.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Personal personal = new Personal(MySqlOperations);
+            personal.button1.Visible = true;
+            personal.button3.Visible = false;
+            personal.AcceptButton = personal.button1;
+            personal.Personal_Closed += Load_ComboBoxes;
+            personal.Show();
+        }
+
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             dateTimePicker2.MinDate = dateTimePicker1.Value;
@@ -152,6 +182,16 @@ namespace Epikrizy
         //Epikrizy
 
         //Diagnozy
+        private void button9_Click(object sender, EventArgs e)
+        {
+            Diagnozy diagnozy = new Diagnozy(MySqlOperations);
+            diagnozy.button1.Visible = true;
+            diagnozy.button3.Visible = false;
+            diagnozy.AcceptButton = diagnozy.button1;
+            diagnozy.Diagnozy_Closed += Load_ComboBoxes;
+            diagnozy.Show();
+        }
+
         private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
             ID_Diagnoza = MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Select_ID_Diagnozy_ComboBox, null, comboBox4.Text);
@@ -188,7 +228,7 @@ namespace Epikrizy
                 Value4 = "Да";
             else
                 Value4 = "Нет";
-            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Diagnozy_Pacienty, ID, ID_Diagnoza) != "1")
+            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Diagnozy_Pacienty_Edit, ID, ID_Diagnoza, textBox3.Text, Value4) != "1")
             {
                 MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Diagnozy_Pacienta, ID_Diagnoza_Pacienta, ID, ID_Diagnoza, textBox3.Text, Value4);
                 Load_Tabs();

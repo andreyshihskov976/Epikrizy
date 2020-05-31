@@ -109,8 +109,9 @@ namespace Epikrizy
 
         private void dataGridView2_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            foreach (DataGridViewRow row in dataGridView2.SelectedRows)
-                MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Lechenie, row.Cells[0].Value.ToString());
+            if (MessageBox.Show("Хотите удалить запись(-и)?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                foreach (DataGridViewRow row in dataGridView2.SelectedRows)
+                    MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Delete_Lechenie, row.Cells[0].Value.ToString());
             dataGridView2.ClearSelection();
             //MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Otdeleniya_LabIssl, dataGridView2, ID);
             //dataGridView2.Columns[0].Visible = false;

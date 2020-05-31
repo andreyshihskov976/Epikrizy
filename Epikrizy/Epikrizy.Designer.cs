@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.button5 = new System.Windows.Forms.Button();
@@ -204,7 +204,7 @@
             this.button5.Location = new System.Drawing.Point(6, 352);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(424, 28);
-            this.button5.TabIndex = 22;
+            this.button5.TabIndex = 12;
             this.button5.Text = "Изменить";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
@@ -215,7 +215,7 @@
             this.button4.Location = new System.Drawing.Point(433, 352);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(424, 28);
-            this.button4.TabIndex = 21;
+            this.button4.TabIndex = 13;
             this.button4.Text = "Отменить";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
@@ -225,7 +225,7 @@
             this.button3.Location = new System.Drawing.Point(6, 352);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(424, 28);
-            this.button3.TabIndex = 20;
+            this.button3.TabIndex = 11;
             this.button3.Text = "Добавить";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
@@ -235,9 +235,10 @@
             this.button2.Location = new System.Drawing.Point(613, 308);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(244, 28);
-            this.button2.TabIndex = 19;
+            this.button2.TabIndex = 10;
             this.button2.Text = "Добавить нового врача";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // comboBox3
             // 
@@ -247,7 +248,7 @@
             this.comboBox3.Location = new System.Drawing.Point(199, 308);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(408, 28);
-            this.comboBox3.TabIndex = 18;
+            this.comboBox3.TabIndex = 10;
             // 
             // label9
             // 
@@ -273,7 +274,7 @@
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(658, 78);
-            this.textBox2.TabIndex = 15;
+            this.textBox2.TabIndex = 9;
             // 
             // label7
             // 
@@ -291,7 +292,7 @@
             this.dateTimePicker3.Location = new System.Drawing.Point(213, 192);
             this.dateTimePicker3.Name = "dateTimePicker3";
             this.dateTimePicker3.Size = new System.Drawing.Size(150, 26);
-            this.dateTimePicker3.TabIndex = 13;
+            this.dateTimePicker3.TabIndex = 7;
             this.dateTimePicker3.ValueChanged += new System.EventHandler(this.dateTimePicker3_ValueChanged);
             // 
             // dateTimePicker4
@@ -302,7 +303,7 @@
             this.dateTimePicker4.MinDate = new System.DateTime(1910, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker4.Name = "dateTimePicker4";
             this.dateTimePicker4.Size = new System.Drawing.Size(150, 26);
-            this.dateTimePicker4.TabIndex = 12;
+            this.dateTimePicker4.TabIndex = 8;
             // 
             // label6
             // 
@@ -328,7 +329,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(658, 78);
-            this.textBox1.TabIndex = 9;
+            this.textBox1.TabIndex = 6;
             // 
             // comboBox2
             // 
@@ -338,7 +339,7 @@
             this.comboBox2.Location = new System.Drawing.Point(199, 74);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(237, 28);
-            this.comboBox2.TabIndex = 8;
+            this.comboBox2.TabIndex = 5;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // label4
@@ -397,6 +398,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Добавить нового пациента";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // comboBox1
             // 
@@ -443,10 +445,10 @@
             this.button9.Location = new System.Drawing.Point(626, 6);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(230, 28);
-            this.button9.TabIndex = 27;
+            this.button9.TabIndex = 15;
             this.button9.Text = "Добавить новый диагноз";
             this.button9.UseVisualStyleBackColor = true;
-            this.button9.Visible = false;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // dataGridView1
             // 
@@ -454,20 +456,20 @@
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridView1.Location = new System.Drawing.Point(6, 158);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(850, 222);
-            this.dataGridView1.TabIndex = 26;
+            this.dataGridView1.TabIndex = 21;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dataGridView1.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridView1_UserDeletingRow);
             // 
@@ -476,7 +478,7 @@
             this.button6.Location = new System.Drawing.Point(6, 124);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(424, 28);
-            this.button6.TabIndex = 25;
+            this.button6.TabIndex = 19;
             this.button6.Text = "Изменить";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Visible = false;
@@ -487,7 +489,7 @@
             this.button7.Location = new System.Drawing.Point(432, 124);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(424, 28);
-            this.button7.TabIndex = 24;
+            this.button7.TabIndex = 20;
             this.button7.Text = "Очистить";
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
@@ -497,7 +499,7 @@
             this.button8.Location = new System.Drawing.Point(6, 124);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(424, 28);
-            this.button8.TabIndex = 23;
+            this.button8.TabIndex = 18;
             this.button8.Text = "Добавить";
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
@@ -527,7 +529,7 @@
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(629, 78);
-            this.textBox3.TabIndex = 15;
+            this.textBox3.TabIndex = 16;
             // 
             // comboBox4
             // 
@@ -537,7 +539,7 @@
             this.comboBox4.Location = new System.Drawing.Point(227, 6);
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(393, 28);
-            this.comboBox4.TabIndex = 12;
+            this.comboBox4.TabIndex = 14;
             this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
             // 
             // label12
@@ -575,20 +577,20 @@
             this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView2.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridView2.Location = new System.Drawing.Point(511, 6);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView2.Size = new System.Drawing.Size(348, 340);
-            this.dataGridView2.TabIndex = 27;
+            this.dataGridView2.TabIndex = 28;
             this.dataGridView2.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellDoubleClick);
             this.dataGridView2.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridView2_UserDeletingRow);
             // 
@@ -597,7 +599,7 @@
             this.button10.Location = new System.Drawing.Point(8, 352);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(424, 28);
-            this.button10.TabIndex = 25;
+            this.button10.TabIndex = 26;
             this.button10.Text = "Изменить";
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Visible = false;
@@ -608,7 +610,7 @@
             this.button11.Location = new System.Drawing.Point(435, 352);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(424, 28);
-            this.button11.TabIndex = 24;
+            this.button11.TabIndex = 27;
             this.button11.Text = "Очистить";
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.button11_Click);
@@ -618,7 +620,7 @@
             this.button12.Location = new System.Drawing.Point(8, 352);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(424, 28);
-            this.button12.TabIndex = 23;
+            this.button12.TabIndex = 25;
             this.button12.Text = "Добавить";
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.button12_Click);
@@ -638,7 +640,7 @@
             this.textBox4.Multiline = true;
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(260, 152);
-            this.textBox4.TabIndex = 21;
+            this.textBox4.TabIndex = 23;
             // 
             // label13
             // 
@@ -655,7 +657,7 @@
             this.textBox5.Multiline = true;
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(260, 152);
-            this.textBox5.TabIndex = 19;
+            this.textBox5.TabIndex = 24;
             // 
             // label14
             // 
@@ -674,7 +676,7 @@
             this.dateTimePicker5.MinDate = new System.DateTime(1910, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker5.Name = "dateTimePicker5";
             this.dateTimePicker5.Size = new System.Drawing.Size(150, 26);
-            this.dateTimePicker5.TabIndex = 17;
+            this.dateTimePicker5.TabIndex = 22;
             // 
             // tabPage4
             // 
@@ -699,7 +701,7 @@
             this.button15.Location = new System.Drawing.Point(12, 350);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(231, 28);
-            this.button15.TabIndex = 27;
+            this.button15.TabIndex = 33;
             this.button15.Text = "Изменить";
             this.button15.UseVisualStyleBackColor = true;
             this.button15.Visible = false;
@@ -710,7 +712,7 @@
             this.button14.Location = new System.Drawing.Point(248, 350);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(231, 28);
-            this.button14.TabIndex = 26;
+            this.button14.TabIndex = 34;
             this.button14.Text = "Очистить";
             this.button14.UseVisualStyleBackColor = true;
             this.button14.Click += new System.EventHandler(this.button14_Click);
@@ -720,7 +722,7 @@
             this.button13.Location = new System.Drawing.Point(12, 350);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(231, 28);
-            this.button13.TabIndex = 25;
+            this.button13.TabIndex = 32;
             this.button13.Text = "Добавить";
             this.button13.UseVisualStyleBackColor = true;
             this.button13.Click += new System.EventHandler(this.button13_Click);
@@ -737,7 +739,7 @@
             this.dataGridView4.RowHeadersVisible = false;
             this.dataGridView4.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView4.Size = new System.Drawing.Size(467, 271);
-            this.dataGridView4.TabIndex = 24;
+            this.dataGridView4.TabIndex = 31;
             // 
             // dataGridView3
             // 
@@ -751,7 +753,7 @@
             this.dataGridView3.RowHeadersVisible = false;
             this.dataGridView3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView3.Size = new System.Drawing.Size(372, 372);
-            this.dataGridView3.TabIndex = 23;
+            this.dataGridView3.TabIndex = 35;
             this.dataGridView3.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView3_CellDoubleClick);
             this.dataGridView3.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridView3_UserDeletingRow);
             // 
@@ -763,7 +765,7 @@
             this.comboBox5.Location = new System.Drawing.Point(305, 6);
             this.comboBox5.Name = "comboBox5";
             this.comboBox5.Size = new System.Drawing.Size(174, 28);
-            this.comboBox5.TabIndex = 22;
+            this.comboBox5.TabIndex = 29;
             this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             // 
             // label16
@@ -792,7 +794,7 @@
             this.dateTimePicker6.MinDate = new System.DateTime(1910, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker6.Name = "dateTimePicker6";
             this.dateTimePicker6.Size = new System.Drawing.Size(150, 26);
-            this.dateTimePicker6.TabIndex = 19;
+            this.dateTimePicker6.TabIndex = 30;
             // 
             // tabPage5
             // 
@@ -817,7 +819,7 @@
             this.button16.Location = new System.Drawing.Point(12, 350);
             this.button16.Name = "button16";
             this.button16.Size = new System.Drawing.Size(231, 28);
-            this.button16.TabIndex = 27;
+            this.button16.TabIndex = 40;
             this.button16.Text = "Изменить";
             this.button16.UseVisualStyleBackColor = true;
             this.button16.Visible = false;
@@ -828,7 +830,7 @@
             this.button17.Location = new System.Drawing.Point(248, 350);
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(231, 28);
-            this.button17.TabIndex = 26;
+            this.button17.TabIndex = 41;
             this.button17.Text = "Очистить";
             this.button17.UseVisualStyleBackColor = true;
             this.button17.Click += new System.EventHandler(this.button17_Click);
@@ -838,7 +840,7 @@
             this.button18.Location = new System.Drawing.Point(12, 350);
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(231, 28);
-            this.button18.TabIndex = 25;
+            this.button18.TabIndex = 39;
             this.button18.Text = "Добавить";
             this.button18.UseVisualStyleBackColor = true;
             this.button18.Click += new System.EventHandler(this.button18_Click);
@@ -855,7 +857,7 @@
             this.dataGridView5.RowHeadersVisible = false;
             this.dataGridView5.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView5.Size = new System.Drawing.Size(467, 271);
-            this.dataGridView5.TabIndex = 24;
+            this.dataGridView5.TabIndex = 38;
             // 
             // dataGridView6
             // 
@@ -869,7 +871,7 @@
             this.dataGridView6.RowHeadersVisible = false;
             this.dataGridView6.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView6.Size = new System.Drawing.Size(372, 372);
-            this.dataGridView6.TabIndex = 23;
+            this.dataGridView6.TabIndex = 42;
             this.dataGridView6.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView6_CellDoubleClick);
             this.dataGridView6.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridView6_UserDeletingRow);
             // 
@@ -881,7 +883,7 @@
             this.comboBox6.Location = new System.Drawing.Point(305, 6);
             this.comboBox6.Name = "comboBox6";
             this.comboBox6.Size = new System.Drawing.Size(174, 28);
-            this.comboBox6.TabIndex = 22;
+            this.comboBox6.TabIndex = 36;
             this.comboBox6.SelectedIndexChanged += new System.EventHandler(this.comboBox6_SelectedIndexChanged);
             // 
             // label17
@@ -910,7 +912,7 @@
             this.dateTimePicker7.MinDate = new System.DateTime(1910, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker7.Name = "dateTimePicker7";
             this.dateTimePicker7.Size = new System.Drawing.Size(150, 26);
-            this.dateTimePicker7.TabIndex = 19;
+            this.dateTimePicker7.TabIndex = 37;
             // 
             // tabPage6
             // 
@@ -962,7 +964,7 @@
             this.button19.Location = new System.Drawing.Point(6, 352);
             this.button19.Name = "button19";
             this.button19.Size = new System.Drawing.Size(424, 28);
-            this.button19.TabIndex = 40;
+            this.button19.TabIndex = 60;
             this.button19.Text = "Изменить";
             this.button19.UseVisualStyleBackColor = true;
             this.button19.Visible = false;
@@ -973,7 +975,7 @@
             this.button20.Location = new System.Drawing.Point(433, 352);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(424, 28);
-            this.button20.TabIndex = 39;
+            this.button20.TabIndex = 61;
             this.button20.Text = "Очистить";
             this.button20.UseVisualStyleBackColor = true;
             this.button20.Click += new System.EventHandler(this.button20_Click);
@@ -983,7 +985,7 @@
             this.button21.Location = new System.Drawing.Point(6, 352);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(424, 28);
-            this.button21.TabIndex = 38;
+            this.button21.TabIndex = 59;
             this.button21.Text = "Добавить";
             this.button21.UseVisualStyleBackColor = true;
             this.button21.Click += new System.EventHandler(this.button21_Click);
@@ -997,7 +999,7 @@
             this.comboBox8.Location = new System.Drawing.Point(219, 100);
             this.comboBox8.Name = "comboBox8";
             this.comboBox8.Size = new System.Drawing.Size(183, 28);
-            this.comboBox8.TabIndex = 37;
+            this.comboBox8.TabIndex = 46;
             // 
             // comboBox7
             // 
@@ -1008,7 +1010,7 @@
             this.comboBox7.Location = new System.Drawing.Point(219, 68);
             this.comboBox7.Name = "comboBox7";
             this.comboBox7.Size = new System.Drawing.Size(183, 28);
-            this.comboBox7.TabIndex = 36;
+            this.comboBox7.TabIndex = 45;
             // 
             // textBox23
             // 
@@ -1016,7 +1018,7 @@
             this.textBox23.MaxLength = 300;
             this.textBox23.Name = "textBox23";
             this.textBox23.Size = new System.Drawing.Size(183, 26);
-            this.textBox23.TabIndex = 35;
+            this.textBox23.TabIndex = 58;
             // 
             // label36
             // 
@@ -1033,7 +1035,7 @@
             this.textBox22.MaxLength = 300;
             this.textBox22.Name = "textBox22";
             this.textBox22.Size = new System.Drawing.Size(183, 26);
-            this.textBox22.TabIndex = 33;
+            this.textBox22.TabIndex = 57;
             // 
             // label35
             // 
@@ -1050,7 +1052,7 @@
             this.textBox21.MaxLength = 300;
             this.textBox21.Name = "textBox21";
             this.textBox21.Size = new System.Drawing.Size(183, 26);
-            this.textBox21.TabIndex = 31;
+            this.textBox21.TabIndex = 56;
             // 
             // label34
             // 
@@ -1067,7 +1069,7 @@
             this.textBox20.MaxLength = 300;
             this.textBox20.Name = "textBox20";
             this.textBox20.Size = new System.Drawing.Size(183, 26);
-            this.textBox20.TabIndex = 29;
+            this.textBox20.TabIndex = 55;
             // 
             // label33
             // 
@@ -1084,7 +1086,7 @@
             this.textBox19.MaxLength = 300;
             this.textBox19.Name = "textBox19";
             this.textBox19.Size = new System.Drawing.Size(183, 26);
-            this.textBox19.TabIndex = 27;
+            this.textBox19.TabIndex = 54;
             // 
             // label32
             // 
@@ -1101,7 +1103,7 @@
             this.textBox18.MaxLength = 300;
             this.textBox18.Name = "textBox18";
             this.textBox18.Size = new System.Drawing.Size(183, 26);
-            this.textBox18.TabIndex = 25;
+            this.textBox18.TabIndex = 53;
             // 
             // label31
             // 
@@ -1118,7 +1120,7 @@
             this.textBox17.MaxLength = 300;
             this.textBox17.Name = "textBox17";
             this.textBox17.Size = new System.Drawing.Size(183, 26);
-            this.textBox17.TabIndex = 23;
+            this.textBox17.TabIndex = 52;
             // 
             // label30
             // 
@@ -1135,7 +1137,7 @@
             this.textBox14.MaxLength = 300;
             this.textBox14.Name = "textBox14";
             this.textBox14.Size = new System.Drawing.Size(183, 26);
-            this.textBox14.TabIndex = 17;
+            this.textBox14.TabIndex = 51;
             // 
             // label27
             // 
@@ -1152,7 +1154,7 @@
             this.textBox13.MaxLength = 300;
             this.textBox13.Name = "textBox13";
             this.textBox13.Size = new System.Drawing.Size(183, 26);
-            this.textBox13.TabIndex = 15;
+            this.textBox13.TabIndex = 50;
             // 
             // label26
             // 
@@ -1169,7 +1171,7 @@
             this.textBox12.MaxLength = 300;
             this.textBox12.Name = "textBox12";
             this.textBox12.Size = new System.Drawing.Size(183, 26);
-            this.textBox12.TabIndex = 13;
+            this.textBox12.TabIndex = 49;
             // 
             // label25
             // 
@@ -1186,7 +1188,7 @@
             this.textBox11.MaxLength = 300;
             this.textBox11.Name = "textBox11";
             this.textBox11.Size = new System.Drawing.Size(183, 26);
-            this.textBox11.TabIndex = 11;
+            this.textBox11.TabIndex = 48;
             // 
             // label24
             // 
@@ -1203,7 +1205,7 @@
             this.textBox10.MaxLength = 300;
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(183, 26);
-            this.textBox10.TabIndex = 9;
+            this.textBox10.TabIndex = 47;
             // 
             // label23
             // 
@@ -1238,7 +1240,7 @@
             this.textBox7.MaxLength = 300;
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(183, 26);
-            this.textBox7.TabIndex = 3;
+            this.textBox7.TabIndex = 44;
             // 
             // label20
             // 
@@ -1255,7 +1257,7 @@
             this.textBox6.MaxLength = 300;
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(183, 26);
-            this.textBox6.TabIndex = 1;
+            this.textBox6.TabIndex = 43;
             // 
             // label19
             // 

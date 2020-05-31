@@ -43,7 +43,7 @@
             this.button3.Location = new System.Drawing.Point(1, 67);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(214, 28);
-            this.button3.TabIndex = 14;
+            this.button3.TabIndex = 4;
             this.button3.Text = "Изменить";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
@@ -55,7 +55,7 @@
             this.button2.Location = new System.Drawing.Point(221, 67);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(214, 28);
-            this.button2.TabIndex = 13;
+            this.button2.TabIndex = 5;
             this.button2.Text = "Отменить";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -66,7 +66,7 @@
             this.button1.Location = new System.Drawing.Point(1, 67);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(214, 28);
-            this.button1.TabIndex = 12;
+            this.button1.TabIndex = 3;
             this.button1.Text = "Добавить";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -88,7 +88,7 @@
             this.maskedTextBox1.Mask = "Филиал № 00 ";
             this.maskedTextBox1.Name = "maskedTextBox1";
             this.maskedTextBox1.Size = new System.Drawing.Size(214, 26);
-            this.maskedTextBox1.TabIndex = 15;
+            this.maskedTextBox1.TabIndex = 1;
             // 
             // label2
             // 
@@ -106,7 +106,7 @@
             this.textBox1.Location = new System.Drawing.Point(221, 35);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(214, 26);
-            this.textBox1.TabIndex = 17;
+            this.textBox1.TabIndex = 2;
             // 
             // Gcgp
             // 

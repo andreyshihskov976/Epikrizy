@@ -303,6 +303,19 @@ namespace Epikrizy
                     WordApp = new WordApplication();
                     Documents = WordApp.Documents;
                     Document = Documents.Open(Application.StartupPath + "\\blanks\\epikriz.docx");
+                    string pol = Select_Text(MySqlQueries.Select_Pol_Pacienta, ID);
+                    if (pol == "М")
+                    {
+                        Replace("{graj}", "Гражданин", Document);
+                        Replace("{proj}", "проживающий", Document);
+                        Replace("{nahod}", "находился", Document);
+                    }
+                    else if(pol == "Ж")
+                    {
+                        Replace("{graj}", "Гражданка", Document);
+                        Replace("{proj}", "проживающая", Document);
+                        Replace("{nahod}", "находилась", Document);
+                    }
                     Replace("{id}", output.Split(';')[1], Document);
                     Replace("{pacient}", output.Split(';')[2], Document);
                     Replace("{adress_pacienta}", output.Split(';')[3], Document);
@@ -348,39 +361,47 @@ namespace Epikrizy
 
                     output = "";
                     dt = Select_DataTable(MySqlQueries.Print_Proved_LabIssl, ID);
-                    foreach (DataRow row in dt.Rows)
+                    for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        output += row[1].ToString();
-                        dt2 = Select_DataTable(MySqlQueries.Print_Dannye_LabIssl, ID, row[0].ToString());
+                        output += dt.Rows[i][1].ToString();
+                        dt2 = Select_DataTable(MySqlQueries.Print_Dannye_LabIssl, ID, dt.Rows[i][0].ToString());
                         for (int j = 0; j < dt2.Rows.Count; j++)
                         {
                             if (j != dt2.Rows.Count - 1)
                                 output += dt2.Rows[j][0].ToString() + ", ";
-                            else
+                            else if (i != dt.Rows.Count - 1)
                                 output += dt2.Rows[j][0].ToString() + "."+ '\r'+'\t';
+                            else
+                                output += dt2.Rows[j][0].ToString() + ".";
                         }
                     }
                     Replace("{lab_issl}", output, Document);
 
                     output = "";
                     dt = Select_DataTable(MySqlQueries.Print_Proved_InstrIssl, ID);
-                    foreach (DataRow row in dt.Rows)
+                    for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        output += row[1].ToString();
-                        dt2 = Select_DataTable(MySqlQueries.Print_Dannye_InstrIssl, ID, row[0].ToString());
+                        output += dt.Rows[i][1].ToString();
+                        dt2 = Select_DataTable(MySqlQueries.Print_Dannye_InstrIssl, ID, dt.Rows[i][0].ToString());
                         for (int j = 0; j < dt2.Rows.Count; j++)
                         {
                             if (j != dt2.Rows.Count - 1)
                                 output += dt2.Rows[j][0].ToString() + ", ";
-                            else
+                            else if (i != dt.Rows.Count - 1)
                                 output += dt2.Rows[j][0].ToString() + "." + '\r' + '\t';
+                            else
+                                output += dt2.Rows[j][0].ToString() + ".";
                         }
                     }
                     Replace("{instr_issl}", output, Document);
 
                     output = Select_Text(MySqlQueries.Print_Dop_Sved, ID);
-                    for (int i = 0; i < 16; i++)
-                        Replace("{ds"+i.ToString()+"}", output.Split(';')[i], Document);
+                    if (output != "" && output != null)
+                        for (int i = 0; i < 16; i++)
+                            Replace("{ds" + i.ToString() + "}", output.Split(';')[i], Document);
+                    else
+                        for (int i = 0; i < 16; i++)
+                            Replace("{ds" + i.ToString() + "}", "", Document);
 
                     output = Select_Text(MySqlQueries.Print_Zav_Otdeleniya, ID);
                     Replace("{zav_otdeleniya}", output, Document);
@@ -404,19 +425,21 @@ namespace Epikrizy
             }
         }
 
-        public void Print_Acts(SaveFileDialog saveFileDialog, string ID)
+        public void Print_Kartochka(SaveFileDialog saveFileDialog, string ID)
         {
             WordApplication WordApp = null;
             Documents Documents = null;
             Document Document = null;
             string output = null;
             string fileName = null;
+            DataTable dt = new DataTable();
+            DataTable dt2 = new DataTable();
             saveFileDialog.DefaultExt = "Документ Word|*.docx";
             saveFileDialog.Filter = "Документ Word|*.docx|Документ Word 93-2003|*.doc|PDF|*.pdf";
-            saveFileDialog.Title = "Сохранить акт как";
-            //output = Select_Text(MySqlQueries.Select_Print_Acts, ID);
+            saveFileDialog.Title = "Сохранить личную карточку пациента как";
+            output = Select_Text(MySqlQueries.Print_Kartochka_Pacienta, ID);
             saveFileDialog.FileName = output.Split(';')[0];
-            saveFileDialog.InitialDirectory = Application.StartupPath + "\\Акты\\";
+            saveFileDialog.InitialDirectory = Application.StartupPath + "\\Личные карточки\\";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -424,15 +447,97 @@ namespace Epikrizy
                     fileName = saveFileDialog.FileName;
                     WordApp = new WordApplication();
                     Documents = WordApp.Documents;
-                    Document = Documents.Open(Application.StartupPath + "\\blanks\\Act.docx");
-                    Replace("{Наименование}", output.Split(';')[0], Document);
-                    Replace("{Договор}", output.Split(';')[1], Document);
-                    Replace("{Сотрудник}", output.Split(';')[2], Document);
-                    Replace("{Сотрудник}", output.Split(';')[2], Document);
-                    Replace("{Автомобиль}", output.Split(';')[3], Document);
-                    Replace("{Клиент}", output.Split(';')[4], Document);
-                    Replace("{Клиент}", output.Split(';')[4], Document);
-                    Replace("{Комментарий}", output.Split(';')[5], Document);
+                    Document = Documents.Open(Application.StartupPath + "\\blanks\\kartochka.docx");
+                    string pol = Select_Text(MySqlQueries.Select_Pol_Pacienta_Kartochka, ID);
+                    if (pol == "М")
+                    {
+                        Replace("{graj}", "Гражданин", Document);
+                        Replace("{proj}", "проживает", Document);
+                        Replace("{nahod}", "НАХОДИЛСЯ", Document);
+                    }
+                    else if (pol == "Ж")
+                    {
+                        Replace("{graj}", "Гражданка", Document);
+                        Replace("{proj}", "проживающая", Document);
+                        Replace("{nahod}", "НАХОДИЛАСЬ", Document);
+                    }
+                    Replace("{id}", output.Split(';')[1], Document);
+                    Replace("{pacient}", output.Split(';')[2], Document);
+                    Replace("{pacient}", output.Split(';')[2], Document);
+                    Replace("{adress_pacienta}", output.Split(';')[3], Document);
+                    Replace("{filial}", output.Split(';')[4].Split(' ')[2], Document);
+
+                    dt = Select_DataTable(MySqlQueries.Print_Otdeleniya_Pacienta, ID);
+                    output = "";
+                    foreach (DataRow row in dt.Rows)
+                        output += row[0].ToString();
+                    Replace("{otdelenie}", output, Document);
+
+                    dt = Select_DataTable(MySqlQueries.Print_Perenes_Zabol_Pacienta, ID);
+                    output = "";
+                    foreach (DataRow row in dt.Rows)
+                        output += row[0].ToString();
+                    Replace("{zaklucheniya}", output, Document);
+
+                    dt = Select_DataTable(MySqlQueries.Print_Perenesennye_Operacii_Pacienta, ID);
+                    output = "";
+                    foreach (DataRow row in dt.Rows)
+                        output += row[0].ToString();
+                    Replace("{perenesennye_operacii}", output, Document);
+
+                    dt = Select_DataTable(MySqlQueries.Print_Recomendacii_Pacienta, ID);
+                    output = "";
+                    foreach (DataRow row in dt.Rows)
+                        output += row[0].ToString()+'\r'+'\t';
+                    Replace("{recomendacii}", output, Document);
+
+                    dt = Select_DataTable(MySqlQueries.Print_Preparaty_Pacienta, ID);
+                    output = "";
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        if (i != dt.Rows.Count - 1)
+                            output += dt.Rows[i][0].ToString() + ", ";
+                        else
+                            output += dt.Rows[i][0].ToString() + ".";
+                    }
+                    Replace("{preparaty}", output, Document);
+
+                    output = "";
+                    dt = Select_DataTable(MySqlQueries.Print_Proved_LabIssl_Pacienta, ID);
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        output += dt.Rows[i][1].ToString();
+                        dt2 = Select_DataTable(MySqlQueries.Print_Dannye_LabIssl_Pacienta, ID, dt.Rows[i][0].ToString());
+                        for (int j = 0; j < dt2.Rows.Count; j++)
+                        {
+                            if (j != dt2.Rows.Count - 1)
+                                output += dt2.Rows[j][0].ToString() + ", ";
+                            else if (i != dt.Rows.Count - 1)
+                                output += dt2.Rows[j][0].ToString() + "." + '\r' + '\t';
+                            else
+                                output += dt2.Rows[j][0].ToString() + ".";
+                        }
+                    }
+                    Replace("{lab_issl}", output, Document);
+
+                    output = "";
+                    dt = Select_DataTable(MySqlQueries.Print_Proved_InstrIssl_Pacienta, ID);
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        output += dt.Rows[i][1].ToString();
+                        dt2 = Select_DataTable(MySqlQueries.Print_Dannye_InstrIssl_Pacienta, ID, dt.Rows[i][0].ToString());
+                        for (int j = 0; j < dt2.Rows.Count; j++)
+                        {
+                            if (j != dt2.Rows.Count - 1)
+                                output += dt2.Rows[j][0].ToString() + ", ";
+                            else if (i != dt.Rows.Count - 1)
+                                output += dt2.Rows[j][0].ToString() + "." + '\r' + '\t';
+                            else
+                                output += dt2.Rows[j][0].ToString() + ".";
+                        }
+                    }
+                    Replace("{instr_issl}", output, Document);
+
                     Document.SaveAs(fileName);
                     WordApp.Visible = true;
                 }
@@ -452,7 +557,7 @@ namespace Epikrizy
             }
         }
 
-        public void Print_Reestr(MySqlQueries mySqlQueries, DateTimePicker dateTimePicker1, DateTimePicker dateTimePicker2, SaveFileDialog saveFileDialog)
+        public void Print_Reestr(MySqlQueries mySqlQueries, string otdelenie, DateTimePicker dateTimePicker1, DateTimePicker dateTimePicker2, SaveFileDialog saveFileDialog)
         {
             ExcelApplication ExcelApp = null;
             Workbooks workbooks = null;
@@ -461,35 +566,37 @@ namespace Epikrizy
             string fileName = null;
             saveFileDialog.DefaultExt = "Книга Excel|*.xlsx";
             saveFileDialog.Filter = "Книга Excel|*.xlsx|Книга Excel 93-2003|*.xls|PDF|*.pdf";
-            saveFileDialog.Title = "Сохранить реестр заключенных договоров как";
-            saveFileDialog.FileName = "Реестр заключенных договоров с " + dateTimePicker1.Value.ToShortDateString() + " по " + dateTimePicker2.Value.ToShortDateString();
-            saveFileDialog.InitialDirectory = Application.StartupPath + "\\Отчетность\\";
+            saveFileDialog.Title = "Сохранить реестр эпикризов как";
+            saveFileDialog.FileName = "Реестр эпикризов отделения " + otdelenie + " с " + dateTimePicker1.Value.ToShortDateString() + " по " + dateTimePicker2.Value.ToShortDateString();
+            saveFileDialog.InitialDirectory = Application.StartupPath + "\\Реестры эпикризов\\";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 fileName = saveFileDialog.FileName;
+                string id = Select_Text(MySqlQueries.Select_ID_Otdeleniya_ComboBox, null, otdelenie);
                 string date1 = dateTimePicker1.Value.Year.ToString() + '-' + dateTimePicker1.Value.Month.ToString() + '-' + dateTimePicker1.Value.Day.ToString();
                 string date2 = dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString() + '-' + dateTimePicker2.Value.Day.ToString();
-                //DataTable data = Select_DataTable(MySqlQueries.Select_Reestr_Dogovorov, null, date1, date2);
+                DataTable data = Select_DataTable(MySqlQueries.Print_Reestr, id, date1, date2);
                 try
                 {
                     ExcelApp = new ExcelApplication();
                     workbooks = ExcelApp.Workbooks;
-                    workbook = workbooks.Open(Application.StartupPath + "\\blanks\\Reestr.xlsx");
+                    workbook = workbooks.Open(Application.StartupPath + "\\blanks\\reestr.xlsx");
                     worksheet = workbook.Worksheets.get_Item(1) as Worksheet;
+                    ExcelApp.Cells[1, 1] = "Реестр выписных эпикризов отделения " + '"' + otdelenie + '"';
                     ExcelApp.Cells[2, 1] = "c " + dateTimePicker1.Value.ToShortDateString() + " по " + dateTimePicker2.Value.ToShortDateString();
                     int ExCol = 1;
                     int ExRow = 5;
-                    //for (int i = 0; i < data.Rows.Count - 0; i++)
-                    //{
-                    //    ExCol = 1;
-                    //    for (int j = 0; j < data.Columns.Count; j++)
-                    //    {
-                    //        ExcelApp.Cells[ExRow, ExCol] = data.Rows[i][j].ToString();
-                    //        ExCol++;
-                    //    }
-                    //    ExRow++;
-                    //}
-                    var cells = worksheet.get_Range("A5 ", "E" + (ExRow - 1).ToString());
+                    for (int i = 0; i < data.Rows.Count - 0; i++)
+                    {
+                        ExCol = 1;
+                        for (int j = 0; j < data.Columns.Count; j++)
+                        {
+                            ExcelApp.Cells[ExRow, ExCol] = data.Rows[i][j].ToString();
+                            ExCol++;
+                        }
+                        ExRow++;
+                    }
+                    var cells = worksheet.get_Range("A4 ", "E" + (ExRow - 1).ToString());
                     cells.Borders[XlBordersIndex.xlInsideVertical].LineStyle = XlLineStyle.xlContinuous;
                     cells.Borders[XlBordersIndex.xlInsideHorizontal].LineStyle = XlLineStyle.xlContinuous;
                     cells.Borders[XlBordersIndex.xlEdgeTop].LineStyle = XlLineStyle.xlContinuous;

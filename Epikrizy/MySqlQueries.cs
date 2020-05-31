@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
@@ -40,6 +41,8 @@ namespace Epikrizy
 
         public string Exists_Diagnozy_Pacienty = $@"SELECT EXISTS(SELECT * FROM diagnozy_pacienta WHERE id_epikriza = @ID AND id_diagnoza = @Value1);";
 
+        public string Exists_Diagnozy_Pacienty_Edit = $@"SELECT EXISTS(SELECT * FROM diagnozy_pacienta WHERE id_epikriza = @ID AND id_diagnoza = @Value1 AND commentariy = @Value2 AND zaklucheniye = @Value3)";
+
         public string Exists_Perenesennye_Operacii = $@"SELECT EXISTS(SELECT * FROM perenesennye_operacii WHERE id_epikriza = @ID AND date_provedeniya = @Value1 AND provedeno = @Value2 AND commentariy = @Value3);";
 
         public string Exists_Proved_LabIssl = $@"SELECT EXISTS(SELECT * FROM proved_lab_issled WHERE id_epikriza = @ID AND id_lab_issledovaniya = @Value1 AND date_proved = @Value2);";
@@ -79,7 +82,7 @@ WHERE personal.id_otdeleniya = @ID";
 
         public string Select_Pacienty = $@"SET lc_time_names = 'ru_RU';
 SELECT pacienty.id_pacienta, CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Ф.И.О. Пациента', 
-DATE_FORMAT(pacienty.data_rojdeniya,'%d %M %Y') AS 'Дата рождения', pacienty.adress_projivaniya AS 'Адрес проживания', gcgp.nom_filiala AS 'Филиал ГЦГП'
+DATE_FORMAT(pacienty.data_rojdeniya,'%d %M %Y') AS 'Дата рождения', pol AS 'Пол', pacienty.adress_projivaniya AS 'Адрес проживания', gcgp.nom_filiala AS 'Филиал ГЦГП'
 FROM pacienty INNER JOIN gcgp ON pacienty.id_gcgp = gcgp.id_gcgp;";
 
         public string Select_Pacienty_ComboBox = $@"SET lc_time_names = 'ru_RU';
@@ -222,7 +225,7 @@ WHERE epikrizy.id_epikriza = @ID;";
 
         public string Insert_Personal = $@"INSERT INTO personal (familiya, imya, otchestvo, id_otdeleniya, id_doljnosti) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5);";
 
-        public string Insert_Pacienty = $@"INSERT INTO pacienty (familiya, imya, otchestvo, data_rojdeniya, adress_projivaniya, id_gcgp) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5, @Value6);";
+        public string Insert_Pacienty = $@"INSERT INTO pacienty (familiya, imya, otchestvo, data_rojdeniya, pol, adress_projivaniya, id_gcgp) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5, @Value6, @Value7);";
 
         public string Insert_LabIssl = $@"INSERT INTO lab_issledovaniya (naimenovanie) VALUES (@Value1);";
 
@@ -268,7 +271,7 @@ WHERE epikrizy.id_epikriza = @ID;";
 
         public string Update_Personal = $@"UPDATE personal SET familiya = @Value1, imya = @Value2, otchestvo = @Value3, id_otdeleniya = @Value4, id_doljnosti = @Value5 WHERE id_personala = @ID;";
 
-        public string Update_Pacienty = $@"UPDATE pacienty SET familiya = @Value1, imya = @Value2, otchestvo = @Value3, data_rojdeniya = @Value4, adress_projivaniya = @Value5, id_gcgp = @Value6 WHERE id_pacienta = @ID;";
+        public string Update_Pacienty = $@"UPDATE pacienty SET familiya = @Value1, imya = @Value2, otchestvo = @Value3, data_rojdeniya = @Value4, pol = @Value5, adress_projivaniya = @Value6, id_gcgp = @Value7 WHERE id_pacienta = @ID;";
 
         public string Update_LabIssl = $@"UPDATE lab_issledovaniya SET naimenovanie = @Value1 WHERE id_lab_issledovaniya = @ID;";
 
@@ -426,6 +429,90 @@ INNER JOIN otdeleniya ON personal.id_otdeleniya = otdeleniya.id_otdeleniya
 INNER JOIN doljnosti ON personal.id_doljnosti = doljnosti.id_doljnosti
 INNER JOIN epikrizy ON otdeleniya.id_otdeleniya = epikrizy.id_otdeleniya
 WHERE epikrizy.id_epikriza = @ID AND doljnosti.id_doljnosti = 5;";
+
+        public string Select_Pol_Pacienta = $@"SELECT pol 
+FROM pacienty INNER JOIN epikrizy ON pacienty.id_pacienta = epikrizy.id_pacienta
+WHERE epikrizy.id_epikriza = @ID;";
         //Print Epikrizy
+
+        //Print Kartochka
+        public string Print_Kartochka_Pacienta = $@"SELECT CONCAT(CONCAT('Личная карточка №',id_pacienta,' ',CONCAT(familiya,' ',imya,' ',otchestvo,DATE_FORMAT(data_rojdeniya,'%d.%m.%Y'),' года рождения')),';',
+id_pacienta,';',CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo,' ', DATE_FORMAT(pacienty.data_rojdeniya, '%d.%m.%Y')),';',
+adress_projivaniya,';',gcgp.nom_filiala)
+FROM pacienty INNER JOIN gcgp ON pacienty.id_gcgp = gcgp.id_gcgp
+WHERE id_pacienta = @ID;";
+
+        public string Print_Otdeleniya_Pacienta = $@"SELECT CONCAT(otdeleniya.naimenovanie,': с ', DATE_FORMAT(epikrizy.date_n,'%d.%m.%Y'),' по ', DATE_FORMAT(epikrizy.date_k,'%d.%m.%Y'),'. Лечащий врач: ', lech_vrach,'. ')
+FROM epikrizy INNER JOIN otdeleniya ON epikrizy.id_otdeleniya = otdeleniya.id_otdeleniya
+WHERE id_pacienta = @ID;";
+
+        public string Print_Perenes_Zabol_Pacienta = $@"SELECT CONCAT(diagnozy.naimenovanie,'. ', commentariy,'. ')
+FROM diagnozy_pacienta INNER JOIN epikrizy ON diagnozy_pacienta.id_epikriza = epikrizy.id_epikriza
+INNER JOIN diagnozy ON diagnozy_pacienta.id_diagnoza = diagnozy.id_diagnoza
+WHERE id_pacienta = @ID AND diagnozy_pacienta.zaklucheniye = 'Да';";
+
+        public string Print_Perenesennye_Operacii_Pacienta = $@"SELECT CONCAT(Date_Format(date_provedeniya, '%d.%m.%y'),'г. - ',provedeno,'. Послеоперационный период: ',commentariy, '. ')
+FROM perenesennye_operacii INNER JOIN epikrizy ON perenesennye_operacii.id_epikriza = epikrizy.id_epikriza
+WHERE id_pacienta = @ID;";
+
+        public string Print_Preparaty_Pacienta = $@"SELECT DISTINCT preparaty.naimenovanie FROM preparaty
+INNER JOIN lechenie ON preparaty.id_preparata = lechenie.id_preparata
+INNER JOIN diagnozy ON lechenie.id_diagnoza = diagnozy.id_diagnoza
+INNER JOIN diagnozy_pacienta ON diagnozy.id_diagnoza = diagnozy_pacienta.id_diagnoza
+INNER JOIN epikrizy ON diagnozy_pacienta.id_epikriza = epikrizy.id_epikriza
+WHERE id_pacienta = @ID;";
+        
+        public string Print_Proved_LabIssl_Pacienta = $@"SELECT proved_lab_issled.id_proved_lab_issled, CONCAT(lab_issledovaniya.naimenovanie,' от ', DATE_FORMAT(date_proved, '%d.%m.%y'),'г. : ')
+FROM proved_lab_issled INNER JOIN epikrizy ON proved_lab_issled.id_epikriza = epikrizy.id_epikriza
+INNER JOIN lab_issledovaniya ON proved_lab_issled.id_lab_issledovaniya = lab_issledovaniya.id_lab_issledovaniya
+WHERE epikrizy.id_pacienta = @ID;";
+
+        public string Print_Dannye_LabIssl_Pacienta = $@"SELECT CASE
+	WHEN pokazat_lab_issled.ed_izm = '' AND commentariy = ''
+		THEN CONCAT(pokazat_lab_issled.naimenovanie,' ', znachenie)
+	WHEN pokazat_lab_issled.ed_izm = ''
+		THEN CONCAT(pokazat_lab_issled.naimenovanie,' ', znachenie,' ', commentariy)
+	WHEN commentariy = ''
+		THEN CONCAT(pokazat_lab_issled.naimenovanie,' ', znachenie,' ', pokazat_lab_issled.ed_izm)
+	ELSE CONCAT(pokazat_lab_issled.naimenovanie,' ', znachenie,' ', pokazat_lab_issled.ed_izm,' ',commentariy)
+END
+FROM dannye_lab_issled
+INNER JOIN proved_lab_issled ON dannye_lab_issled.id_proved_lab_issled = proved_lab_issled.id_proved_lab_issled
+INNER JOIN pokazat_lab_issled ON dannye_lab_issled.id_pokazat_lab_issled = pokazat_lab_issled.id_pokazat_lab_issled
+INNER JOIN epikrizy ON proved_lab_issled.id_epikriza = epikrizy.id_epikriza
+WHERE epikrizy.id_pacienta = @ID AND proved_lab_issled.id_proved_lab_issled = @Value1";
+
+        public string Print_Proved_InstrIssl_Pacienta = $@"SELECT proved_instr_issled.id_proved_instr_issled, CONCAT(instr_issledovaniya.naimenovanie,' от ', DATE_FORMAT(date_proved, '%d.%m.%y'),'г. : ')
+FROM proved_instr_issled INNER JOIN epikrizy ON proved_instr_issled.id_epikriza = epikrizy.id_epikriza
+INNER JOIN instr_issledovaniya ON proved_instr_issled.id_instr_issledovaniya = instr_issledovaniya.id_instr_issledovaniya
+WHERE epikrizy.id_pacienta = @ID;";
+
+        public string Print_Dannye_InstrIssl_Pacienta = $@"SELECT CASE
+	WHEN pokazat_instr_issled.ed_izm = '' AND commentariy = ''
+		THEN CONCAT(pokazat_instr_issled.naimenovanie,' ', znachenie)
+	WHEN pokazat_instr_issled.ed_izm = ''
+		THEN CONCAT(pokazat_instr_issled.naimenovanie,' ', znachenie,' ', commentariy)
+	WHEN commentariy = ''
+		THEN CONCAT(pokazat_instr_issled.naimenovanie,' ', znachenie,' ', pokazat_instr_issled.ed_izm)
+	ELSE CONCAT(pokazat_instr_issled.naimenovanie,' ', znachenie,' ', pokazat_instr_issled.ed_izm,' ',commentariy)
+END
+FROM dannye_instr_issled
+INNER JOIN proved_instr_issled ON dannye_instr_issled.id_proved_instr_issled = proved_instr_issled.id_proved_instr_issled
+INNER JOIN pokazat_instr_issled ON dannye_instr_issled.id_pokazat_instr_issled = pokazat_instr_issled.id_pokazat_instr_issled
+INNER JOIN epikrizy ON proved_instr_issled.id_epikriza = epikrizy.id_epikriza
+WHERE epikrizy.id_pacienta = @ID AND proved_instr_issled.id_proved_instr_issled = @Value1;";
+
+        public string Print_Recomendacii_Pacienta = $@"SELECT CONCAT(CONCAT('C ',date_n,' по ',date_k,': '),recomendacii)
+FROM epikrizy WHERE id_pacienta = @ID;";
+
+        public string Select_Pol_Pacienta_Kartochka = $@"SELECT pol 
+FROM pacienty WHERE id_pacienta = @ID;";
+        //Print Kartochka
+
+        //Print Reestr
+        public string Print_Reestr = $@"SELECT id_epikriza, CONCAT(pacienty.familiya, ' ',pacienty.imya, ' ', pacienty.otchestvo), DATE_FORMAT(date_n,'%d.%m.%Y'), DATE_FORMAT(date_k,'%d.%m.%Y'), lech_vrach
+FROM epikrizy INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
+WHERE id_otdeleniya = @ID AND date_n BETWEEN @Value1 AND @Value2 AND date_k BETWEEN @Value1 AND @Value2;";
+        //Print Reestr
     }
 }

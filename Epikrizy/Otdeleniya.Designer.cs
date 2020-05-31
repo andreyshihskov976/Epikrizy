@@ -55,11 +55,12 @@
             // 
             // button2
             // 
+            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.button2.Location = new System.Drawing.Point(221, 35);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(214, 28);
-            this.button2.TabIndex = 3;
+            this.button2.TabIndex = 4;
             this.button2.Text = "Отменить";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -67,10 +68,10 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.button3.Location = new System.Drawing.Point(1, 35);
+            this.button3.Location = new System.Drawing.Point(0, 35);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(214, 28);
-            this.button3.TabIndex = 4;
+            this.button3.TabIndex = 3;
             this.button3.Text = "Изменить";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);

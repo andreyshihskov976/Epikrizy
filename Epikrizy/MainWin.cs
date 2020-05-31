@@ -368,8 +368,9 @@ namespace Epikrizy
             pacienty.textBox2.Text = row.Cells[1].Value.ToString().Split(' ')[1];
             pacienty.textBox3.Text = row.Cells[1].Value.ToString().Split(' ')[2];
             pacienty.dateTimePicker1.Value = DateTime.Parse(row.Cells[2].Value.ToString());
-            pacienty.textBox4.Text = row.Cells[3].Value.ToString();
-            MySqlOperations.Search_In_ComboBox(row.Cells[4].Value.ToString(), pacienty.comboBox1);
+            MySqlOperations.Search_In_ComboBox(row.Cells[3].Value.ToString(), pacienty.comboBox2);
+            pacienty.textBox4.Text = row.Cells[4].Value.ToString();
+            MySqlOperations.Search_In_ComboBox(row.Cells[5].Value.ToString(), pacienty.comboBox1);
             pacienty.AcceptButton = pacienty.button3;
             pacienty.Pacienty_Closed += пациентыToolStripMenuItem_Click;
             pacienty.Show();
@@ -437,22 +438,25 @@ namespace Epikrizy
             MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Proved_LabIssl, epikrizy.dataGridView3, row.Cells[0].Value.ToString());
             epikrizy.dataGridView3.Columns[0].Visible = false;
             output = MySqlOperations.Select_Text(MySqlQueries.Select_Dop_Sved, row.Cells[0].Value.ToString());
-            epikrizy.textBox6.Text = output.Split(';')[0];
-            epikrizy.textBox7.Text = output.Split(';')[1];
-            MySqlOperations.Search_In_ComboBox(output.Split(';')[2], epikrizy.comboBox7);
-            MySqlOperations.Search_In_ComboBox(output.Split(';')[3], epikrizy.comboBox8);
-            epikrizy.textBox10.Text = output.Split(';')[4];
-            epikrizy.textBox11.Text = output.Split(';')[5];
-            epikrizy.textBox12.Text = output.Split(';')[6];
-            epikrizy.textBox13.Text = output.Split(';')[7];
-            epikrizy.textBox14.Text = output.Split(';')[8];
-            epikrizy.textBox17.Text = output.Split(';')[9];
-            epikrizy.textBox18.Text = output.Split(';')[10];
-            epikrizy.textBox19.Text = output.Split(';')[11];
-            epikrizy.textBox20.Text = output.Split(';')[12];
-            epikrizy.textBox21.Text = output.Split(';')[13];
-            epikrizy.textBox22.Text = output.Split(';')[14];
-            epikrizy.textBox23.Text = output.Split(';')[15];
+            if (output != null && output != "")
+            {
+                epikrizy.textBox6.Text = output.Split(';')[0];
+                epikrizy.textBox7.Text = output.Split(';')[1];
+                MySqlOperations.Search_In_ComboBox(output.Split(';')[2], epikrizy.comboBox7);
+                MySqlOperations.Search_In_ComboBox(output.Split(';')[3], epikrizy.comboBox8);
+                epikrizy.textBox10.Text = output.Split(';')[4];
+                epikrizy.textBox11.Text = output.Split(';')[5];
+                epikrizy.textBox12.Text = output.Split(';')[6];
+                epikrizy.textBox13.Text = output.Split(';')[7];
+                epikrizy.textBox14.Text = output.Split(';')[8];
+                epikrizy.textBox17.Text = output.Split(';')[9];
+                epikrizy.textBox18.Text = output.Split(';')[10];
+                epikrizy.textBox19.Text = output.Split(';')[11];
+                epikrizy.textBox20.Text = output.Split(';')[12];
+                epikrizy.textBox21.Text = output.Split(';')[13];
+                epikrizy.textBox22.Text = output.Split(';')[14];
+                epikrizy.textBox23.Text = output.Split(';')[15];
+            }
             epikrizy.button3.Visible = false;
             epikrizy.button5.Visible = true;
             if (MySqlOperations.Select_Text(MySqlQueries.Exists_Dop_Sved, row.Cells[0].Value.ToString()) == "1")
@@ -653,7 +657,19 @@ namespace Epikrizy
 
         private void toolStripMenuItem19_Click(object sender, EventArgs e)
         {
-            MySqlOperations.Print_Epikriz(saveFileDialog1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+            if (dataGridView1.SelectedRows.Count == 1)
+            {
+                if (identify == "epikrizy")
+                    MySqlOperations.Print_Epikriz(saveFileDialog1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                if (identify == "pacienty")
+                    MySqlOperations.Print_Kartochka(saveFileDialog1, dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                if (identify == "otdeleniya")
+                {
+                    Reestr reestr = new Reestr(MySqlOperations, dataGridView1.SelectedRows[0].Cells[1].Value.ToString());
+                    reestr.ShowDialog();
+                }
+            }
+            else MessageBox.Show("Для сохранения необходимо выделить желаемую запись.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
 }
