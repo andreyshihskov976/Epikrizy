@@ -671,5 +671,17 @@ namespace Epikrizy
             }
             else MessageBox.Show("Для сохранения необходимо выделить желаемую запись.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
+
+        private void динамикаЗаболеванийToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Dinamic dinamic = new Dinamic(MySqlOperations);
+            dinamic.Show();
+        }
+
+        private void статискаПоЗаболеваемостиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Statistics statistics = new Statistics(MySqlOperations);
+            statistics.Show();
+        }
     }
 }

@@ -60,6 +60,9 @@
             this.инструментальныеИсследованияToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.пациентыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выписныеЭпикризыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.статисткаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.динамикаЗаболеванийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.статискаПоЗаболеваемостиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
@@ -82,6 +85,7 @@
             this.опрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.поискToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem22 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -102,7 +106,6 @@
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.toolStripMenuItem22 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -272,7 +275,8 @@
             this.диагнозыИПрепаратыToolStripMenuItem,
             this.исследованияToolStripMenuItem,
             this.пациентыToolStripMenuItem,
-            this.выписныеЭпикризыToolStripMenuItem});
+            this.выписныеЭпикризыToolStripMenuItem,
+            this.статисткаToolStripMenuItem});
             this.открытьToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("открытьToolStripMenuItem.Image")));
             this.открытьToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
@@ -379,6 +383,29 @@
             this.выписныеЭпикризыToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.выписныеЭпикризыToolStripMenuItem.Text = "Выписные эпикризы";
             this.выписныеЭпикризыToolStripMenuItem.Click += new System.EventHandler(this.выписныеЭпикризыToolStripMenuItem_Click);
+            // 
+            // статисткаToolStripMenuItem
+            // 
+            this.статисткаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.динамикаЗаболеванийToolStripMenuItem,
+            this.статискаПоЗаболеваемостиToolStripMenuItem});
+            this.статисткаToolStripMenuItem.Name = "статисткаToolStripMenuItem";
+            this.статисткаToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.статисткаToolStripMenuItem.Text = "Статистка";
+            // 
+            // динамикаЗаболеванийToolStripMenuItem
+            // 
+            this.динамикаЗаболеванийToolStripMenuItem.Name = "динамикаЗаболеванийToolStripMenuItem";
+            this.динамикаЗаболеванийToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.динамикаЗаболеванийToolStripMenuItem.Text = "Динамика заболеваний";
+            this.динамикаЗаболеванийToolStripMenuItem.Click += new System.EventHandler(this.динамикаЗаболеванийToolStripMenuItem_Click);
+            // 
+            // статискаПоЗаболеваемостиToolStripMenuItem
+            // 
+            this.статискаПоЗаболеваемостиToolStripMenuItem.Name = "статискаПоЗаболеваемостиToolStripMenuItem";
+            this.статискаПоЗаболеваемостиToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.статискаПоЗаболеваемостиToolStripMenuItem.Text = "Статиска по заболеваемости";
+            this.статискаПоЗаболеваемостиToolStripMenuItem.Click += new System.EventHandler(this.статискаПоЗаболеваемостиToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
@@ -550,6 +577,12 @@
             this.поискToolStripMenuItem.Size = new System.Drawing.Size(54, 23);
             this.поискToolStripMenuItem.Text = "&Поиск";
             this.поискToolStripMenuItem.Click += new System.EventHandler(this.поискToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem22
+            // 
+            this.toolStripMenuItem22.Name = "toolStripMenuItem22";
+            this.toolStripMenuItem22.Size = new System.Drawing.Size(60, 23);
+            this.toolStripMenuItem22.Text = "Фильтр";
             // 
             // toolStripMenuItem6
             // 
@@ -745,12 +778,6 @@
             this.Column1.HeaderText = "Скоро тут будет инфа в разрезе выбранной записи";
             this.Column1.Name = "Column1";
             // 
-            // toolStripMenuItem22
-            // 
-            this.toolStripMenuItem22.Name = "toolStripMenuItem22";
-            this.toolStripMenuItem22.Size = new System.Drawing.Size(60, 23);
-            this.toolStripMenuItem22.Text = "Фильтр";
-            // 
             // MainWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -856,6 +883,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem20;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem21;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem22;
+        private System.Windows.Forms.ToolStripMenuItem статисткаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem динамикаЗаболеванийToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem статискаПоЗаболеваемостиToolStripMenuItem;
     }
 }
 

@@ -514,5 +514,23 @@ FROM pacienty WHERE id_pacienta = @ID;";
 FROM epikrizy INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
 WHERE id_otdeleniya = @ID AND date_n BETWEEN @Value1 AND @Value2 AND date_k BETWEEN @Value1 AND @Value2;";
         //Print Reestr
+
+        //Dinamic
+        public string Select_Dinamic = $@"SET lc_time_names = 'ru_RU';
+SELECT COUNT(diagnozy_pacienta.id_diagnoza), DATE_FORMAT(epikrizy.date_k,'31 %M %Yг.')
+FROM diagnozy_pacienta INNER JOIN diagnozy ON diagnozy_pacienta.id_diagnoza = diagnozy.id_diagnoza
+INNER JOIN epikrizy ON diagnozy_pacienta.id_epikriza = epikrizy.id_epikriza
+WHERE diagnozy.id_diagnoza = @ID AND diagnozy_pacienta.zaklucheniye = 'Да'
+GROUP BY DATE_FORMAT(epikrizy.date_k,'31 %M %Yг.')
+ORDER BY DATE_FORMAT(epikrizy.date_k,'31 %M %Yг.') DESC;";
+
+        public string Select_Statistics = $@"SET lc_time_names = 'ru_RU';
+SELECT COUNT(diagnozy_pacienta.id_diagnoza), diagnozy.naimenovanie
+FROM diagnozy_pacienta INNER JOIN diagnozy ON diagnozy_pacienta.id_diagnoza = diagnozy.id_diagnoza
+INNER JOIN epikrizy ON diagnozy_pacienta.id_epikriza = epikrizy.id_epikriza
+WHERE epikrizy.date_k BETWEEN @Value1 AND @Value2 AND diagnozy_pacienta.zaklucheniye = 'Да'
+GROUP BY diagnozy.naimenovanie
+ORDER BY COUNT(diagnozy_pacienta.id_diagnoza) DESC;";
+        //Dinamic
     }
 }
