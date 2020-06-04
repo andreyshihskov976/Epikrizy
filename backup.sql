@@ -28,10 +28,14 @@ CREATE TABLE IF NOT EXISTS `dannye_instr_issled` (
   KEY `id_pokazat_instr_issled` (`id_pokazat_instr_issled`),
   CONSTRAINT `dannye_instr_issled_ibfk_2` FOREIGN KEY (`id_pokazat_instr_issled`) REFERENCES `pokazat_instr_issled` (`id_pokazat_instr_issled`),
   CONSTRAINT `dannye_instr_issled_ibfk_3` FOREIGN KEY (`id_proved_instr_issled`) REFERENCES `proved_instr_issled` (`id_proved_instr_issled`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Данные показателей инструментальных исследований';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Данные показателей инструментальных исследований';
 
--- Дамп данных таблицы vypisnie_epikrizy.dannye_instr_issled: ~0 rows (приблизительно)
+-- Дамп данных таблицы vypisnie_epikrizy.dannye_instr_issled: ~3 rows (приблизительно)
 /*!40000 ALTER TABLE `dannye_instr_issled` DISABLE KEYS */;
+INSERT IGNORE INTO `dannye_instr_issled` (`id_dannyh_instr_issled`, `id_proved_instr_issled`, `id_pokazat_instr_issled`, `znachenie`, `commentariy`) VALUES
+	(7, 5, 1, 'Синусовый', 'Обычный'),
+	(8, 5, 2, '85', ''),
+	(9, 5, 3, '123', '');
 /*!40000 ALTER TABLE `dannye_instr_issled` ENABLE KEYS */;
 
 -- Дамп структуры для таблица vypisnie_epikrizy.dannye_lab_issled
@@ -46,9 +50,9 @@ CREATE TABLE IF NOT EXISTS `dannye_lab_issled` (
   KEY `id_pokazat_lab_issled` (`id_pokazat_lab_issled`),
   CONSTRAINT `dannye_lab_issled_ibfk_2` FOREIGN KEY (`id_pokazat_lab_issled`) REFERENCES `pokazat_lab_issled` (`id_pokazat_lab_issled`),
   CONSTRAINT `dannye_lab_issled_ibfk_3` FOREIGN KEY (`id_proved_lab_issled`) REFERENCES `proved_lab_issled` (`id_proved_lab_issled`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='Данные показателей лабораторных исследований';
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='Данные показателей лабораторных исследований';
 
--- Дамп данных таблицы vypisnie_epikrizy.dannye_lab_issled: ~6 rows (приблизительно)
+-- Дамп данных таблицы vypisnie_epikrizy.dannye_lab_issled: ~8 rows (приблизительно)
 /*!40000 ALTER TABLE `dannye_lab_issled` DISABLE KEYS */;
 INSERT IGNORE INTO `dannye_lab_issled` (`id_dannyh_lab_issled`, `id_proved_lab_issled`, `id_pokazat_lab_issled`, `znachenie`, `commentariy`) VALUES
 	(19, 4, 15, 'II', ''),
@@ -56,7 +60,11 @@ INSERT IGNORE INTO `dannye_lab_issled` (`id_dannyh_lab_issled`, `id_proved_lab_i
 	(21, 5, 15, 'II', ''),
 	(22, 5, 16, '+', ''),
 	(23, 6, 19, 'Есть', ''),
-	(24, 6, 20, 'Норма', '');
+	(24, 6, 20, 'Норма', ''),
+	(25, 8, 15, 'II', ''),
+	(26, 8, 16, '+', ''),
+	(27, 9, 19, '123', '456'),
+	(28, 9, 20, '321', '654');
 /*!40000 ALTER TABLE `dannye_lab_issled` ENABLE KEYS */;
 
 -- Дамп структуры для таблица vypisnie_epikrizy.diagnozy
@@ -64,13 +72,14 @@ CREATE TABLE IF NOT EXISTS `diagnozy` (
   `id_diagnoza` int(11) NOT NULL AUTO_INCREMENT,
   `naimenovanie` varchar(50) NOT NULL,
   PRIMARY KEY (`id_diagnoza`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Справочник диагнозов';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Справочник диагнозов';
 
 -- Дамп данных таблицы vypisnie_epikrizy.diagnozy: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `diagnozy` DISABLE KEYS */;
 INSERT IGNORE INTO `diagnozy` (`id_diagnoza`, `naimenovanie`) VALUES
 	(1, 'Взрыв жопы'),
-	(2, 'Жопа горит сильно');
+	(2, 'Жопа горит сильно'),
+	(5, 'Гастрит');
 /*!40000 ALTER TABLE `diagnozy` ENABLE KEYS */;
 
 -- Дамп структуры для таблица vypisnie_epikrizy.diagnozy_pacienta
@@ -85,14 +94,15 @@ CREATE TABLE IF NOT EXISTS `diagnozy_pacienta` (
   KEY `id_diagnoza` (`id_diagnoza`),
   CONSTRAINT `diagnozy_pacienta_ibfk_2` FOREIGN KEY (`id_diagnoza`) REFERENCES `diagnozy` (`id_diagnoza`) ON UPDATE CASCADE,
   CONSTRAINT `diagnozy_pacienta_ibfk_3` FOREIGN KEY (`id_epikriza`) REFERENCES `epikrizy` (`id_epikriza`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='Перечень диагнозов, поставленных пациенту';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Перечень диагнозов, поставленных пациенту';
 
--- Дамп данных таблицы vypisnie_epikrizy.diagnozy_pacienta: ~2 rows (приблизительно)
+-- Дамп данных таблицы vypisnie_epikrizy.diagnozy_pacienta: ~4 rows (приблизительно)
 /*!40000 ALTER TABLE `diagnozy_pacienta` DISABLE KEYS */;
 INSERT IGNORE INTO `diagnozy_pacienta` (`id_diagnoza_pacienta`, `id_epikriza`, `id_diagnoza`, `commentariy`, `zaklucheniye`) VALUES
 	(2, 3, 1, 'BOOM-BOOM!', 'Да'),
 	(7, 4, 2, 'FIRE!!!', 'Да'),
-	(8, 4, 1, 'BOOM-BOOM!', 'Да');
+	(8, 4, 2, 'BOOM-BOOM!', 'Да'),
+	(9, 5, 2, 'Поверхностный гастрит 1 степени.', 'Да');
 /*!40000 ALTER TABLE `diagnozy_pacienta` ENABLE KEYS */;
 
 -- Дамп структуры для таблица vypisnie_epikrizy.doljnosti
@@ -134,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `dop_sved` (
   CONSTRAINT `dop_sved_ibfk_1` FOREIGN KEY (`id_epikriza`) REFERENCES `epikrizy` (`id_epikriza`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Дополнительные сведения эпикриза';
 
--- Дамп данных таблицы vypisnie_epikrizy.dop_sved: ~2 rows (приблизительно)
+-- Дамп данных таблицы vypisnie_epikrizy.dop_sved: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `dop_sved` DISABLE KEYS */;
 INSERT IGNORE INTO `dop_sved` (`id_dop_sved`, `id_epikriza`, `ad`, `gen_anam`, `smoking`, `alco`, `imt`, `cholesterin`, `blood`, `urina`, `ekg`, `skore`, `vgd`, `predstat`, `mol`, `flura`, `glukoza`, `suicide`) VALUES
 	(2, 3, '2', '3', 'Да', 'Да', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17'),
@@ -158,13 +168,14 @@ CREATE TABLE IF NOT EXISTS `epikrizy` (
   KEY `id_otdeleniya` (`id_otdeleniya`),
   CONSTRAINT `epikrizy_ibfk_1` FOREIGN KEY (`id_pacienta`) REFERENCES `pacienty` (`id_pacienta`),
   CONSTRAINT `epikrizy_ibfk_2` FOREIGN KEY (`id_otdeleniya`) REFERENCES `otdeleniya` (`id_otdeleniya`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Выписные эпикризы';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Выписные эпикризы';
 
 -- Дамп данных таблицы vypisnie_epikrizy.epikrizy: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `epikrizy` DISABLE KEYS */;
 INSERT IGNORE INTO `epikrizy` (`id_epikriza`, `id_pacienta`, `date_n`, `date_k`, `id_otdeleniya`, `sost_vypiski`, `lvn_n`, `lvn_k`, `recomendacii`, `lech_vrach`) VALUES
 	(3, 1, '2020-05-27', '2020-05-28', 2, 'yuio', '2020-05-29', '2020-05-30', 'etrh', 'Синенок Ангелина Олеговна'),
-	(4, 2, '2020-05-27', '2020-05-30', 4, 'rdf', '2020-05-31', '2020-06-01', 'rsdf', 'Шишков Андрей Алексеевич');
+	(4, 2, '2020-05-27', '2020-05-30', 4, 'rdf', '2020-05-31', '2020-06-01', 'rsdf', 'Шишков Андрей Алексеевич'),
+	(5, 2, '2020-06-01', '2020-06-05', 4, 'Удовлетворительном состоянии', '2020-06-06', '2020-06-07', 'Пройти повторное обследование через 12 месяцев. Принимать Омепразол раз в день в течении 2 месяцев.', 'Шишков Андрей Алексеевич');
 /*!40000 ALTER TABLE `epikrizy` ENABLE KEYS */;
 
 -- Дамп структуры для таблица vypisnie_epikrizy.gcgp
@@ -259,13 +270,16 @@ CREATE TABLE IF NOT EXISTS `lechenie` (
   KEY `id_preparata` (`id_preparata`),
   CONSTRAINT `lechenie_ibfk_1` FOREIGN KEY (`id_diagnoza`) REFERENCES `diagnozy` (`id_diagnoza`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `lechenie_ibfk_2` FOREIGN KEY (`id_preparata`) REFERENCES `preparaty` (`id_preparata`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='Перечень препаратор для лечения диагноза';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='Перечень препаратор для лечения диагноза';
 
--- Дамп данных таблицы vypisnie_epikrizy.lechenie: ~2 rows (приблизительно)
+-- Дамп данных таблицы vypisnie_epikrizy.lechenie: ~5 rows (приблизительно)
 /*!40000 ALTER TABLE `lechenie` DISABLE KEYS */;
 INSERT IGNORE INTO `lechenie` (`id_lecheniya`, `id_diagnoza`, `id_preparata`) VALUES
 	(1, 1, 1),
-	(3, 2, 1);
+	(3, 2, 1),
+	(8, 2, 2),
+	(9, 5, 1),
+	(10, 5, 3);
 /*!40000 ALTER TABLE `lechenie` ENABLE KEYS */;
 
 -- Дамп структуры для таблица vypisnie_epikrizy.otdeleniya
@@ -289,6 +303,7 @@ CREATE TABLE IF NOT EXISTS `pacienty` (
   `imya` varchar(30) NOT NULL,
   `otchestvo` varchar(30) NOT NULL,
   `data_rojdeniya` date NOT NULL,
+  `pol` varchar(1) NOT NULL,
   `adress_projivaniya` varchar(150) NOT NULL,
   `id_gcgp` int(11) NOT NULL,
   PRIMARY KEY (`id_pacienta`),
@@ -298,9 +313,9 @@ CREATE TABLE IF NOT EXISTS `pacienty` (
 
 -- Дамп данных таблицы vypisnie_epikrizy.pacienty: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `pacienty` DISABLE KEYS */;
-INSERT IGNORE INTO `pacienty` (`id_pacienta`, `familiya`, `imya`, `otchestvo`, `data_rojdeniya`, `adress_projivaniya`, `id_gcgp`) VALUES
-	(1, 'Кракодеев', 'Евгений', 'Александрович', '2000-07-07', 'г. Добруш, ул. Пролетарская, д.13', 1),
-	(2, 'Шишкова', 'Наталья', 'Леонидовна', '1977-02-13', 'г. Гомель, пр-т Речицкий, 4д 53', 1);
+INSERT IGNORE INTO `pacienty` (`id_pacienta`, `familiya`, `imya`, `otchestvo`, `data_rojdeniya`, `pol`, `adress_projivaniya`, `id_gcgp`) VALUES
+	(1, 'Кракодеев', 'Евгений', 'Александрович', '2000-07-07', 'М', 'г. Добруш, ул. Пролетарская, д.13', 1),
+	(2, 'Шишкова', 'Наталья', 'Леонидовна', '1976-02-13', 'Ж', 'г. Гомель, пр-т Речицкий, 4д 53', 1);
 /*!40000 ALTER TABLE `pacienty` ENABLE KEYS */;
 
 -- Дамп структуры для таблица vypisnie_epikrizy.perenesennye_operacii
@@ -313,12 +328,13 @@ CREATE TABLE IF NOT EXISTS `perenesennye_operacii` (
   PRIMARY KEY (`id_operacii`),
   KEY `id_pacienta` (`id_epikriza`),
   CONSTRAINT `perenesennye_operacii_ibfk_1` FOREIGN KEY (`id_epikriza`) REFERENCES `epikrizy` (`id_epikriza`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Перенесенные операции пациентов';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Перенесенные операции пациентов';
 
 -- Дамп данных таблицы vypisnie_epikrizy.perenesennye_operacii: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `perenesennye_operacii` DISABLE KEYS */;
 INSERT IGNORE INTO `perenesennye_operacii` (`id_operacii`, `id_epikriza`, `date_provedeniya`, `provedeno`, `commentariy`) VALUES
-	(2, 4, '2020-05-28', 'Ватноадекватный', 'Пример заполнения');
+	(2, 4, '2020-05-28', 'Пример заполнения', 'Ватноадекватный'),
+	(3, 5, '2020-06-02', 'Гастроскопия желудка с пробой слизистой оболочки', 'Без особенностей');
 /*!40000 ALTER TABLE `perenesennye_operacii` ENABLE KEYS */;
 
 -- Дамп структуры для таблица vypisnie_epikrizy.personal
@@ -388,13 +404,14 @@ CREATE TABLE IF NOT EXISTS `preparaty` (
   `naimenovanie` varchar(50) NOT NULL DEFAULT '',
   `farm_svoistva` varchar(200) NOT NULL DEFAULT '',
   PRIMARY KEY (`id_preparata`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Справочник препаратов и назначенных лечений лечений';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Справочник препаратов и назначенных лечений лечений';
 
 -- Дамп данных таблицы vypisnie_epikrizy.preparaty: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `preparaty` DISABLE KEYS */;
 INSERT IGNORE INTO `preparaty` (`id_preparata`, `naimenovanie`, `farm_svoistva`) VALUES
 	(1, 'Аспирин', 'Болит живот, рука, ноги, голова?! Выпей АСПИРИН - точно пройдет. Разорвало живот, оторвало руку, ногу, голову ?! Выпей АСПИРИН - отрастет всё снова!'),
-	(2, 'Вазелин', '"Охлади своё трахание, Углепластик"');
+	(2, 'Вазелин', '"Охлади своё трахание, Углепластик"'),
+	(3, 'Омепразол', 'Применяется при заболеваниях желудка, а также при болях в ЖКТ');
 /*!40000 ALTER TABLE `preparaty` ENABLE KEYS */;
 
 -- Дамп структуры для таблица vypisnie_epikrizy.proved_instr_issled
@@ -408,10 +425,12 @@ CREATE TABLE IF NOT EXISTS `proved_instr_issled` (
   KEY `id_instr_issledovaniya` (`id_instr_issledovaniya`),
   CONSTRAINT `proved_instr_issled_ibfk_1` FOREIGN KEY (`id_instr_issledovaniya`) REFERENCES `instr_issledovaniya` (`id_instr_issledovaniya`),
   CONSTRAINT `proved_instr_issled_ibfk_2` FOREIGN KEY (`id_epikriza`) REFERENCES `epikrizy` (`id_epikriza`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Проведенные инстр. исследования';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Проведенные инстр. исследования';
 
 -- Дамп данных таблицы vypisnie_epikrizy.proved_instr_issled: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `proved_instr_issled` DISABLE KEYS */;
+INSERT IGNORE INTO `proved_instr_issled` (`id_proved_instr_issled`, `id_epikriza`, `id_instr_issledovaniya`, `date_proved`) VALUES
+	(5, 5, 1, '2020-06-01');
 /*!40000 ALTER TABLE `proved_instr_issled` ENABLE KEYS */;
 
 -- Дамп структуры для таблица vypisnie_epikrizy.proved_lab_issled
@@ -425,14 +444,16 @@ CREATE TABLE IF NOT EXISTS `proved_lab_issled` (
   KEY `id_lab_issledovaniya` (`id_lab_issledovaniya`),
   CONSTRAINT `proved_lab_issled_ibfk_1` FOREIGN KEY (`id_lab_issledovaniya`) REFERENCES `lab_issledovaniya` (`id_lab_issledovaniya`),
   CONSTRAINT `proved_lab_issled_ibfk_2` FOREIGN KEY (`id_epikriza`) REFERENCES `epikrizy` (`id_epikriza`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='Проведенные лаб. исследования';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Проведенные лаб. исследования';
 
--- Дамп данных таблицы vypisnie_epikrizy.proved_lab_issled: ~3 rows (приблизительно)
+-- Дамп данных таблицы vypisnie_epikrizy.proved_lab_issled: ~5 rows (приблизительно)
 /*!40000 ALTER TABLE `proved_lab_issled` DISABLE KEYS */;
 INSERT IGNORE INTO `proved_lab_issled` (`id_proved_lab_issled`, `id_epikriza`, `id_lab_issledovaniya`, `date_proved`) VALUES
 	(4, 3, 18, '2020-05-28'),
 	(5, 4, 18, '2020-05-27'),
-	(6, 4, 19, '2020-05-27');
+	(6, 4, 19, '2020-05-27'),
+	(8, 5, 18, '2020-06-02'),
+	(9, 5, 19, '2020-06-02');
 /*!40000 ALTER TABLE `proved_lab_issled` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
