@@ -39,6 +39,7 @@ namespace Epikrizy
         {
             try
             {
+                MessageBox.Show("Не обнаружена база данных или сервер не активен." + '\n' + "Обратитесь к системному администратору.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 MySqlOperations.OpenConnection();
                 splitContainer1.Panel2Collapsed = true;
             }
@@ -329,6 +330,7 @@ namespace Epikrizy
         {
             Preparaty preparaty = new Preparaty(MySqlOperations, row.Cells[0].Value.ToString());
             preparaty.textBox1.Text = row.Cells[1].Value.ToString();
+            preparaty.textBox2.Text = row.Cells[2].Value.ToString();
             preparaty.button3.Visible = true;
             preparaty.button1.Visible = false;
             preparaty.AcceptButton = preparaty.button3;
@@ -682,6 +684,11 @@ namespace Epikrizy
         {
             Statistics statistics = new Statistics(MySqlOperations);
             statistics.Show();
+        }
+
+        private void опрограммеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Программа "+'"'+"Выписные Эпикризы БСМП"+'"'+" разработана по индивидуальному заданию на дипломной проект. Программа позволяет осуществлять функции добавления, удаления, редактирования записей таблиц. Предусмотрен вывод на печать следующих документов: Личная карточка пациента, Выписной эпикриз, Реестр выписных эпикризов из истории болезни. Также программа имеет функцию построения статистических графиков за выбранный период. Предусмотрены проверки нежелательных действий пользователя. Программу разработал учащийся группы ПО-41 Шишков Андрей Алексеевич.", "О программе...", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

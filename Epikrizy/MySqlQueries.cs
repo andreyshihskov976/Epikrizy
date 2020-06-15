@@ -151,7 +151,7 @@ WHERE instr_issledovaniya.id_instr_issledovaniya = @ID;";
 
         public string Select_ID_InstrIssl_ComboBox = $@"SELECT id_instr_issledovaniya FROM instr_issledovaniya WHERE naimenovanie = @Value1;";
 
-        public string Select_Diagnozy = $@"SELECT diagnozy.id_diagnoza, diagnozy.naimenovanie AS 'Наименование исследования'
+        public string Select_Diagnozy = $@"SELECT diagnozy.id_diagnoza, diagnozy.naimenovanie AS 'Наименование диагноза'
         FROM diagnozy;";
 
         public string Select_Diagnozy_ComboBox = $@"SELECT naimenovanie FROM diagnozy;";
@@ -183,7 +183,7 @@ WHERE diagnozy.id_diagnoza = @ID;";
 FROM perenesennye_operacii INNER JOIN epikrizy ON perenesennye_operacii.id_epikriza = epikrizy.id_epikriza
 WHERE epikrizy.id_epikriza = @ID;";
 
-        public string Select_Epikrizy = $@"SELECT id_epikriza, CONCAT('Эпикриз №',id_epikriza) AS '', CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Пациент (Ф.И.О.)', date_n AS 'Дата начала лечения',
+        public string Select_Epikrizy = $@"SELECT id_epikriza, CONCAT('Эпикриз №',id_epikriza) AS ' ', CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Пациент (Ф.И.О.)', date_n AS 'Дата начала лечения',
 date_k AS 'Дата окончания лечения', otdeleniya.naimenovanie AS 'Наименование отделения'
 FROM epikrizy INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
 INNER JOIN otdeleniya ON epikrizy.id_otdeleniya = otdeleniya.id_otdeleniya;";

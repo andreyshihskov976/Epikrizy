@@ -77,8 +77,8 @@ CREATE TABLE IF NOT EXISTS `diagnozy` (
 -- Дамп данных таблицы vypisnie_epikrizy.diagnozy: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `diagnozy` DISABLE KEYS */;
 INSERT IGNORE INTO `diagnozy` (`id_diagnoza`, `naimenovanie`) VALUES
-	(1, 'Взрыв жопы'),
-	(2, 'Жопа горит сильно'),
+	(1, 'Аппендицит'),
+	(2, 'Язва желудка'),
 	(5, 'Гастрит');
 /*!40000 ALTER TABLE `diagnozy` ENABLE KEYS */;
 
