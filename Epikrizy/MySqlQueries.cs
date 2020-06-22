@@ -214,6 +214,125 @@ WHERE epikrizy.id_epikriza = @ID;";
         public string Select_Dop_Sved = $@"SELECT CONCAT(ad, ';', gen_anam, ';', smoking, ';', alco, ';', imt, ';', cholesterin, ';', blood, ';', urina, ';', ekg, ';', skore, ';', vgd, ';', predstat, ';', mol, ';', flura, ';', glukoza, ';', suicide) FROM dop_sved WHERE id_epikriza = @ID;";
         //Select
 
+        //Select Add Panel
+        public string Select_Lab_Otdeleniya_Add = $@"SELECT lab_issledovaniya.naimenovanie AS 'Наименование исследования' FROM lab_issledovaniya
+INNER JOIN lab_otdeleniya ON lab_issledovaniya.id_lab_issledovaniya = lab_otdeleniya.id_lab_issledovaniya
+WHERE lab_otdeleniya.id_otdeleniya = @ID;";
+
+        public string Select_Instr_Otdeleniya_Add = $@"SELECT instr_issledovaniya.naimenovanie AS 'Наименование исследования' FROM instr_issledovaniya
+INNER JOIN instr_otdeleniya ON instr_issledovaniya.id_instr_issledovaniya = instr_otdeleniya.id_instr_issledovaniya
+WHERE instr_otdeleniya.id_otdeleniya = @ID;";
+
+        public string Select_Pacienty_Add = $@"SELECT CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Ф.И.О. Пациента'
+FROM pacienty INNER JOIN epikrizy ON pacienty.id_pacienta = epikrizy.id_pacienta
+INNER JOIN otdeleniya ON epikrizy.id_otdeleniya = otdeleniya.id_otdeleniya
+WHERE otdeleniya.id_otdeleniya = @ID;";
+
+        public string Select_Epikrizy_Add = $@"SELECT CONCAT('Эпикризы №', epikrizy.id_epikriza) AS 'Номер эпикриза', CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Ф.И.О. Пациента', epikrizy.date_n AS 'Начало лечения', epikrizy.date_k AS 'Окончание лечения'
+FROM epikrizy INNER JOIN otdeleniya ON epikrizy.id_otdeleniya = otdeleniya.id_otdeleniya
+INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
+WHERE otdeleniya.id_otdeleniya = @ID;";
+
+        public string Select_Diagnozy_Add = $@"SELECT diagnozy.naimenovanie AS 'Наименование диагноза'
+FROM diagnozy INNER JOIN lechenie ON diagnozy.id_diagnoza = lechenie.id_diagnoza
+INNER JOIN preparaty ON lechenie.id_preparata = preparaty.id_preparata
+WHERE preparaty.id_preparata = @ID;";
+
+        public string Select_Pacienty_Add_2 = $@"SELECT CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Ф.И.О. Пациента'
+FROM pacienty INNER JOIN epikrizy ON pacienty.id_pacienta = epikrizy.id_pacienta
+INNER JOIN diagnozy_pacienta ON diagnozy_pacienta.id_epikriza = epikrizy.id_epikriza
+INNER JOIN diagnozy ON diagnozy_pacienta.id_diagnoza = diagnozy.id_diagnoza
+INNER JOIN lechenie ON lechenie.id_diagnoza = diagnozy.id_diagnoza
+INNER JOIN preparaty ON preparaty.id_preparata = lechenie.id_preparata
+WHERE preparaty.id_preparata = @ID
+GROUP BY pacienty.id_pacienta;";
+
+        public string Select_Epikrizy_Add_2 = $@"SELECT CONCAT('Эпикризы №', epikrizy.id_epikriza) AS 'Номер эпикриза', CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Ф.И.О. Пациента', epikrizy.date_n AS 'Начало лечения', epikrizy.date_k AS 'Окончание лечения'
+FROM epikrizy INNER JOIN diagnozy_pacienta ON  diagnozy_pacienta.id_epikriza = epikrizy.id_epikriza
+INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
+INNER JOIN diagnozy ON diagnozy_pacienta.id_diagnoza = diagnozy.id_diagnoza
+INNER JOIN lechenie ON diagnozy.id_diagnoza = lechenie.id_diagnoza
+INNER JOIN preparaty ON lechenie.id_preparata = preparaty.id_preparata
+WHERE preparaty.id_preparata = @ID;";
+
+        public string Select_Diagnozy_Add_2 = $@"SELECT diagnozy.naimenovanie AS 'Наименование диагноза'
+FROM diagnozy INNER JOIN diagnozy_pacienta ON diagnozy_pacienta.id_diagnoza = diagnozy.id_diagnoza
+INNER JOIN epikrizy ON epikrizy.id_epikriza = diagnozy_pacienta.id_epikriza
+INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
+WHERE pacienty.id_pacienta = @ID
+GROUP BY diagnozy.id_diagnoza;";
+
+        public string Select_Epikrizy_Add_3 = $@"SELECT CONCAT('Эпикризы №', epikrizy.id_epikriza) AS 'Номер эпикриза', CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Ф.И.О. Пациента', epikrizy.date_n AS 'Начало лечения', epikrizy.date_k AS 'Окончание лечения'
+FROM epikrizy INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
+WHERE pacienty.id_pacienta = @ID;";
+
+        public string Select_Perenes_Operacii_Add = $@"SELECT perenesennye_operacii.date_provedeniya AS 'Дата проведения', perenesennye_operacii.provedeno AS 'Проведено', perenesennye_operacii.commentariy AS 'Комментарий'
+FROM perenesennye_operacii INNER JOIN epikrizy ON perenesennye_operacii.id_epikriza = epikrizy.id_epikriza
+INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
+WHERE pacienty.id_pacienta = @ID;";
+
+        public string Select_Otdeleniya_Add = $@"SELECT otdeleniya.naimenovanie AS 'Наименование отделения'
+FROM otdeleniya INNER JOIN epikrizy ON epikrizy.id_otdeleniya = otdeleniya.id_otdeleniya
+INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
+WHERE pacienty.id_pacienta = @ID
+GROUP BY otdeleniya.id_otdeleniya;";
+
+        public string Select_Lab_Issl_Add = $@"SET lc_time_names = 'ru_RU';
+SELECT lab_issledovaniya.naimenovanie AS 'Наименование исследования', DATE_FORMAT(proved_lab_issled.date_proved, '%d %M %Y') AS 'Дата проведения'
+FROM lab_issledovaniya INNER JOIN proved_lab_issled ON lab_issledovaniya.id_lab_issledovaniya = proved_lab_issled.id_lab_issledovaniya
+INNER JOIN epikrizy ON proved_lab_issled.id_epikriza = epikrizy.id_epikriza
+INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
+WHERE pacienty.id_pacienta = @ID;";
+
+        public string Select_Instr_Issl_Add = $@"SET lc_time_names = 'ru_RU';
+SELECT instr_issledovaniya.naimenovanie AS 'Наименование исследования', DATE_FORMAT(proved_instr_issled.date_proved, '%d %M %Y') AS 'Дата проведения'
+FROM instr_issledovaniya INNER JOIN proved_instr_issled ON instr_issledovaniya.id_instr_issledovaniya = proved_instr_issled.id_instr_issledovaniya
+INNER JOIN epikrizy ON proved_instr_issled.id_epikriza = epikrizy.id_epikriza
+INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
+WHERE pacienty.id_pacienta = @ID;";
+
+        public string Select_Pacienty_Add_3 = $@"SELECT CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Ф.И.О. Пациента'
+FROM pacienty INNER JOIN gcgp ON pacienty.id_gcgp = gcgp.id_gcgp
+WHERE gcgp.id_gcgp = @ID;";
+
+        public string Select_Pokazat_Lab_Issl_Add = $@"SELECT pokazat_lab_issled.naimenovanie AS 'Наименование показателя', pokazat_lab_issled.ed_izm AS 'Ед. изм.'
+FROM pokazat_lab_issled INNER JOIN lab_issledovaniya ON pokazat_lab_issled.id_lab_issledovaniya = lab_issledovaniya.id_lab_issledovaniya
+WHERE lab_issledovaniya.id_lab_issledovaniya = @ID;";
+
+        public string Select_Pokazat_Instr_Issl_Add = $@"SELECT pokazat_instr_issled.naimenovanie AS 'Наименование показателя', pokazat_instr_issled.ed_izm AS 'Ед. изм.'
+FROM pokazat_instr_issled INNER JOIN instr_issledovaniya ON pokazat_instr_issled.id_instr_issledovaniya = instr_issledovaniya.id_instr_issledovaniya
+WHERE instr_issledovaniya.id_instr_issledovaniya = @ID;";
+
+        public string Select_Preparaty_Add = $@"SELECT preparaty.naimenovanie AS 'Наименование препарата', preparaty.farm_svoistva AS 'Фарм. свойства'
+FROM preparaty INNER JOIN lechenie ON preparaty.id_preparata = lechenie.id_preparata
+INNER JOIN diagnozy ON lechenie.id_diagnoza = diagnozy.id_diagnoza
+WHERE diagnozy.id_diagnoza = @ID;";
+
+        public string Select_Lab_Issl_Add_2 = $@"SELECT lab_issledovaniya.naimenovanie AS 'Наименование исследования'
+FROM lab_issledovaniya INNER JOIN proved_lab_issled ON lab_issledovaniya.id_lab_issledovaniya = proved_lab_issled.id_lab_issledovaniya
+INNER JOIN epikrizy ON proved_lab_issled.id_epikriza = epikrizy.id_epikriza
+WHERE epikrizy.id_epikriza = @ID;";
+
+        public string Select_Instr_Issl_Add_2 = $@"SELECT instr_issledovaniya.naimenovanie AS 'Наименование исследования'
+FROM instr_issledovaniya INNER JOIN proved_instr_issled ON instr_issledovaniya.id_instr_issledovaniya = proved_instr_issled.id_instr_issledovaniya
+INNER JOIN epikrizy ON proved_instr_issled.id_epikriza = epikrizy.id_epikriza
+WHERE epikrizy.id_epikriza = @ID;";
+
+        public string Select_Diagnozy_Add_3 = $@"SELECT diagnozy.naimenovanie AS 'Наименование диагноза'
+FROM diagnozy INNER JOIN diagnozy_pacienta ON diagnozy_pacienta.id_diagnoza = diagnozy.id_diagnoza
+INNER JOIN epikrizy ON diagnozy_pacienta.id_epikriza = epikrizy.id_epikriza
+WHERE epikrizy.id_epikriza = @ID
+GROUP BY diagnozy.id_diagnoza;";
+
+        public string Select_Preparaty_Add_2 = $@"SELECT preparaty.naimenovanie AS 'Наименование препарата', preparaty.farm_svoistva AS 'Фарм. свойства'
+FROM preparaty INNER JOIN lechenie ON preparaty.id_preparata = lechenie.id_preparata
+INNER JOIN diagnozy ON lechenie.id_diagnoza = diagnozy.id_diagnoza
+INNER JOIN diagnozy_pacienta ON diagnozy.id_diagnoza = diagnozy_pacienta.id_diagnoza
+INNER JOIN epikrizy ON diagnozy_pacienta.id_epikriza = epikrizy.id_epikriza
+WHERE epikrizy.id_epikriza = @ID
+GROUP BY preparaty.id_preparata;";
+        //Select Add Panel
+
         //Insert
         public string Insert_Otdeleniya = $@"INSERT INTO otdeleniya (naimenovanie) VALUES (@Value1);";
 

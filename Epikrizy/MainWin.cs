@@ -39,7 +39,6 @@ namespace Epikrizy
         {
             try
             {
-                MessageBox.Show("Не обнаружена база данных или сервер не активен." + '\n' + "Обратитесь к системному администратору.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 MySqlOperations.OpenConnection();
                 splitContainer1.Panel2Collapsed = true;
             }
@@ -60,11 +59,67 @@ namespace Epikrizy
             dataGridView1.SelectAll();
         }
 
+        private void ComboBox1_Items()
+        {
+            comboBox1.Items.Clear();
+            if (identify == "otdeleniya")
+            {
+                string[] items = new string[] { "Лаб. исследования", "Инстр. исследования", "Пацинеты", "Эпикризы" };
+                comboBox1.Items.AddRange(items);
+                comboBox1.SelectedIndex = 0;
+            }
+            else if (identify == "preparaty")
+            {
+                string[] items = new string[] { "Диагнозы", "Пацинеты", "Эпикризы" };
+                comboBox1.Items.AddRange(items);
+                comboBox1.SelectedIndex = 0;
+            }
+            else if(identify == "pacienty")
+            {
+                string[] items = new string[] { "Диагнозы", "Эпикризы", "Перенесенные операции", "Отделения", "Лаб. исследования", "Инстр. исследования" };
+                comboBox1.Items.AddRange(items);
+                comboBox1.SelectedIndex = 0;
+            }
+            else if(identify == "gcgp")
+            {
+                string[] items = new string[] { "Пацинеты" };
+                comboBox1.Items.AddRange(items);
+                comboBox1.SelectedIndex = 0;
+            }
+            else if(identify == "labIssl")
+            {
+                string[] items = new string[] { "Показатели" };
+                comboBox1.Items.AddRange(items);
+                comboBox1.SelectedIndex = 0;
+            }
+            else if(identify == "instrIssl")
+            {
+                string[] items = new string[] { "Показатели" };
+                comboBox1.Items.AddRange(items);
+                comboBox1.SelectedIndex = 0;
+            }
+            else if(identify == "diagnozy")
+            {
+                string[] items = new string[] { "Препараты" };
+                comboBox1.Items.AddRange(items);
+                comboBox1.SelectedIndex = 0;
+            }
+            else if(identify == "epikrizy")
+            {
+                string[] items = new string[] { "Лаб.исследования", "Инстр.исследования", "Диагнозы", "Препараты" };
+                comboBox1.Items.AddRange(items);
+                comboBox1.SelectedIndex = 0;
+            }
+            else
+                comboBox1.Items.Clear();
+        }
+
         private void отделенияToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Otdeleniya, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
             identify = "otdeleniya";
+            ComboBox1_Items();
         }
 
         private void должностиToolStripMenuItem_Click(object sender, EventArgs e)
@@ -72,6 +127,7 @@ namespace Epikrizy
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Doljnosti, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
             identify = "doljnosti";
+            ComboBox1_Items();
         }
 
         private void препаратыToolStripMenuItem_Click(object sender, EventArgs e)
@@ -79,6 +135,7 @@ namespace Epikrizy
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Preparaty, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
             identify = "preparaty";
+            ComboBox1_Items();
         }
 
         private void персоналToolStripMenuItem_Click(object sender, EventArgs e)
@@ -86,6 +143,7 @@ namespace Epikrizy
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Personal, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
             identify = "personal";
+            ComboBox1_Items();
         }
 
         private void пациентыToolStripMenuItem_Click(object sender, EventArgs e)
@@ -93,6 +151,7 @@ namespace Epikrizy
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Pacienty, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
             identify = "pacienty";
+            ComboBox1_Items();
         }
 
         private void филиалыГЦГПToolStripMenuItem_Click(object sender, EventArgs e)
@@ -100,6 +159,7 @@ namespace Epikrizy
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Gcgp, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
             identify = "gcgp";
+            ComboBox1_Items();
         }
 
         private void лабораторныеИсследованияToolStripMenuItem_Click(object sender, EventArgs e)
@@ -107,6 +167,7 @@ namespace Epikrizy
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_LabIssl, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
             identify = "labIssl";
+            ComboBox1_Items();
         }
 
         private void инструментальныеИсследованияToolStripMenuItem_Click(object sender, EventArgs e)
@@ -114,6 +175,7 @@ namespace Epikrizy
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_InstrIssl, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
             identify = "instrIssl";
+            ComboBox1_Items();
         }
 
         private void диагнозыToolStripMenuItem_Click(object sender, EventArgs e)
@@ -121,6 +183,7 @@ namespace Epikrizy
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Diagnozy, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
             identify = "diagnozy";
+            ComboBox1_Items();
         }
 
         private void выписныеЭпикризыToolStripMenuItem_Click(object sender, EventArgs e)
@@ -128,6 +191,7 @@ namespace Epikrizy
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Epikrizy, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
             identify = "epikrizy";
+            ComboBox1_Items();
         }
 
         private void Insert_Otdeleniya()
