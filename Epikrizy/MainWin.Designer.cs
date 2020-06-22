@@ -528,6 +528,7 @@
             this.сервисToolStripMenuItem.Name = "сервисToolStripMenuItem";
             this.сервисToolStripMenuItem.Size = new System.Drawing.Size(59, 23);
             this.сервисToolStripMenuItem.Text = "&Сервис";
+            this.сервисToolStripMenuItem.Visible = false;
             // 
             // настройкиToolStripMenuItem
             // 
@@ -589,6 +590,7 @@
             this.toolStripMenuItem22.Name = "toolStripMenuItem22";
             this.toolStripMenuItem22.Size = new System.Drawing.Size(60, 23);
             this.toolStripMenuItem22.Text = "Фильтр";
+            this.toolStripMenuItem22.Click += new System.EventHandler(this.toolStripMenuItem22_Click);
             // 
             // toolStripMenuItem6
             // 
