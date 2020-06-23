@@ -280,7 +280,7 @@ namespace Epikrizy
             range.Find.Execute(FindText: Identify, ReplaceWith: Text);
         }
 
-        public void Print_Epikriz(SaveFileDialog saveFileDialog, string ID)
+        public void Print_Epikriz(SaveFileDialog saveFileDialog, string ID, DialogResult dialog)
         {
             WordApplication WordApp = null;
             Documents Documents = null;
@@ -407,7 +407,18 @@ namespace Epikrizy
                     Replace("{zav_otdeleniya}", output, Document);
 
                     Document.SaveAs(fileName);
-                    WordApp.Visible = true;
+                    if (dialog == DialogResult.Yes)
+                        WordApp.Quit();
+                    if (dialog == DialogResult.No) 
+                    {
+                        WordApp.PrintPreview = true;
+                        WordApp.Visible = true; 
+                    }
+                    if (dialog == DialogResult.Cancel) 
+                    {
+                        WordApp.PrintOut();
+                        WordApp.Quit();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -425,7 +436,7 @@ namespace Epikrizy
             }
         }
 
-        public void Print_Kartochka(SaveFileDialog saveFileDialog, string ID)
+        public void Print_Kartochka(SaveFileDialog saveFileDialog, string ID, DialogResult dialog)
         {
             WordApplication WordApp = null;
             Documents Documents = null;
@@ -470,19 +481,19 @@ namespace Epikrizy
                     dt = Select_DataTable(MySqlQueries.Print_Otdeleniya_Pacienta, ID);
                     output = "";
                     foreach (DataRow row in dt.Rows)
-                        output += row[0].ToString();
+                        output += row[0].ToString() + '\r' + '\t';
                     Replace("{otdelenie}", output, Document);
 
                     dt = Select_DataTable(MySqlQueries.Print_Perenes_Zabol_Pacienta, ID);
                     output = "";
                     foreach (DataRow row in dt.Rows)
-                        output += row[0].ToString();
+                        output += row[0].ToString() + '\r' + '\t';
                     Replace("{zaklucheniya}", output, Document);
 
                     dt = Select_DataTable(MySqlQueries.Print_Perenesennye_Operacii_Pacienta, ID);
                     output = "";
                     foreach (DataRow row in dt.Rows)
-                        output += row[0].ToString();
+                        output += row[0].ToString() + '\r' + '\t';
                     Replace("{perenesennye_operacii}", output, Document);
 
                     dt = Select_DataTable(MySqlQueries.Print_Recomendacii_Pacienta, ID);
@@ -539,7 +550,18 @@ namespace Epikrizy
                     Replace("{instr_issl}", output, Document);
 
                     Document.SaveAs(fileName);
-                    WordApp.Visible = true;
+                    if (dialog == DialogResult.Yes)
+                        WordApp.Quit();
+                    if (dialog == DialogResult.No)
+                    {
+                        WordApp.PrintPreview = true;
+                        WordApp.Visible = true;
+                    }
+                    if (dialog == DialogResult.Cancel)
+                    {
+                        WordApp.PrintOut();
+                        WordApp.Quit();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -557,7 +579,7 @@ namespace Epikrizy
             }
         }
 
-        public void Print_Reestr(MySqlQueries mySqlQueries, string otdelenie, DateTimePicker dateTimePicker1, DateTimePicker dateTimePicker2, SaveFileDialog saveFileDialog)
+        public void Print_Reestr(MySqlQueries mySqlQueries, string otdelenie, DateTimePicker dateTimePicker1, DateTimePicker dateTimePicker2, SaveFileDialog saveFileDialog, DialogResult dialog)
         {
             ExcelApplication ExcelApp = null;
             Workbooks workbooks = null;
@@ -604,7 +626,18 @@ namespace Epikrizy
                     cells.Borders[XlBordersIndex.xlEdgeLeft].LineStyle = XlLineStyle.xlContinuous;
                     cells.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlContinuous;
                     workbook.SaveAs(fileName);
-                    ExcelApp.Visible = true;
+                    if (dialog == DialogResult.Yes)
+                        ExcelApp.Quit();
+                    if (dialog == DialogResult.No)
+                    {
+                        workbook.PrintPreview();
+                        ExcelApp.Visible = true;
+                    }
+                    if (dialog == DialogResult.Cancel)
+                    {
+                        workbook.PrintOut();
+                        ExcelApp.Quit();
+                    }
                 }
                 catch (Exception ex)
                 {

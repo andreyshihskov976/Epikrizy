@@ -183,7 +183,7 @@ WHERE diagnozy.id_diagnoza = @ID;";
 FROM perenesennye_operacii INNER JOIN epikrizy ON perenesennye_operacii.id_epikriza = epikrizy.id_epikriza
 WHERE epikrizy.id_epikriza = @ID;";
 
-        public string Select_Epikrizy = $@"SELECT id_epikriza, CONCAT('Эпикриз №',id_epikriza) AS ' ', CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Пациент (Ф.И.О.)', date_n AS 'Дата начала лечения',
+        public string Select_Epikrizy = $@"SELECT id_epikriza, CONCAT('Эпикриз №',id_epikriza) AS 'Номер П/П', CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Пациент (Ф.И.О.)', date_n AS 'Дата начала лечения',
 date_k AS 'Дата окончания лечения', otdeleniya.naimenovanie AS 'Наименование отделения'
 FROM epikrizy INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
 INNER JOIN otdeleniya ON epikrizy.id_otdeleniya = otdeleniya.id_otdeleniya;";
@@ -213,6 +213,49 @@ WHERE epikrizy.id_epikriza = @ID;";
 
         public string Select_Dop_Sved = $@"SELECT CONCAT(ad, ';', gen_anam, ';', smoking, ';', alco, ';', imt, ';', cholesterin, ';', blood, ';', urina, ';', ekg, ';', skore, ';', vgd, ';', predstat, ';', mol, ';', flura, ';', glukoza, ';', suicide) FROM dop_sved WHERE id_epikriza = @ID;";
         //Select
+
+        //Filter
+        public string Select_Otdeleniya_Filter = $@"SELECT id_otdeleniya, naimenovanie AS 'Наименование отделения' FROM otdeleniya WHERE naimenovanie LIKE @Value1;";
+
+        public string Select_Doljnosti_Filter = $@"SELECT id_doljnosti, naimenovanie AS 'Наименование должности' FROM doljnosti WHERE naimenovanie LIKE @Value1;";
+
+        public string Select_Preparaty_Filter = $@"SELECT id_preparata, naimenovanie AS 'Наименование препарата', farm_svoistva AS 'Фармакологические свойства' FROM preparaty WHERE naimenovanie LIKE @Value1 OR farm_svoistva LIKE @Value1;";
+
+        public string Select_Personal_Filter = $@"SELECT personal.id_personala, CONCAT(personal.familiya,' ', personal.imya, ' ', personal.otchestvo) AS 'Ф.И.О. Сотрудника', 
+otdeleniya.naimenovanie AS 'Наименование отделения', doljnosti.naimenovanie AS 'Наименование должности'
+FROM personal INNER JOIN otdeleniya ON personal.id_otdeleniya = otdeleniya.id_otdeleniya
+INNER JOIN doljnosti ON personal.id_doljnosti = doljnosti.id_doljnosti
+WHERE CONCAT(personal.familiya,' ', personal.imya, ' ', personal.otchestvo) LIKE @Value1 OR 
+otdeleniya.naimenovanie LIKE @Value1 OR doljnosti.naimenovanie LIKE @Value1;";
+
+        public string Select_Pacienty_Filter = $@"SET lc_time_names = 'ru_RU';
+SELECT pacienty.id_pacienta, CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Ф.И.О. Пациента', 
+DATE_FORMAT(pacienty.data_rojdeniya,'%d %M %Y') AS 'Дата рождения', pol AS 'Пол', pacienty.adress_projivaniya AS 'Адрес проживания', gcgp.nom_filiala AS 'Филиал ГЦГП'
+FROM pacienty INNER JOIN gcgp ON pacienty.id_gcgp = gcgp.id_gcgp
+WHERE CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) LIKE @Value1 OR 
+DATE_FORMAT(pacienty.data_rojdeniya,'%d %M %Y') LIKE @Value1 OR pol LIKE @Value1 OR pacienty.adress_projivaniya LIKE @Value1 OR gcgp.nom_filiala LIKE @Value1;";
+        
+        public string Select_Gcgp_Filter = $@"SELECT id_gcgp, nom_filiala AS 'Номер филиала', adress AS 'Адрес' FROM gcgp WHERE nom_filiala LIKE @Value1;";
+
+        public string Select_LabIssl_Filter = $@"SELECT lab_issledovaniya.id_lab_issledovaniya, lab_issledovaniya.naimenovanie AS 'Наименование исследования'
+FROM lab_issledovaniya
+WHERE naimenovanie LIKE @Value1;";
+
+        public string Select_InstrIssl_Filter = $@"SELECT instr_issledovaniya.id_instr_issledovaniya, instr_issledovaniya.naimenovanie AS 'Наименование исследования'
+        FROM instr_issledovaniya
+WHERE naimenovanie LIKE @Value1;";
+
+        public string Select_Diagnozy_Filter = $@"SELECT diagnozy.id_diagnoza, diagnozy.naimenovanie AS 'Наименование диагноза'
+FROM diagnozy
+WHERE naimenovanie LIKE @Value1;";
+
+        public string Select_Epikrizy_Filter = $@"SELECT id_epikriza, CONCAT('Эпикриз №',id_epikriza) AS 'Номер П/П', CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) AS 'Пациент (Ф.И.О.)', date_n AS 'Дата начала лечения',
+date_k AS 'Дата окончания лечения', otdeleniya.naimenovanie AS 'Наименование отделения'
+FROM epikrizy INNER JOIN pacienty ON epikrizy.id_pacienta = pacienty.id_pacienta
+INNER JOIN otdeleniya ON epikrizy.id_otdeleniya = otdeleniya.id_otdeleniya
+WHERE CONCAT(pacienty.familiya,' ', pacienty.imya, ' ', pacienty.otchestvo) LIKE @Value1 OR date_n LIKE @Value1 OR
+date_k LIKE @Value1 OR otdeleniya.naimenovanie LIKE @Value1;";
+        //Filter
 
         //Select Add Panel
         public string Select_Lab_Otdeleniya_Add = $@"SELECT lab_issledovaniya.naimenovanie AS 'Наименование исследования' FROM lab_issledovaniya

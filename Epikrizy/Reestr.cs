@@ -14,18 +14,20 @@ namespace Epikrizy
     {
         MySqlOperations MySqlOperations = null;
         string Otdelenie = null;
+        DialogResult dialog = DialogResult.OK;
 
-        public Reestr(MySqlOperations mySqlOperations, string otdelenie)
+        public Reestr(MySqlOperations mySqlOperations, string otdelenie, DialogResult dialog)
         {
             InitializeComponent();
             MySqlOperations = mySqlOperations;
             Otdelenie = otdelenie;
             dateTimePicker1.Value = DateTime.Now;
+            this.dialog = dialog;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MySqlOperations.Print_Reestr(MySqlOperations.MySqlQueries, Otdelenie, dateTimePicker1, dateTimePicker2, saveFileDialog1);
+            MySqlOperations.Print_Reestr(MySqlOperations.MySqlQueries, Otdelenie, dateTimePicker1, dateTimePicker2, saveFileDialog1, dialog);
             this.Close();
         }
 
