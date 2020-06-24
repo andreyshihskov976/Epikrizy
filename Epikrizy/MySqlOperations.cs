@@ -436,6 +436,17 @@ namespace Epikrizy
             }
         }
 
+        public void Rukovodstvo()
+        {
+            WordApplication WordApp = null;
+            Documents Documents = null;
+            Document Document = null;
+            WordApp = new WordApplication();
+            Documents = WordApp.Documents;
+            Document = Documents.Open(Application.StartupPath + "\\blanks\\spravka.docx");
+            WordApp.Visible = true;
+        }
+
         public void Print_Kartochka(SaveFileDialog saveFileDialog, string ID, DialogResult dialog)
         {
             WordApplication WordApp = null;

@@ -1036,5 +1036,10 @@ namespace Epikrizy
                 печатьToolStripMenuItem.Visible = false;
             }
         }
+
+        private void руководствоToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MySqlOperations.Rukovodstvo();
+        }
     }
 }

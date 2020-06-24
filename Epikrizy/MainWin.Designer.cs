@@ -108,6 +108,7 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.руководствоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -554,7 +555,8 @@
             this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.содержаниеToolStripMenuItem,
             this.toolStripSeparator5,
-            this.опрограммеToolStripMenuItem});
+            this.опрограммеToolStripMenuItem,
+            this.руководствоToolStripMenuItem});
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
             this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 23);
             this.справкаToolStripMenuItem.Text = "Спра&вка";
@@ -562,18 +564,18 @@
             // содержаниеToolStripMenuItem
             // 
             this.содержаниеToolStripMenuItem.Name = "содержаниеToolStripMenuItem";
-            this.содержаниеToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.содержаниеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.содержаниеToolStripMenuItem.Text = "&Содержание";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(155, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
             // 
             // опрограммеToolStripMenuItem
             // 
             this.опрограммеToolStripMenuItem.Name = "опрограммеToolStripMenuItem";
-            this.опрограммеToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.опрограммеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.опрограммеToolStripMenuItem.Text = "&О программе...";
             this.опрограммеToolStripMenuItem.Click += new System.EventHandler(this.опрограммеToolStripMenuItem_Click);
             // 
@@ -789,7 +791,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.dataGridView2);
             this.splitContainer2.Panel2MinSize = 96;
-            this.splitContainer2.Size = new System.Drawing.Size(398, 709);
+            this.splitContainer2.Size = new System.Drawing.Size(96, 100);
             this.splitContainer2.SplitterDistance = 34;
             this.splitContainer2.SplitterWidth = 6;
             this.splitContainer2.TabIndex = 0;
@@ -849,6 +851,13 @@
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView2.Size = new System.Drawing.Size(398, 669);
             this.dataGridView2.TabIndex = 0;
+            // 
+            // руководствоToolStripMenuItem
+            // 
+            this.руководствоToolStripMenuItem.Name = "руководствоToolStripMenuItem";
+            this.руководствоToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.руководствоToolStripMenuItem.Text = "&Руководство";
+            this.руководствоToolStripMenuItem.Click += new System.EventHandler(this.руководствоToolStripMenuItem_Click);
             // 
             // MainWin
             // 
@@ -968,6 +977,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ToolStripMenuItem руководствоToolStripMenuItem;
     }
 }
 
