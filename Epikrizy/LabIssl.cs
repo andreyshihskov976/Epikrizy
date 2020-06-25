@@ -55,9 +55,9 @@ namespace Epikrizy
             {
                 if (dataGridView1.Rows.Count > 0 && dataGridView2.Rows.Count > 0)
                     this.Close();
-                else if (dataGridView1.Rows.Count >= 0)
+                else if (dataGridView1.Rows.Count <= 0)
                     MessageBox.Show("Не заполнен блок " + '"' + "Показатели исследования" + '"' + ", пожалуйста заполните его прежде чем закрыть окно.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                else if (dataGridView2.Rows.Count >= 0)
+                else if (dataGridView2.Rows.Count <= 0)
                     MessageBox.Show("Не заполнен блок " + '"' + "Отделения, в которых проводится" + '"' + ", пожалуйста заполните его прежде чем закрыть окно.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else

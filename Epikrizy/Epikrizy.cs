@@ -149,6 +149,8 @@ namespace Epikrizy
             dataGridView2.Columns[0].Visible = false;
             MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Proved_LabIssl, dataGridView3, ID);
             dataGridView3.Columns[0].Visible = false;
+            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Proved_InstrIssl, dataGridView6, ID);
+            dataGridView6.Columns[0].Visible = false;
         }
 
         private void Epikrizy_FormClosed(object sender, FormClosedEventArgs e)
@@ -233,6 +235,8 @@ namespace Epikrizy
                 MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Diagnozy_Pacienta, ID_Diagnoza_Pacienta, ID, ID_Diagnoza, textBox3.Text, Value4);
                 Load_Tabs();
                 Clear_Tab2();
+                button6.Visible = false;
+                button8.Visible = true;
             }
             else
                 MessageBox.Show("Изменения не были внесены.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -390,8 +394,8 @@ namespace Epikrizy
         private void button15_Click(object sender, EventArgs e)
         {
             string date = dateTimePicker6.Value.Year.ToString() + '-' + dateTimePicker6.Value.Month.ToString() + '-' + dateTimePicker6.Value.Day.ToString();
-            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Proved_LabIssl, ID, ID_LabIssl, date) != "1")
-            {
+            //if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Proved_LabIssl, ID, ID_LabIssl, date) != "1")
+            //{
                 MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Proved_LabIssl, ID_Proved_LabIssl, ID, date);
                 foreach (DataGridViewRow row in dataGridView4.Rows)
                     MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Dannye_LabIssl, row.Cells[0].Value.ToString(), row.Cells[2].Value.ToString(), row.Cells[4].Value.ToString());
@@ -399,9 +403,9 @@ namespace Epikrizy
                 comboBox5.Enabled = true;
                 button15.Visible = false;
                 button13.Visible = true;
-            }
-            else
-                MessageBox.Show("Изменения не были внесены.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
+            //else
+            //    MessageBox.Show("Изменения не были внесены.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void button14_Click(object sender, EventArgs e)
@@ -432,7 +436,7 @@ namespace Epikrizy
             Clear_Tab5();
             }
             else
-                MessageBox.Show("Добавляемое вами лаборатнорное исследование уже пристутствует в данном эпикризе.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Добавляемое вами инструментальное исследование уже пристутствует в данном эпикризе.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Clear_Tab5()
@@ -467,8 +471,8 @@ namespace Epikrizy
         private void button16_Click(object sender, EventArgs e)
         {
             string date = dateTimePicker7.Value.Year.ToString() + '-' + dateTimePicker7.Value.Month.ToString() + '-' + dateTimePicker7.Value.Day.ToString();
-            if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Proved_InstrIssl, ID, ID_InstrIssl, date) != "1")
-            {
+            //if (MySqlOperations.Select_Text(MySqlOperations.MySqlQueries.Exists_Proved_InstrIssl, ID, ID_InstrIssl, date) != "1")
+            //{
                 MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Proved_InstrIssl, ID_Proved_InstrIssl, ID, date);
                 foreach (DataGridViewRow row in dataGridView5.Rows)
                     MySqlOperations.Insert_Update_Delete(MySqlOperations.MySqlQueries.Update_Dannye_InstrIssl, row.Cells[0].Value.ToString(), row.Cells[2].Value.ToString(), row.Cells[4].Value.ToString());
@@ -476,9 +480,9 @@ namespace Epikrizy
                 comboBox6.Enabled = true;
                 button16.Visible = false;
                 button18.Visible = true;
-            }
-            else
-                MessageBox.Show("Изменения не были внесены.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
+            //else
+            //    MessageBox.Show("Изменения не были внесены.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void button17_Click(object sender, EventArgs e)

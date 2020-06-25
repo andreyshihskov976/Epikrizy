@@ -277,7 +277,8 @@ namespace Epikrizy
         private void Replace(string Identify, string Text, Document document)
         {
             var range = document.Content;
-            range.Find.Execute(FindText: Identify, ReplaceWith: Text);
+            range.Find.Execute(FindText: Identify);
+            range.Text = Text;
         }
 
         public void Print_Epikriz(SaveFileDialog saveFileDialog, string ID, DialogResult dialog)

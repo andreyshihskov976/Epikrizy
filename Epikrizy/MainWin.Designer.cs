@@ -83,6 +83,7 @@
             this.содержаниеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.опрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.руководствоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.поискToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem22 = new System.Windows.Forms.ToolStripMenuItem();
@@ -108,7 +109,6 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.руководствоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -564,20 +564,27 @@
             // содержаниеToolStripMenuItem
             // 
             this.содержаниеToolStripMenuItem.Name = "содержаниеToolStripMenuItem";
-            this.содержаниеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.содержаниеToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.содержаниеToolStripMenuItem.Text = "&Содержание";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(155, 6);
             // 
             // опрограммеToolStripMenuItem
             // 
             this.опрограммеToolStripMenuItem.Name = "опрограммеToolStripMenuItem";
-            this.опрограммеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.опрограммеToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.опрограммеToolStripMenuItem.Text = "&О программе...";
             this.опрограммеToolStripMenuItem.Click += new System.EventHandler(this.опрограммеToolStripMenuItem_Click);
+            // 
+            // руководствоToolStripMenuItem
+            // 
+            this.руководствоToolStripMenuItem.Name = "руководствоToolStripMenuItem";
+            this.руководствоToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.руководствоToolStripMenuItem.Text = "&Руководство";
+            this.руководствоToolStripMenuItem.Click += new System.EventHandler(this.руководствоToolStripMenuItem_Click);
             // 
             // toolStripTextBox1
             // 
@@ -793,7 +800,6 @@
             this.splitContainer2.Panel2MinSize = 96;
             this.splitContainer2.Size = new System.Drawing.Size(96, 100);
             this.splitContainer2.SplitterDistance = 34;
-            this.splitContainer2.SplitterWidth = 6;
             this.splitContainer2.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -809,7 +815,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(398, 34);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(96, 34);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -820,7 +826,7 @@
             this.label1.Location = new System.Drawing.Point(4, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(191, 52);
+            this.label1.Size = new System.Drawing.Size(40, 52);
             this.label1.TabIndex = 0;
             this.label1.Text = "Критерий отбора:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -830,10 +836,10 @@
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(203, 5);
+            this.comboBox1.Location = new System.Drawing.Point(52, 5);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(191, 28);
+            this.comboBox1.Size = new System.Drawing.Size(40, 28);
             this.comboBox1.TabIndex = 1;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -849,15 +855,8 @@
             this.dataGridView2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(398, 669);
+            this.dataGridView2.Size = new System.Drawing.Size(96, 62);
             this.dataGridView2.TabIndex = 0;
-            // 
-            // руководствоToolStripMenuItem
-            // 
-            this.руководствоToolStripMenuItem.Name = "руководствоToolStripMenuItem";
-            this.руководствоToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.руководствоToolStripMenuItem.Text = "&Руководство";
-            this.руководствоToolStripMenuItem.Click += new System.EventHandler(this.руководствоToolStripMenuItem_Click);
             // 
             // MainWin
             // 

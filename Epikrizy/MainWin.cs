@@ -415,7 +415,7 @@ namespace Epikrizy
             if (identify == "labIssl")
                 Insert_LabIssl();
             if (identify == "instrIssl")
-                Insert_LabIssl();
+                Insert_InstrIssl();
             if (identify == "diagnozy")
                 Insert_Diagnozy();
             if (identify == "epikrizy")
@@ -606,6 +606,8 @@ namespace Epikrizy
             epikrizy.dataGridView2.Columns[0].Visible = false;
             MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Proved_LabIssl, epikrizy.dataGridView3, row.Cells[0].Value.ToString());
             epikrizy.dataGridView3.Columns[0].Visible = false;
+            MySqlOperations.Select_DataGridView(MySqlOperations.MySqlQueries.Select_Proved_InstrIssl, epikrizy.dataGridView6, row.Cells[0].Value.ToString());
+            epikrizy.dataGridView6.Columns[0].Visible = false;
             output = MySqlOperations.Select_Text(MySqlQueries.Select_Dop_Sved, row.Cells[0].Value.ToString());
             if (output != null && output != "")
             {
@@ -794,7 +796,8 @@ namespace Epikrizy
 
         private void dataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            Delete_Rows();
+            if (MessageBox.Show("Хотите удалить запись(-и)?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                Delete_String();
         }
 
         private void вклвыклПереносПоСловамToolStripMenuItem_Click(object sender, EventArgs e)
